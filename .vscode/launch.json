@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LicenceLifecycleManagementApplication<licence-lifecycle-management>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.capstone.licencelifecyclemanagement.LicenceLifecycleManagementApplication",
+            "projectName": "licence-lifecycle-management",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
