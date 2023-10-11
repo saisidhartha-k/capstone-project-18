@@ -57,4 +57,22 @@ public class SoftwareController {
         return softwareservice.getSoftwares();
     }
 
+    @GetMapping("/getExpiredCount")
+    public int getExpiredCount()
+    {
+        return softwareservice.expiredSoftwaresCount();
+    }
+
+    @GetMapping("/getNotExpiredCount")
+    public int getNotExpiredCount()
+    {
+        return softwareservice.notExpListCount();
+    }
+
+    @GetMapping("/getAboutExpiredCount")
+    public int getAboutExpiredCount()
+    {
+        return softwareservice.aboutToExpireCount();
+    }
+
 }
