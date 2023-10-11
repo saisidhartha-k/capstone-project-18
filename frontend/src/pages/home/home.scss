@@ -1,0 +1,43 @@
+.home {
+    display: flex;
+  
+    .homeContainer {
+      flex: 6;
+  
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+  
+      .card {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 300px; /* Adjust the max-width as needed */
+      }
+  
+      .card-header {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+      }
+  
+      .card-title {
+        margin: 0;
+        font-size: 1.2rem; /* Increase the font size for the card title */
+      }
+  
+      .card-body {
+        padding: 10px; /* Reduce padding to make the content area smaller */
+      }
+  
+      .listContainer {
+        margin-top: 20px;
+      }
+    }
+  }
+  
