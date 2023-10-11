@@ -52,11 +52,3 @@ The License Management System uses Mockito for unit testing. You can write test 
 ### Visualizations
 
 The system uses Chart.js for generating graphical visualizations to represent license status and trends. You can customize these graphs as needed to display the data most effectively.
-
-### Contributions
-
-Contributions to this project are welcome. If you'd like to improve the License Management System or add new features, please fork the repository and submit a pull request.
-
-### License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
