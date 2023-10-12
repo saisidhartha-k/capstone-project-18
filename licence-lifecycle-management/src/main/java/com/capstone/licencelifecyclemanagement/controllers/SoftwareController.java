@@ -5,28 +5,45 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
+import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 import com.capstone.licencelifecyclemanagement.services.SoftwareService;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @CrossOrigin()
-
 @RequestMapping("/software")
 public class SoftwareController {
     
     @Autowired
     private SoftwareService softwareservice;
 
+    @Autowired
+    private SoftwarePurchaseRepository softwarePurchaseRepository;
+
+    @Autowired
+    private SoftwareRepository softwareRepository;
 
     @PostMapping("/addsoftware")
+    @Transactional
     public Software addSoftware(@RequestBody Software software)
     {
-        return softwareservice.addSoftware(software);
+        Software softwareNew = softwareRepository.save(software);
+        SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(),softwareNew);
+        SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
+        softwarePurchaseRepository.save(sPurchase);
+        return softwareNew;
     }
 
     @GetMapping("/getNotExpired")
@@ -73,6 +90,11 @@ public class SoftwareController {
     public int getAboutExpiredCount()
     {
         return softwareservice.aboutToExpireCount();
+    }
+
+    @PostMapping("/renew/{id}")
+    public String renewSoftware(@PathVariable("id") int id, @RequestBody SoftwareDto dto) {
+        return softwareservice.RenewSoftware(id, dto);
     }
 
 }

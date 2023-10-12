@@ -4,24 +4,60 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import javax.swing.text.html.Option;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class SoftwareService {
     @Autowired
     private SoftwareRepository softwarerepository;
 
+    @Autowired
+    private SoftwarePurchaseRepository softwarePurchaseRepository;
+
     String toEmail = "admin@prodapt.com";
 
-    public Software addSoftware(Software software) {
-        return softwarerepository.save(software);
+    // @Transactional
+    // public Software addSoftware(Software software) {
+    //     Software softwareNew = softwarerepository.save(software);
+    //     SoftwarePurchase sPurchase = new SoftwarePurchase();
+    //     sPurchase.setSoftware(softwareNew);
+    //     softwarePurchaseRepository.save(sPurchase);
+    //     return softwareNew;
+    // }
+
+    public String RenewSoftware(int softwareId, SoftwareDto dto) {
+        Optional<Software> existingSoftware = softwarerepository.findById(softwareId);
+       // softwarerepository.deleteById(softwareId);
+        if (existingSoftware.isPresent()) {
+            Software software = existingSoftware.get();
+            software.setCost(dto.getCost());
+            software.setExpiryDate(dto.getExpiryDate());
+            software.setIsExpired(false);
+            software.setPurchaseDate(LocalDate.now());
+            software.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
+            softwarerepository.save(software);
+            SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(), software);
+            SoftwarePurchase sPurchase =  new SoftwarePurchase(SPID);
+            softwarePurchaseRepository.save(sPurchase);
+            return "renewed software:" + softwareId; 
+        }
+        return "not found";
+
     }
 
     public List<Software> getSoftwares() {
