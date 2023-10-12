@@ -31,14 +31,14 @@ public class SoftwareService {
 
     String toEmail = "admin@prodapt.com";
 
-    // @Transactional
-    // public Software addSoftware(Software software) {
-    //     Software softwareNew = softwarerepository.save(software);
-    //     SoftwarePurchase sPurchase = new SoftwarePurchase();
-    //     sPurchase.setSoftware(softwareNew);
-    //     softwarePurchaseRepository.save(sPurchase);
-    //     return softwareNew;
-    // }
+    @Transactional
+    public Software addSoftware(Software software) {
+        Software softwareNew = softwarerepository.save(software);
+        SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(),softwareNew);
+        SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
+        softwarePurchaseRepository.save(sPurchase);
+        return softwareNew;
+    }
 
     public String RenewSoftware(int softwareId, SoftwareDto dto) {
         Optional<Software> existingSoftware = softwarerepository.findById(softwareId);

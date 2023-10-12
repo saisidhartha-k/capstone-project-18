@@ -39,11 +39,7 @@ public class SoftwareController {
     @Transactional
     public Software addSoftware(@RequestBody Software software)
     {
-        Software softwareNew = softwareRepository.save(software);
-        SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(),softwareNew);
-        SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
-        softwarePurchaseRepository.save(sPurchase);
-        return softwareNew;
+        return softwareservice.addSoftware(software);
     }
 
     @GetMapping("/getNotExpired")
