@@ -16,7 +16,9 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String companyName;
+    @ManyToOne
+    @JoinColumn(name = "company_id") 
+    private Company company;
     private String licenseNumber = String.valueOf(Math.ceil(Math.random() * 10000));
     private int numberOfEmployees;
     private int cost;
