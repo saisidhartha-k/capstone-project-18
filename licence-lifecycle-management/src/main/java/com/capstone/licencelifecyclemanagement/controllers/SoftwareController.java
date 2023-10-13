@@ -29,12 +29,6 @@ public class SoftwareController {
     @Autowired
     private SoftwareService softwareservice;
 
-    @Autowired
-    private SoftwarePurchaseRepository softwarePurchaseRepository;
-
-    @Autowired
-    private SoftwareRepository softwareRepository;
-
     @PostMapping("/addsoftware")
     @Transactional
     public Software addSoftware(@RequestBody Software software)
