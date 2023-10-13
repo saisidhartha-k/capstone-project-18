@@ -84,7 +84,7 @@ public class SoftwareController {
 
     @PostMapping("/renew/{id}")
     public String renewSoftware(@PathVariable("id") int id, @RequestBody SoftwareDto dto) {
-        return softwareservice.RenewSoftware(id, dto);
+        return softwareservice.renewSoftware(id, dto);
     }
 
 }

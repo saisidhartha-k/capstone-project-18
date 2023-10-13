@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
-import com.capstone.licencelifecyclemanagement.services.CompanyService;
+import com.capstone.licencelifecyclemanagement.services.DeviceCompanyService;
 
 @RestController
 @RequestMapping("/company")
 public class DeviceCompanyController {
 
     @Autowired
-    private CompanyService companyService;
+    private DeviceCompanyService deviceCompanyService;
 
     @PostMapping("/addCompany")
     public DeviceCompany addCompany(@RequestBody DeviceCompany company)
     {
-        return companyService.addCompany(company);
+        return deviceCompanyService.addCompany(company);
     }
 }

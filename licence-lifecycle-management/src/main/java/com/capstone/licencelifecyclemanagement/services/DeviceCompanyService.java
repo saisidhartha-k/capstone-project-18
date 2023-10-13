@@ -7,7 +7,7 @@ import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 
 @Service
-public class CompanyService {
+public class DeviceCompanyService {
     @Autowired
     private DeviceCompanyRepository DeviceCompanyRepository;
 

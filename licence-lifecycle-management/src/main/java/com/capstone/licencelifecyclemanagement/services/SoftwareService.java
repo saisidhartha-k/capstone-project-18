@@ -14,11 +14,14 @@ import org.springframework.mail.SimpleMailMessage;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.SoftwareCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -29,35 +32,84 @@ public class SoftwareService {
     @Autowired
     private SoftwarePurchaseRepository softwarePurchaseRepository;
 
+    @Autowired
+    private SoftwareCompanyRepository softwareCompanyRepository;
+
     String toEmail = "admin@prodapt.com";
 
-    @Transactional
+      @Transactional
     public Software addSoftware(Software software) {
+        if (software.getCompany() != null && softwareCompanyRepository.existsById(software.getCompany().getId())) {
+            setExistingCompany(software);
+        } else {
+            createNewCompany(software);
+        }
+
         Software softwareNew = softwarerepository.save(software);
-        SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(),softwareNew);
+        SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(), softwareNew);
         SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
         softwarePurchaseRepository.save(sPurchase);
         return softwareNew;
     }
 
-    public String RenewSoftware(int softwareId, SoftwareDto dto) {
+    public String renewSoftware(int softwareId, SoftwareDto dto) {
         Optional<Software> existingSoftware = softwarerepository.findById(softwareId);
-       // softwarerepository.deleteById(softwareId);
         if (existingSoftware.isPresent()) {
             Software software = existingSoftware.get();
+
+            if (dto.getCompany() != null && softwareCompanyRepository.existsById(dto.getCompany().getId())) {
+                setExistingCompany(software, dto.getCompany());
+            } else {
+                createNewCompany(software, dto.getCompany());
+            }
+
             software.setCost(dto.getCost());
             software.setExpiryDate(dto.getExpiryDate());
             software.setIsExpired(false);
             software.setPurchaseDate(LocalDate.now());
             software.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
             softwarerepository.save(software);
-            SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(), software);
-            SoftwarePurchase sPurchase =  new SoftwarePurchase(SPID);
-            softwarePurchaseRepository.save(sPurchase);
-            return "renewed software:" + softwareId; 
-        }
-        return "not found";
 
+            SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(), software);
+            SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
+            softwarePurchaseRepository.save(sPurchase);
+
+            return "Software renewed: " + softwareId;
+        }
+
+        return "Software not found";
+    }
+
+    public List<Software> getSoftware() {
+        return softwarerepository.findAll();
+    }
+
+    private void setExistingCompany(Software software) {
+        Optional<SoftwareCompany> existingCompany = softwareCompanyRepository.findById(software.getCompany().getId());
+        if (existingCompany.isPresent()) {
+            software.setCompany(existingCompany.get());
+        } else {
+            throw new EntityNotFoundException("Company with ID " + software.getCompany().getId() + " not found.");
+        }
+    }
+
+    private void createNewCompany(Software software) {
+        SoftwareCompany newCompany = softwareCompanyRepository.save(software.getCompany());
+        software.setCompany(newCompany);
+    }
+
+    private void setExistingCompany(Software software, SoftwareCompany company) {
+        Optional<SoftwareCompany> existingCompany = softwareCompanyRepository.findById(company.getId());
+        if (existingCompany.isPresent()) {
+            software.setCompany(existingCompany.get());
+        } else {
+            throw new EntityNotFoundException("Company with ID " + company.getId() + " not found.");
+        }
+    }
+
+    private void createNewCompany(Software software, SoftwareCompany company) {
+        SoftwareCompany newCompany = softwareCompanyRepository.save(company);
+        software.setCompany(newCompany);
     }
 
     public List<Software> getSoftwares() {
