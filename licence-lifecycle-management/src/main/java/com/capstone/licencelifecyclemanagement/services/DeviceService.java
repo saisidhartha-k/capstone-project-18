@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.licencelifecyclemanagement.dto.DeviceDto;
-import com.capstone.licencelifecyclemanagement.entitys.Company;
+import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
-import com.capstone.licencelifecyclemanagement.repository.CompanyRepository;
+import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
 
@@ -28,12 +28,12 @@ public class DeviceService {
     private DevicePurchaseRepository devicePurchaseRepository;
 
     @Autowired
-    private CompanyRepository companyRepository;
+    private DeviceCompanyRepository DeviceCompanyRepository;
 
     String toEmail = "admin@prodapt.com";
 
     public Device addDevice(Device device) {
-        if (device.getCompany() != null && companyRepository.existsById(device.getCompany().getId())) {
+        if (device.getCompany() != null && DeviceCompanyRepository.existsById(device.getCompany().getId())) {
             setExistingCompany(device);
         } else {
             createNewCompany(device);
@@ -52,7 +52,7 @@ public class DeviceService {
         if (existingDevice.isPresent()) {
             Device device = existingDevice.get();
 
-            if (dto.getCompany() != null && companyRepository.existsById(dto.getCompany().getId())) {
+            if (dto.getCompany() != null && DeviceCompanyRepository.existsById(dto.getCompany().getId())) {
                 setExistingCompany(device, dto.getCompany());
             } else {
                 createNewCompany(device, dto.getCompany());
@@ -81,7 +81,7 @@ public class DeviceService {
     }
 
     private void setExistingCompany(Device device) {
-        Optional<Company> existingCompany = companyRepository.findById(device.getCompany().getId());
+        Optional<DeviceCompany> existingCompany = DeviceCompanyRepository.findById(device.getCompany().getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
         } else {
@@ -90,12 +90,12 @@ public class DeviceService {
     }
 
     private void createNewCompany(Device device) {
-        Company newCompany = companyRepository.save(device.getCompany());
+        DeviceCompany newCompany = DeviceCompanyRepository.save(device.getCompany());
         device.setCompany(newCompany);
     }
 
-    private void setExistingCompany(Device device, Company company) {
-        Optional<Company> existingCompany = companyRepository.findById(company.getId());
+    private void setExistingCompany(Device device, DeviceCompany company) {
+        Optional<DeviceCompany> existingCompany = DeviceCompanyRepository.findById(company.getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
         } else {
@@ -103,8 +103,8 @@ public class DeviceService {
         }
     }
 
-    private void createNewCompany(Device device, Company company) {
-        Company newCompany = companyRepository.save(company);
+    private void createNewCompany(Device device, DeviceCompany company) {
+        DeviceCompany newCompany = DeviceCompanyRepository.save(company);
         device.setCompany(newCompany);
     }
 

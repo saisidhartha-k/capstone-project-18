@@ -3,16 +3,16 @@ package com.capstone.licencelifecyclemanagement.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capstone.licencelifecyclemanagement.entitys.Company;
-import com.capstone.licencelifecyclemanagement.repository.CompanyRepository;
+import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
+import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 
 @Service
 public class CompanyService {
     @Autowired
-    private CompanyRepository companyRepository;
+    private DeviceCompanyRepository DeviceCompanyRepository;
 
-    public Company addCompany(Company company) {
-        return companyRepository.save(company);
+    public DeviceCompany addCompany(DeviceCompany company) {
+        return DeviceCompanyRepository.save(company);
     }
 }
 

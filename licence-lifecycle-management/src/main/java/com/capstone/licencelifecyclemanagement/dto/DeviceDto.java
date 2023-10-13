@@ -2,7 +2,7 @@ package com.capstone.licencelifecyclemanagement.dto;
 
 import java.time.LocalDate;
 
-import com.capstone.licencelifecyclemanagement.entitys.Company;
+import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 
 import lombok.Data;
 
@@ -11,5 +11,5 @@ public class DeviceDto {
     private int cost;
     private LocalDate expiryDate;
     private String location;
-    private Company company;
+    private DeviceCompany company;
 }

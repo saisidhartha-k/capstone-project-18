@@ -18,7 +18,7 @@ public class Device {
     private String name;
     @ManyToOne
     @JoinColumn(name = "company_id") 
-    private Company company;
+    private DeviceCompany company;
     private String licenseNumber = String.valueOf(Math.ceil(Math.random() * 10000));
     private int numberOfEmployees;
     private int cost;
