@@ -1,19 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './featured.scss';
 import Chart from 'chart.js/auto';
-import axios from 'axios';
+import { getSoftwares } from '../../service/SoftwareService';
 
 const Featured = () => {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
-  const [chartData, setChartData] = useState([]);
+  const [mostSpentCompany, setMostSpentCompany] = useState('');
+  const [leastSpentCompany, setLeastSpentCompany] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/software/get')
+    getSoftwares()
       .then((response) => {
-        const softwareData = response.data;
+        const softwareData = response;
         console.log(response);
-        const companyNames = softwareData.map((software) => software.companyName);
+        const companyNames = softwareData.map((software) => software.company.name);
         const costs = softwareData.map((software) => software.cost);
 
         const data = {
@@ -39,6 +40,15 @@ const Featured = () => {
         });
 
         chartInstanceRef.current = newChartInstance;
+
+        const maxCost = Math.max(...costs);
+        const minCost = Math.min(...costs);
+
+        const mostSpentCompanyIndex = costs.indexOf(maxCost);
+        const leastSpentCompanyIndex = costs.indexOf(minCost);
+
+        setMostSpentCompany(companyNames[mostSpentCompanyIndex]);
+        setLeastSpentCompany(companyNames[leastSpentCompanyIndex]);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -47,8 +57,13 @@ const Featured = () => {
 
   return (
     <div className="featured">
+      <h2 className="chart-heading">Software Costs</h2>
       <div className="chart-container">
         <canvas ref={chartRef} width={300} height={300}></canvas>
+      </div>
+      <div className="company-info">
+        <p className="info-text">Company with the most money spent: {mostSpentCompany}</p>
+        <p className="info-text">Company with the least money spent: {leastSpentCompany}</p>
       </div>
     </div>
   );

@@ -51,6 +51,7 @@ export const Home = () => {
             <Featured/>
             <DashoardChart/>
         </div>
+        
         <div className="listContainer">
           <div className="listTitle">
             <Table/>
