@@ -17,5 +17,5 @@ public class SoftwareCompany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private boolean isSoftwareService;
+    private String description;
 }

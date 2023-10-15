@@ -4,6 +4,7 @@ import "./home.scss";
 import Navbar from "../../components/navbar/Navbar";
 import Widget from "../../components/widgets/Widget";
 import Featured from "../../components/featured/Featured";
+import Table from "../../components/table/Table";
 
 export const Home = () => {
   return (
@@ -48,6 +49,11 @@ export const Home = () => {
         <div className="charts">
             <Featured/>
             {/* <Featured/> */}
+        </div>
+        <div className="listContainer">
+          <div className="listTitle">
+            <Table/>
+          </div>
         </div>
       </div>
     </div>

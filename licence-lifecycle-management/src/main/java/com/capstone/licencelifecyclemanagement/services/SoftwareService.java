@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.mail.SimpleMailMessage;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
+import com.capstone.licencelifecyclemanagement.entitys.Notification;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
@@ -35,9 +37,12 @@ public class SoftwareService {
     @Autowired
     private SoftwareCompanyRepository softwareCompanyRepository;
 
+    @Autowired
+    private NotificationRepository notificationRepository;
+
     String toEmail = "admin@prodapt.com";
 
-      @Transactional
+    @Transactional
     public Software addSoftware(Software software) {
         if (software.getCompany() != null && softwareCompanyRepository.existsById(software.getCompany().getId())) {
             setExistingCompany(software);
@@ -124,7 +129,7 @@ public class SoftwareService {
             int remainingDays = calculateRemainingDays(expiryDate);
 
             if (remainingDays <= 30 && remainingDays > 0)
-                SendEmail(remainingDays, software.getName());
+                sendNotification(remainingDays, software);
 
             else if (remainingDays < 0) {
                 software.setIsExpired(true);
@@ -178,20 +183,31 @@ public class SoftwareService {
         return remainingDays;
     }
 
-    public void SendEmail(int remainingDays, String name) {
-        String software = softwarerepository.findById(1).get().getName();
-        String emailSubject = "Software License Expiry Reminder";
-        String emailMessage = "Your software license for " + name +
-                " will expire in " + remainingDays + " days. Please take action.";
+    public void sendNotification(int remainingDays, Software software) {
+        // Software software = softwarerepository.findById(1).orElse(null); // Replace
+        // '1' with the actual software ID
+        if (software != null) {
+            String subject = "Software License Expiry Reminder";
+            String meesage = "Your software license for " + software.getName() +
+                    " will expire in " + remainingDays + " days. Please take action.";
 
-        System.out.println(emailMessage);
+            // Create a new Notification entity
+            Notification notification = new Notification();
+            notification.setMessage(meesage);
+            notification.setExpiryDate(software.getExpiryDate());
+            notification.setNumberOfDaysLeft(remainingDays);
+            notification.setSoftware(software);
+            notification.setName(software.getName());
+            notification.setIsSoftware(true);
+            // Save the notification in the database
+            notificationRepository.save(notification);
 
-        // SimpleMailMessage message = new SimpleMailMessage();
-        // message.setTo(toEmail);
-        // message.setSubject(emailSubject);
-        // message.setText(emailMessage);
-        // System.out.println(message);
-        // JavaMailSender.send(message);
+            System.out.println(meesage);
 
+            // You can also include logic to send an email here if needed.
+        } else {
+            System.out.println("Software not found or expired.");
+        }
     }
+
 }

@@ -1,6 +1,7 @@
 package com.capstone.licencelifecyclemanagement.services;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +13,12 @@ import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
+import com.capstone.licencelifecyclemanagement.entitys.Notification;
+import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
+import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -29,6 +33,9 @@ public class DeviceService {
 
     @Autowired
     private DeviceCompanyRepository DeviceCompanyRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     String toEmail = "admin@prodapt.com";
 
@@ -79,6 +86,54 @@ public class DeviceService {
     public List<Device> getDevices() {
         return deviceRepository.findAll();
     }
+
+    public void assetCheck() {
+        List<Device> DeviceList = getDevices();
+
+        for (Device device : DeviceList) {
+            LocalDate expiryDate = device.getExpiryDate();
+            int remainingDays = calculateRemainingDays(expiryDate);
+
+            if (remainingDays <= 30 && remainingDays > 0)
+                sendNotification( remainingDays, device);
+
+            else if (remainingDays < 0) {
+                device.setIsExpired(true);
+                deviceRepository.save(device);
+            }
+        }
+
+    }
+
+    public int calculateRemainingDays(LocalDate expiryDate) {
+        LocalDate currentDate = LocalDate.now();
+
+        int remainingDays = (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
+        return remainingDays;
+    }
+
+     public void sendNotification(int remainingDays, Device device) {
+        if (device != null) {
+            String subject = "device License Expiry Reminder";
+            String meesage  = "Your device license for " + device.getName() +
+                    " will expire in " + remainingDays + " days. Please take action.";
+    
+            Notification notification = new Notification();
+            notification.setMessage(meesage);
+            notification.setExpiryDate(device.getExpiryDate());
+            notification.setNumberOfDaysLeft(remainingDays);
+            notification.setDevice(device);
+            notification.setName(device.getName());
+            notification.setIsSoftware(false);
+    
+            notificationRepository.save(notification);
+    
+            System.out.println(meesage);
+    
+        } else {
+            System.out.println("device not found or expired.");
+        }
+    }    
 
     private void setExistingCompany(Device device) {
         Optional<DeviceCompany> existingCompany = DeviceCompanyRepository.findById(device.getCompany().getId());

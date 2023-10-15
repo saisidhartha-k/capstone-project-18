@@ -1,34 +1,40 @@
+import React, { useState, useEffect } from "react";
 import "./navbar.scss";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-
-// import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext, useState } from "react";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 
 const Navbar = () => {
-  // const { dispatch } = useContext(DarkModeContext);
-  const [isDarkMode, setDarkMode] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!isDarkMode);
-  };
+  useEffect(() => {
+    // Function to handle scroll event
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <div className={`navbar ${isDarkMode ? 'dark-mode' : ''}`}>
-    <div className="wrapper">
-      <div className="items">
-        <div className="item" onClick={toggleDarkMode}>
-          {isDarkMode ? (
+    <div className={`navbar ${isScrolled ? "fixed" : ""}`}>
+      <div className="wrapper">
+        <div className="items">
+          <div className="item">
             <DarkModeOutlinedIcon className="icon" />
-          ) : (
-            <LightModeOutlinedIcon className="icon" />
-          )}
-        </div>
-
+          </div>
           <div className="item">
             <img
-               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdsHr0_k8PrNgg8SYhwVlV4ONxwliFxDLSDCC6TTqe&s"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdsHr0_k8PrNgg8SYhwVlV4ONxwliFxDLSDCC6TTqe&s"
               alt=""
               className="avatar"
             />
