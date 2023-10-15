@@ -87,6 +87,10 @@ public class DeviceService {
         return deviceRepository.findAll();
     }
 
+    public List<Device> expierdDevices() {
+        return deviceRepository.findByIsExpired(true);
+    }
+
     public void assetCheck() {
         List<Device> DeviceList = getDevices();
 

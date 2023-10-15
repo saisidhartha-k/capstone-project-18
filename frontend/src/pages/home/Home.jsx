@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Widget from "../../components/widgets/Widget";
 import Featured from "../../components/featured/Featured";
 import Table from "../../components/table/Table";
+import DashoardChart from "../../components/dashboardchart/DashoardChart";
 
 export const Home = () => {
   return (
@@ -48,7 +49,7 @@ export const Home = () => {
         </div>
         <div className="charts">
             <Featured/>
-            {/* <Featured/> */}
+            <DashoardChart/>
         </div>
         <div className="listContainer">
           <div className="listTitle">

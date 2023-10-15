@@ -44,4 +44,10 @@ public class DeviceController {
         return deviceService.renewDevice(id, dto);
     }
 
+    @GetMapping("/getExpired")
+    public List<Device> getExpired()
+    {
+        return deviceService.expierdDevices();
+    }
+
 }

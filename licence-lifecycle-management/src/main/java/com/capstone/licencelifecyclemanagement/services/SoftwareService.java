@@ -184,14 +184,12 @@ public class SoftwareService {
     }
 
     public void sendNotification(int remainingDays, Software software) {
-        // Software software = softwarerepository.findById(1).orElse(null); // Replace
-        // '1' with the actual software ID
+  
         if (software != null) {
             String subject = "Software License Expiry Reminder";
             String meesage = "Your software license for " + software.getName() +
                     " will expire in " + remainingDays + " days. Please take action.";
 
-            // Create a new Notification entity
             Notification notification = new Notification();
             notification.setMessage(meesage);
             notification.setExpiryDate(software.getExpiryDate());
