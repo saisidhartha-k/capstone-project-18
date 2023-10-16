@@ -1,11 +1,11 @@
 // softwareService.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://localhost:8080/software';
 
 export const getSoftwareExpiredData = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/software/getExpired`);
+    const response = await axios.get(`${BASE_URL}/getExpired`);
     console.log('service')
     console.log(response)
     return response.data;
@@ -16,7 +16,7 @@ export const getSoftwareExpiredData = async () => {
 
 export const getSoftwares = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/software/get`);
+    const response = await axios.get(`${BASE_URL}/get`);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -26,7 +26,7 @@ export const getSoftwares = async () => {
 
 export const getNotExpiredCount = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/software/getNotExpiredCount`);
+    const response = await axios.get(`${BASE_URL}/getNotExpiredCount`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching data');
@@ -35,9 +35,20 @@ export const getNotExpiredCount = async () => {
 
 export const getExpiredCount = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/software/getExpiredCount`);
+    const response = await axios.get(`${BASE_URL}/getExpiredCount`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching data');
   }
 };
+
+export const addSoftware = async (softwareData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/addsoftware`, softwareData);
+    return response.data; 
+  } catch (error) {
+    throw new Error('Error adding software');
+  }
+};
+
+

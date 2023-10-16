@@ -1,6 +1,7 @@
 import React from 'react'
 import { Sidebar } from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
+import AddSoftware from '../../components/add/AddSoftware'
 
 const addSoftwarePage = () => {
   return (
@@ -8,7 +9,7 @@ const addSoftwarePage = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        kjasbkjsa
+        <AddSoftware/>
         </div>
 
         </div>
