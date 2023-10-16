@@ -12,3 +12,13 @@ export const getDeviceExpiredData = async () => {
     throw new Error('Error fetching data');
   }
 };
+
+export const getDevices = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/get`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching device data');
+  }
+};
