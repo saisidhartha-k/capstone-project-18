@@ -128,10 +128,10 @@ public class SoftwareService {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
-            if (remainingDays <= 30 && remainingDays > 0)
-                sendNotification(remainingDays, software);
+            // if (remainingDays <= 30 && remainingDays > 0)
+            //     sendNotification(remainingDays, software);
 
-            else if (remainingDays < 0) {
+             if (remainingDays < 0) {
                 software.setIsExpired(true);
                 softwarerepository.save(software);
             }

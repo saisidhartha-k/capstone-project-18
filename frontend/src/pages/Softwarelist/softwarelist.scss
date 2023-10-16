@@ -1,0 +1,26 @@
+.list{
+    display: flex;
+     width: 100%;
+    .listContainer
+    {
+        flex: 6;
+    }
+  
+/* CSS for text background highlighting */
+.highlight-expired {
+    background-color: #ffcccc; /* Red highlight color, adjust as needed */
+    padding: 2px; /* Add some padding for spacing */
+    border-radius: 2px; /* Add rounded corners to the highlight */
+    display: inline; /* Make it an inline element */
+  }
+  
+  .highlight-not-expired {
+    background-color: #ccffcc; /* Green highlight color, adjust as needed */
+    padding: 2px; /* Add some padding for spacing */
+    border-radius: 2px; /* Add rounded corners to the highlight */
+    display: inline; /* Make it an inline element */
+  }
+  
+  
+  
+}

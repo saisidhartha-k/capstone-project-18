@@ -117,10 +117,10 @@ public class DeviceService {
             LocalDate expiryDate = device.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
-            if (remainingDays <= 30 && remainingDays > 0)
-                sendNotification(remainingDays, device);
+            // if (remainingDays <= 30 && remainingDays > 0)
+            //     sendNotification(remainingDays, device);
 
-            else if (remainingDays < 0) {
+             if (remainingDays < 0) {
                 device.setIsExpired(true);
                 deviceRepository.save(device);
             }
