@@ -11,7 +11,7 @@ import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 import com.capstone.licencelifecyclemanagement.services.DeviceCompanyService;
 
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/devicecompany")
 public class DeviceCompanyController {
 
     @Autowired

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
@@ -39,28 +40,28 @@ public class SoftwareController {
     @GetMapping("/getNotExpired")
      public List<Software> getNotExpired()
     {
-        softwareservice.assetCheck();
+        //softwareservice.assetCheck();
         return softwareservice.notExpList();
     } 
 
     @GetMapping("/getExpired")
       public List<Software> getExpired()
     {
-        softwareservice.assetCheck();
+       // softwareservice.assetCheck();
         return softwareservice.expiredSoftwares();
     } 
 
      @GetMapping("/getAboutExpired")
       public List<Software> getAboutExpired()
     {
-        softwareservice.assetCheck();
+        //softwareservice.assetCheck();
         return softwareservice.aboutToExpire();
     } 
 
     @GetMapping("/get")
     public List<Software> getSoftwares()
     {
-        softwareservice.assetCheck();
+       // softwareservice.assetCheck();
         return softwareservice.getSoftwares();
     }
 
@@ -102,6 +103,9 @@ public class SoftwareController {
     public int getPercentageOfExpiredSoftware() {
         return softwareservice.percentageOfExpiredSoftware();
     }
+
+
+   
 
 
 }

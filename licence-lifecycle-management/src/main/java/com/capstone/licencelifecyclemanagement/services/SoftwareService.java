@@ -128,8 +128,8 @@ public class SoftwareService {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
-            // if (remainingDays <= 30 && remainingDays > 0)
-            //     sendNotification(remainingDays, software);
+            if (remainingDays <= 30 && remainingDays > 0)
+                sendNotification(remainingDays, software);
 
              if (remainingDays < 0) {
                 software.setIsExpired(true);
@@ -165,14 +165,17 @@ public class SoftwareService {
     public List<Software> aboutToExpire() {
         List<Software> aboutToExpireSoftwares = new ArrayList<>();
         List<Software> softwareList = getSoftwares();
-
+        System.out.println("1");
         for (Software software : softwareList) {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
+            System.out.println(remainingDays);
             if (remainingDays <= 30 && remainingDays > 0) {
                 aboutToExpireSoftwares.add(software);
             }
         }
+        System.out.println("ok");
+        System.out.println(aboutToExpireSoftwares);
         return aboutToExpireSoftwares;
     }
 
@@ -245,6 +248,13 @@ public class SoftwareService {
         List<Software> allSoftware = getSoftware();
     
         return allSoftware.size();
+    }
+
+    //change this later
+
+    public List<SoftwareCompany> getCompanies()
+    {
+        return softwareCompanyRepository.findAll();
     }
     
 

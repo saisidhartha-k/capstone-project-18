@@ -51,4 +51,35 @@ export const addSoftware = async (softwareData) => {
   }
 };
 
+export const getExpired = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/getExpired`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching expired software');
+  }
+};
+
+export const getAboutExpired = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/getAboutExpired`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching software about to expire');
+  }
+};
+
+export const getSoftwareCompanies = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/softwarecompany/getcompanies');
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching companies');
+  }
+};
+
+
+
+
+
 

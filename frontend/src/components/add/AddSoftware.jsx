@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function SoftwareForm() {
   const [formData, setFormData] = useState({
     name: '',
     company: {
-      id: 0,
+      id: '',
       name: '',
     },
     numberOfEmployees: 0,
@@ -12,6 +12,18 @@ function SoftwareForm() {
     expiryDate: '',
     isExpired: false,
   });
+
+  const [companies, setCompanies] = useState([]);
+  const [selectedCompanyId, setSelectedCompanyId] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:8080/softwarecompany/getcompanies')
+      .then((response) => response.json())
+      .then((data) => {
+        setCompanies(data);
+      })
+      .catch((error) => console.error('Error fetching companies:', error));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,8 +45,22 @@ function SoftwareForm() {
     }
   };
 
+  const handleCompanySelect = (e) => {
+    const selectedCompany = companies.find((company) => company.name === e.target.value);
+
+    if (selectedCompany) {
+      setFormData({
+        ...formData,
+        company: {
+          id: selectedCompany.id,
+          name: selectedCompany.name,
+        },
+      });
+      setSelectedCompanyId(selectedCompany.id);
+    }
+  };
+
   const addSoftware = async (softwareData) => {
-    // Assuming addSoftware is a function to make a POST request
     try {
       const response = await fetch('http://localhost:8080/software/addsoftware', {
         method: 'POST',
@@ -43,15 +69,11 @@ function SoftwareForm() {
         },
         body: JSON.stringify(softwareData),
       });
-      console.log(JSON.stringify(softwareData));
 
       if (response.ok) {
-
         const data = await response.json();
         return data;
-      } else {
-        throw new Error('Failed to add software.');
-      }
+      } 
     } catch (error) {
       throw error;
     }
@@ -65,10 +87,8 @@ function SoftwareForm() {
 
       console.log('Software added:', response);
 
-      // Optionally, reset the form or redirect the user
     } catch (error) {
       console.error('Error adding software:', error);
-      // Handle the error as needed
     }
   };
 
@@ -87,16 +107,22 @@ function SoftwareForm() {
           />
         </div>
         <div>
-          <label>Company ID:</label>
-          <input
-            type="number"
-            name="company.id"
-            value={formData.company.id}
-            onChange={handleChange}
-          />
+          <label>Company Name (Select):</label>
+          <select
+            name="company.name"
+            value={formData.company.name}
+            onChange={handleCompanySelect}
+          >
+            <option value="">Select a Company</option>
+            {companies.map((company) => (
+              <option key={company.id} value={company.name}>
+                {company.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <label>Company Name:</label>
+          <label>Company Name (Manual):</label>
           <input
             type="text"
             name="company.name"
@@ -105,11 +131,11 @@ function SoftwareForm() {
           />
         </div>
         <div>
-          <label>Number of Employees:</label>
+          <label>Company ID:</label>
           <input
             type="number"
-            name="numberOfEmployees"
-            value={formData.numberOfEmployees}
+            name="company.id"
+            value={selectedCompanyId}
             onChange={handleChange}
           />
         </div>
