@@ -87,4 +87,21 @@ public class SoftwareController {
         return softwareservice.renewSoftware(id, dto);
     }
 
+    
+    @GetMapping("/percentageAboutToExpire")
+    public int getPercentageOfSoftwareAboutToExpire() {
+        return softwareservice.percentageOfSoftwareAboutToExpire();
+    }
+
+    @GetMapping("/percentageNotExpired")
+    public int getPercentageOfNotExpiredSoftware() {
+        return softwareservice.percentageOfNotExpiredSoftware();
+    }
+
+    @GetMapping("/percentageExpired")
+    public int getPercentageOfExpiredSoftware() {
+        return softwareservice.percentageOfExpiredSoftware();
+    }
+
+
 }

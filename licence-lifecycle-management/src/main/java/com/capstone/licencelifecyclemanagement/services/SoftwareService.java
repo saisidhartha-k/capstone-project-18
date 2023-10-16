@@ -143,13 +143,18 @@ public class SoftwareService {
         return softwarerepository.findByIsExpired(false);
     }
 
-    public int notExpListCount() {
-        List<Software> Softwares = notExpList();
+    public List<Software> expiredSoftwares() {
+        return softwarerepository.findByIsExpired(true);
+    }
+
+    public int aboutToExpireCount() {
+        List<Software> Softwares = aboutToExpire();
         return Softwares.size();
     }
 
-    public List<Software> expiredSoftwares() {
-        return softwarerepository.findByIsExpired(true);
+    public int notExpListCount() {
+        List<Software> Softwares = notExpList();
+        return Softwares.size();
     }
 
     public int expiredSoftwaresCount() {
@@ -171,11 +176,6 @@ public class SoftwareService {
         return aboutToExpireSoftwares;
     }
 
-    public int aboutToExpireCount() {
-        List<Software> Softwares = aboutToExpire();
-        return Softwares.size();
-    }
-
     public int calculateRemainingDays(LocalDate expiryDate) {
         LocalDate currentDate = LocalDate.now();
 
@@ -184,7 +184,7 @@ public class SoftwareService {
     }
 
     public void sendNotification(int remainingDays, Software software) {
-  
+
         if (software != null) {
             String subject = "Software License Expiry Reminder";
             String meesage = "Your software license for " + software.getName() +
@@ -207,5 +207,45 @@ public class SoftwareService {
             System.out.println("Software not found or expired.");
         }
     }
+
+    public int percentageOfSoftwareAboutToExpire() {
+        List<Software> softwareList = aboutToExpire();
+        int totalSoftware = getTotalSoftwareCount();
+    
+        if (totalSoftware == 0) {
+            return 0; // Avoid division by zero
+        }
+    
+        return (softwareList.size() * 100) / totalSoftware;
+    }
+    
+    public int percentageOfNotExpiredSoftware() {
+        List<Software> softwareList = notExpList();
+        int totalSoftware = getTotalSoftwareCount();
+    
+        if (totalSoftware == 0) {
+            return 0; 
+        }
+    
+        return (softwareList.size() * 100) / totalSoftware;
+    }
+    
+    public int percentageOfExpiredSoftware() {
+        List<Software> softwareList = expiredSoftwares();
+        int totalSoftware = getTotalSoftwareCount();
+    
+        if (totalSoftware == 0) {
+            return 0; 
+        }
+    
+        return (softwareList.size() * 100) / totalSoftware;
+    }
+    
+    public int getTotalSoftwareCount() {
+        List<Software> allSoftware = getSoftware();
+    
+        return allSoftware.size();
+    }
+    
 
 }

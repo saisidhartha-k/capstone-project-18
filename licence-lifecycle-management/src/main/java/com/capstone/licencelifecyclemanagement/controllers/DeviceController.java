@@ -50,4 +50,35 @@ public class DeviceController {
         return deviceService.expierdDevices();
     }
 
+    
+    @GetMapping("/aboutToExpireCount")
+    public int getDevicesAboutToExpireCount() {
+        return deviceService.devicesAboutToExpireCount();
+    }
+
+    @GetMapping("/notExpiredCount")
+    public int getNotExpiredDeviceCount() {
+        return deviceService.devicesNotExpiredCount();
+    }
+
+    @GetMapping("/expiredCount")
+    public int getExpiredDevicesCount() {
+        return deviceService.expiredDevicesCount();
+    }
+
+    @GetMapping("/percentageAboutToExpire")
+    public int getPercentageOfDevicesAboutToExpire() {
+        return deviceService.percentageOfDevicesAboutToExpire();
+    }
+
+    @GetMapping("/percentageNotExpired")
+    public int getPercentageOfNotExpiredDevices() {
+        return deviceService.percentageOfNotExpiredDevices();
+    }
+
+    @GetMapping("/percentageExpired")
+    public int getPercentageOfExpiredDevices() {
+        return deviceService.percentageOfExpiredDevices();
+    }
+
 }

@@ -1,46 +1,60 @@
 import React, { useState, useEffect } from "react";
 import "./widget.scss";
-import DoneIcon from "@mui/icons-material/Done";
 import axios from "axios";
 import {
-  CircularProgressBar,
   CircularProgressbar,
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const Widget = ({ title, endpoint, className }) => {
-  const [data, setData] = useState(null);
+const Widget = ({ title, endpoint, className, value, icon }) => {
+  const [dataFromEndpoint, setDataFromEndpoint] = useState(null);
+  const [dataFromValue, setDataFromValue] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataFromEndpoint = async () => {
       try {
-        const response = await axios.get(endpoint);
-        setData(response.data);
+        // Fetch data from the 'endpoint'
+        const endpointResponse = await axios.get(endpoint);
+        setDataFromEndpoint(endpointResponse.data);
       } catch (error) {
         console.error(
-          `An error occurred while fetching data for ${title}:`,
+          `An error occurred while fetching data from 'endpoint' for ${title}:`,
           error
         );
       }
     };
 
-    fetchData();
-  }, [endpoint, title]);
+    const fetchDataFromValue = async () => {
+      try {
+        // Fetch data from the 'value' endpoint
+        const valueResponse = await axios.get(value);
+        setDataFromValue(valueResponse.data);
+      } catch (error) {
+        console.error(
+          `An error occurred while fetching data from 'value' for ${title}:`,
+          error
+        );
+      }
+    };
+
+    fetchDataFromEndpoint();
+    fetchDataFromValue();
+  }, [endpoint, value, title]);
 
   return (
     <div className={`widget ${className}`}>
       <div className="left">
         <span className="title">{title}</span>
-        <span className="counter">{data}</span>
+        <span className="counter">{dataFromEndpoint}</span>
         <span className="link">See more</span>
       </div>
       <div className="right">
         <div className="small-progress-bar">
           <span>
             <CircularProgressbar
-              value={50}
-              text={`${50}%`}
+              value={dataFromValue} // Use the fetched data as the value
+              text={`${dataFromValue}%`}
               strokeWidth={5}
               styles={buildStyles({
                 textSize: "27px",
@@ -50,7 +64,7 @@ const Widget = ({ title, endpoint, className }) => {
             <br />
             <br />
           </span>
-            <DoneIcon className="icon" />
+          {icon}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ package com.capstone.licencelifecyclemanagement.services;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +92,24 @@ public class DeviceService {
         return deviceRepository.findByIsExpired(true);
     }
 
+    public List<Device> notExpiredDevice() {
+        return deviceRepository.findByIsExpired(false);
+    }
+
+    public List<Device> devicesAboutToExpire() {
+        List<Device> aboutToExpireDevices = new ArrayList<>();
+        List<Device> deviceList = getDevices();
+
+        for (Device device : deviceList) {
+            LocalDate expiryDate = device.getExpiryDate();
+            int remainingDays = calculateRemainingDays(expiryDate);
+            if (remainingDays <= 30 && remainingDays > 0) {
+                aboutToExpireDevices.add(device);
+            }
+        }
+        return aboutToExpireDevices;
+    }
+
     public void assetCheck() {
         List<Device> DeviceList = getDevices();
 
@@ -99,7 +118,7 @@ public class DeviceService {
             int remainingDays = calculateRemainingDays(expiryDate);
 
             if (remainingDays <= 30 && remainingDays > 0)
-                sendNotification( remainingDays, device);
+                sendNotification(remainingDays, device);
 
             else if (remainingDays < 0) {
                 device.setIsExpired(true);
@@ -116,12 +135,12 @@ public class DeviceService {
         return remainingDays;
     }
 
-     public void sendNotification(int remainingDays, Device device) {
+    public void sendNotification(int remainingDays, Device device) {
         if (device != null) {
             String subject = "device License Expiry Reminder";
-            String meesage  = "Your device license for " + device.getName() +
+            String meesage = "Your device license for " + device.getName() +
                     " will expire in " + remainingDays + " days. Please take action.";
-    
+
             Notification notification = new Notification();
             notification.setMessage(meesage);
             notification.setExpiryDate(device.getExpiryDate());
@@ -129,15 +148,15 @@ public class DeviceService {
             notification.setDevice(device);
             notification.setName(device.getName());
             notification.setIsSoftware(false);
-    
+
             notificationRepository.save(notification);
-    
+
             System.out.println(meesage);
-    
+
         } else {
             System.out.println("device not found or expired.");
         }
-    }    
+    }
 
     private void setExistingCompany(Device device) {
         Optional<DeviceCompany> existingCompany = DeviceCompanyRepository.findById(device.getCompany().getId());
@@ -165,6 +184,60 @@ public class DeviceService {
     private void createNewCompany(Device device, DeviceCompany company) {
         DeviceCompany newCompany = DeviceCompanyRepository.save(company);
         device.setCompany(newCompany);
+    }
+
+    public int devicesAboutToExpireCount() {
+        List<Device> devices = devicesAboutToExpire();
+        return devices.size();
+    }
+
+    public int devicesNotExpiredCount() {
+        List<Device> devices = notExpiredDevice();
+        return devices.size();
+    }
+
+    public int expiredDevicesCount() {
+        List<Device> devices = expierdDevices();
+        return devices.size();
+    }
+
+    public int percentageOfDevicesAboutToExpire() {
+        List<Device> devices = devicesAboutToExpire();
+        int totalDevices = getTotalDeviceCount();
+
+        if (totalDevices == 0) {
+            return 0; // Avoid division by zero
+        }
+
+        return (devices.size() * 100) / totalDevices;
+    }
+
+    public int percentageOfNotExpiredDevices() {
+        List<Device> devices = notExpiredDevice();
+        int totalDevices = getTotalDeviceCount();
+
+        if (totalDevices == 0) {
+            return 0; // Avoid division by zero
+        }
+
+        return (devices.size() * 100) / totalDevices;
+    }
+
+    public int percentageOfExpiredDevices() {
+        List<Device> devices = expierdDevices();
+        int totalDevices = getTotalDeviceCount();
+
+        if (totalDevices == 0) {
+            return 0; // Avoid division by zero
+        }
+
+        return (devices.size() * 100) / totalDevices;
+    }
+
+    public int getTotalDeviceCount() {
+        List<Device> allDevices = getDevices();
+
+        return allDevices.size();
     }
 
 }
