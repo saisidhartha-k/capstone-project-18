@@ -1,7 +1,26 @@
-.datatable
-{
+/* Your corrected combined SCSS file */
+.datatable {
     overflow: auto;
     height: 600px;
-    width:auto; 
+    width: auto;
 
-}
+    
+  }
+  .cellWithStatus {
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block; /* Display the text highlight as inline */
+  }
+  
+  .cellWithStatus.Expired {
+    color: red;
+    background-color: rgba(189, 3, 3, 0.103);
+
+  }
+  
+  .cellWithStatus.NotExpired {
+    color: green;
+    background-color: rgba(0, 128, 0, 0.151);
+
+  }
+  

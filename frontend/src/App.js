@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import List from "./pages/Softwarelist/SoftwareList";
-import New from "./pages/new/New";
+import AddSoftwarePage from "./pages/addsoftware/AddSoftwarePage";
 
 function App() {
   return (
@@ -14,9 +14,9 @@ function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
-            <Route path="software">
+            <Route path="software/">
               <Route index element={<List />} />
-              <Route path="new" element={<New />} />
+              <Route path="addSoftware" element={<AddSoftwarePage />} />
             </Route>
           </Route>
         </Routes>

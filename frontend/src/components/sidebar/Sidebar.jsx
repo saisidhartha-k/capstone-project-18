@@ -4,6 +4,7 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import DevicesIcon from '@mui/icons-material/Devices';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 export const Sidebar = () => {
   return (
@@ -22,6 +23,10 @@ export const Sidebar = () => {
                 <li>
                     <TerminalIcon className='icon'/>
                     <span>Softwares</span>
+                </li>
+                <li>
+                    <AddToPhotosIcon className='icon'/>
+                    <span>Add Softwares</span>
                 </li>
                 <p className="title"> Device menu </p>
                 <li>

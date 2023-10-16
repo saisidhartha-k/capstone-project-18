@@ -9,7 +9,7 @@ const columns = [
   {
     field: "company",
     headerName: "Company",
-    width: 200,
+    width: 150,
     valueGetter: (params) => params.row.company.name,
   },
   { field: "licenseNumber", headerName: "License", width: 120 },
@@ -18,9 +18,17 @@ const columns = [
   { field: "expiryDate", headerName: "Expiry Date", width: 120 },
   {
     field: "isExpired",
-    headerName: "Expired",
-    width: 90,
-    cellClassName: (params) => params.value ? "expired" : "not-expired",
+    headerName: "Status",
+    width: 100,
+    renderCell: (params) => {
+      const statusText = params.row.isExpired ? 'Expired' : 'Not Expired';
+      const statusClass = params.row.isExpired ? 'Expired' : 'NotExpired';
+      return (
+        <div className={`cellWithStatus ${statusClass}`}>
+          {statusText}
+        </div>
+      );
+    },
   },
 ];
 
