@@ -51,11 +51,11 @@ public class SoftwareControllerTest {
         mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
         mockSoftware1.setIsExpired(false);
 
-        when(softwareService.getSoftware()).thenReturn(mockSoftwareList);
+        when(softwareService.getSoftwares()).thenReturn(mockSoftwareList);
 
         List<Software> result = softwareController.getSoftwares();
 
-        verify(softwareService).getSoftware();
+        verify(softwareService).getSoftwares();
 
         assertEquals(mockSoftwareList, result);
 
