@@ -1,5 +1,6 @@
 package com.capstone.licencelifecyclemanagement.servicetests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,6 +49,24 @@ public class SoftwareServiceTest {
     @Mock
     private SoftwarePurchaseRepository softwarePurchaseRepository;
 
+    private SoftwareCompany mockCompany1;
+    private Software mockSoftware1;
+
+    @BeforeEach
+    public void setUp() {
+        mockCompany1 = new SoftwareCompany();
+        mockCompany1.setName("Company Name 1");
+        mockCompany1.setDescription("Description for Company 1");
+
+        mockSoftware1 = new Software();
+        mockSoftware1.setName("SoftwareName1");
+        mockSoftware1.setCompany(mockCompany1);
+        mockSoftware1.setNumberOfEmployees(50);
+        mockSoftware1.setCost(1000);
+        mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
+        mockSoftware1.setIsExpired(false);
+    }
+
     @Test
     public void testGetSoftware() {
 
@@ -74,70 +93,165 @@ public class SoftwareServiceTest {
 
     @Test
     public void testAddSoftware() {
-        Software mockSoftware = new Software();
-        mockSoftware.setName("TestSoftware");
-        mockSoftware.setCompany(new SoftwareCompany());
-        mockSoftware.setNumberOfEmployees(50);
-        mockSoftware.setCost(1000);
-        mockSoftware.setExpiryDate(LocalDate.now().plusMonths(6));
-        mockSoftware.setIsExpired(false);
 
         Mockito.when(softwareCompanyRepository.existsById(Mockito.anyInt())).thenReturn(true);
 
         Mockito.when(softwareCompanyRepository.findById(Mockito.anyInt()))
                 .thenReturn(Optional.of(new SoftwareCompany()));
 
-        Mockito.when(softwareRepository.save(Mockito.any())).thenReturn(mockSoftware);
+        Mockito.when(softwareRepository.save(Mockito.any())).thenReturn(mockSoftware1);
 
         Mockito.when(softwarePurchaseRepository.save(Mockito.any())).thenReturn(new SoftwarePurchase());
 
-        Software addedSoftware = softwareService.addSoftware(mockSoftware);
+        Software addedSoftware = softwareService.addSoftware(mockSoftware1);
 
         Mockito.verify(softwareCompanyRepository).existsById(Mockito.anyInt());
         Mockito.verify(softwareCompanyRepository).findById(Mockito.anyInt());
         Mockito.verify(softwareRepository).save(Mockito.any());
         Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
 
-        assertEquals("TestSoftware", addedSoftware.getName());
+        assertEquals("SoftwareName1", addedSoftware.getName());
     }
 
     @Test
     public void testRenewSoftware() {
 
-    // Create a SoftwareDto with required data
-    SoftwareDto softwareDto = new SoftwareDto();
-    softwareDto.setCost(100); // Set the cost
-    softwareDto.setExpiryDate(LocalDate.now().plusMonths(1)); // Set the expiry date
+        SoftwareDto softwareDto = new SoftwareDto();
+        softwareDto.setCost(100);
+        softwareDto.setExpiryDate(LocalDate.now().plusMonths(1));
+        Software software = new Software();
+        software.setId(1);
+        software.setName("Sample Software");
+        software.setCost(50);
+        software.setExpiryDate(LocalDate.now().plusDays(10));
 
-    // Create a mock Software instance and SoftwareCompany
-    Software software = new Software();
-    software.setId(1);
-    software.setName("Sample Software");
-    software.setCost(50); // Existing cost
-    software.setExpiryDate(LocalDate.now().plusDays(10)); // Existing expiry date
+        SoftwareCompany company = new SoftwareCompany();
+        company.setId(1);
+        company.setName("Sample Company");
 
-    SoftwareCompany company = new SoftwareCompany();
-    company.setId(1);
-    company.setName("Sample Company");
+        when(softwareRepository.findById(1)).thenReturn(Optional.of(software));
 
-    // Mock repository methods
-    when(softwareRepository.findById(1)).thenReturn(Optional.of(software));
-   // when(softwareCompanyRepository.existsById(1)).thenReturn(true); // Mock to return true
+        when(softwareRepository.save(any(Software.class))).thenReturn(software);
+        when(softwarePurchaseRepository.save(any(SoftwarePurchase.class))).thenReturn(null);
 
-    // Mock save methods
-    when(softwareRepository.save(any(Software.class))).thenReturn(software);
-    when(softwarePurchaseRepository.save(any(SoftwarePurchase.class))).thenReturn(null);
+        String result = softwareService.renewSoftware(1, softwareDto);
 
-    // Call the renewSoftware method
-    String result = softwareService.renewSoftware(1, softwareDto);
+        verify(softwareRepository, times(1)).findById(1);
+        verify(softwareRepository, times(1)).save(any(Software.class));
+        verify(softwarePurchaseRepository, times(1)).save(any(SoftwarePurchase.class));
 
-    // Assertions
-    verify(softwareRepository, times(1)).findById(1);
-   // verify(softwareCompanyRepository, times(1)).existsById(1);
-    verify(softwareRepository, times(1)).save(any(Software.class));
-    verify(softwarePurchaseRepository, times(1)).save(any(SoftwarePurchase.class));
+        assertEquals("Software renewed: 1", result);
+    }
 
-    // Verify that the returned result is as expected
-    assertEquals("Software renewed: 1", result);
-}
+    @Test
+    public void testNotExpList() {
+        List<Software> mockSoftwareList = new ArrayList<>();
+
+        mockSoftwareList.add(mockSoftware1);
+
+        Mockito.when(softwareRepository.findByIsExpired(false)).thenReturn(mockSoftwareList);
+
+        List<Software> result = softwareService.notExpList();
+
+        Mockito.verify(softwareRepository).findByIsExpired(false);
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    public void testExpiredSoftwares() {
+
+        List<Software> mockSoftwareList = new ArrayList<>();
+        mockSoftware1.setIsExpired(true);
+
+        mockSoftwareList.add(mockSoftware1);
+
+        Mockito.when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
+
+        List<Software> result = softwareService.expiredSoftwares();
+
+        Mockito.verify(softwareRepository).findByIsExpired(true);
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    public void testAboutToExpire() {
+
+        mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
+
+        List<Software> mockSoftwareList = new ArrayList<>();
+        mockSoftwareList.add(mockSoftware1);
+
+        when(softwareService.getSoftwares()).thenReturn(mockSoftwareList);
+
+        List<Software> result = softwareService.aboutToExpire();
+
+        assertEquals(1, result.size());
+        assertEquals(mockSoftware1, result.get(0));
+
+    }
+
+    @Test
+    public void testAboutToExpireCount() {
+
+        mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
+
+        List<Software> mockSoftwareList = new ArrayList<>();
+        mockSoftwareList.add(mockSoftware1);
+
+        when(softwareService.aboutToExpire()).thenReturn(mockSoftwareList);
+
+        int result = softwareService.aboutToExpireCount();
+
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void testNotExpiredSoftwaresCount() {
+
+        List<Software> mockSoftwareList = new ArrayList<>();
+
+        mockSoftware1.setIsExpired(true);
+
+        mockSoftwareList.add(mockSoftware1);
+
+        Mockito.when(softwareRepository.findByIsExpired(false)).thenReturn(mockSoftwareList);
+
+        int result = softwareService.notExpListCount();
+
+        Mockito.verify(softwareRepository).findByIsExpired(false);
+
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void testExpiredSoftwaresCount() {
+
+        List<Software> mockSoftwareList = new ArrayList<>();
+        Software mockSoftware1 = new Software();
+        mockSoftware1.setId(1);
+        mockSoftware1.setIsExpired(false);
+
+        Software mockSoftware2 = new Software();
+        mockSoftware2.setId(2);
+        mockSoftware2.setIsExpired(true);
+
+        Software mockSoftware3 = new Software();
+        mockSoftware3.setId(3);
+        mockSoftware3.setIsExpired(true);
+
+        mockSoftwareList.add(mockSoftware1);
+        mockSoftwareList.add(mockSoftware2);
+        mockSoftwareList.add(mockSoftware3);
+
+        Mockito.when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
+
+        int result = softwareService.expiredSoftwaresCount();
+
+        Mockito.verify(softwareRepository).findByIsExpired(true);
+
+        assertEquals(3, result);
+    }
+
 }
