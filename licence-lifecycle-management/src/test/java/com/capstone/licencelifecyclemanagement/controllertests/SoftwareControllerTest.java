@@ -1,4 +1,4 @@
-package com.capstone.licencelifecyclemanagement;
+package com.capstone.licencelifecyclemanagement.controllertests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,10 +42,6 @@ public class SoftwareControllerTest {
         mockCompany1.setName("Company Name 1");
         mockCompany1.setDescription("Description for Company 1");
 
-        SoftwareCompany mockCompany2 = new SoftwareCompany();
-        mockCompany2.setName("Company Name 2");
-        mockCompany2.setDescription("Description for Company 2");
-
         List<Software> mockSoftwareList = new ArrayList<>();
         Software mockSoftware1 = new Software();
         mockSoftware1.setName("SoftwareName1");
@@ -54,14 +50,6 @@ public class SoftwareControllerTest {
         mockSoftware1.setCost(1000);
         mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
         mockSoftware1.setIsExpired(false);
-
-        Software mockSoftware2 = new Software();
-        mockSoftware2.setName("SoftwareName2");
-        mockSoftware2.setCompany(mockCompany2); 
-        mockSoftware2.setNumberOfEmployees(100);
-        mockSoftware2.setCost(2000);
-        mockSoftware2.setExpiryDate(LocalDate.now().plusMonths(12));
-        mockSoftware2.setIsExpired(false);
 
         when(softwareService.getSoftwares()).thenReturn(mockSoftwareList);
 

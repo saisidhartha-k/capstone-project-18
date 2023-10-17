@@ -200,12 +200,10 @@ public class SoftwareService {
             notification.setSoftware(software);
             notification.setName(software.getName());
             notification.setIsSoftware(true);
-            // Save the notification in the database
             notificationRepository.save(notification);
 
             System.out.println(meesage);
 
-            // You can also include logic to send an email here if needed.
         } else {
             System.out.println("Software not found or expired.");
         }
@@ -216,7 +214,7 @@ public class SoftwareService {
         int totalSoftware = getTotalSoftwareCount();
     
         if (totalSoftware == 0) {
-            return 0; // Avoid division by zero
+            return 0;
         }
     
         return (softwareList.size() * 100) / totalSoftware;
