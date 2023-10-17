@@ -50,27 +50,36 @@ export const Sidebar = () => {
           </li>
 
           <li>
-            <AddToPhotosIcon className="icon" />
-            <span>Add Softwares</span>
+            <Link to="/software/addSoftware">
+              <AddToPhotosIcon className="icon" />
+              <span>Add Softwares</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/software/softwarepurchasehistory">
+              <AddToPhotosIcon className="icon" />
+              <span>Software Purchases</span>
+            </Link>
           </li>
 
           <p className="title"> Device menu </p>
           <li>
             <Link to="/device">
-            <DevicesIcon className="icon" />
-            <span>Devices</span>
+              <DevicesIcon className="icon" />
+              <span>Devices</span>
             </Link>
           </li>
 
           <li>
             <Link to="/device/expireddevice">
-            <DevicesIcon className="icon" />
+              <DevicesIcon className="icon" />
               <span>Expired Devices</span>
             </Link>
           </li>
           <li>
             <Link to="/device/abouttoexpireDevice">
-            <DevicesIcon className="icon" />
+              <DevicesIcon className="icon" />
               <span>About To Expire </span>
             </Link>
           </li>

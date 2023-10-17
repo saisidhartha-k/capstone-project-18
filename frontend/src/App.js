@@ -12,6 +12,8 @@ import AllDevicesList from "./pages/devicepages/devicelist/DeviceList";
 import AboutToExpireDeviceList from "./pages/devicepages/abouttoexpiredevice/AboutToExpireDeviceList";
 import ExpiredDeviceList from "./pages/devicepages/expireddevice/ExpiredDeviceList";
 import DeviceCompaniesList from "./pages/devicepages/devicecompanies/DeviceCompanies";
+import AddNewSoftware from "./pages/addsoftware/AddSoftwarePage";
+import SoftwarePurchaseHistoryList from "./pages/softwarepages/softwarepurchasehistory/SoftwarePurchaseHistoryPage";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
               <Route path="expiredSoftware" element={<ExpiredSoftwareList/>}/>
               <Route path="abouttoexpireSoftware" element={<AboutToExpireSoftwareList />} />
               <Route path="softwarecompanies" element={<SoftwareComapniesList />} />
+              <Route path="addSoftware" element={<AddNewSoftware />} />
+              <Route path="softwarepurchasehistory" element={<SoftwarePurchaseHistoryList />}/>
             </Route>
             <Route path="device/">
               <Route index element={<AllDevicesList/>} />

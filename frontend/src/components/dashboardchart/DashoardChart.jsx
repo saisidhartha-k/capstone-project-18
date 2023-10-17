@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { getSoftwares } from '../../service/SoftwareService';
-import { getDevices } from '../../service/DeviceService'; // Import the service for device data
+import { getDevices } from '../../service/DeviceService';
 import './dashboardchart.scss';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,7 +12,7 @@ function DashboardChart() {
 
   useEffect(() => {
     fetchData();
-  }, [dataType]); // Fetch data when dataType changes
+  }, [dataType]);
 
   const fetchData = () => {
     if (dataType === 'software') {
@@ -37,32 +37,46 @@ function DashboardChart() {
   const softwareChartData = softwareData.map((software) => ({
     name: software.name,
     numberOfEmployees: software.numberOfEmployees,
+    company: software.company.name, // Include the company name
   }));
 
   return (
     <div className="chart">
       <h2>{dataType === 'software' ? 'Software Usage' : 'Device Usage'}</h2>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={dataType === 'device'}
-              onChange={() => setDataType(dataType === 'device' ? 'software' : 'device')}
-              color="primary"
-            />
-          }
-          label={`Show ${dataType === 'device' ? 'Software' : 'Device'} Data`}
-        />
+      <FormControlLabel
+        control={
+          <Switch
+            checked={dataType === 'device'}
+            onChange={() => setDataType(dataType === 'device' ? 'software' : 'device')}
+            color="primary"
+          />
+        }
+        label={`Show ${dataType === 'device' ? 'Software' : 'Device'} Data`}
+      />
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={softwareChartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} /> {/* Use custom tooltip content */}
           <Line type="monotone" dataKey="numberOfEmployees" stroke="#8884d8" fill="#8884d8" />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
+}
+
+function CustomTooltip({ active, payload, label }) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip" style={{ background: 'rgba(169, 169, 169, 0.8)', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
+        <p>{`${label} : number of employees using ${payload[0].value}`}</p>
+        <p>{`Company: ${payload[0].payload.company}`}</p>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 export default DashboardChart;

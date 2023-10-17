@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './index.scss'
 
 function SoftwareForm() {
   const [formData, setFormData] = useState({
@@ -93,9 +94,9 @@ function SoftwareForm() {
   };
 
   return (
-    <div>
+    <div className="software-form-container">
       <h2>Software Form</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="software-form" onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
@@ -166,7 +167,7 @@ function SoftwareForm() {
             onChange={(e) => setFormData({ ...formData, isExpired: e.target.checked })}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button  className="submit-button" type="submit">Submit</button>
       </form>
     </div>
   );

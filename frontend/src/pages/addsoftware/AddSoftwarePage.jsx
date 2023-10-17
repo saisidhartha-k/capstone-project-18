@@ -3,7 +3,7 @@ import { Sidebar } from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import AddSoftware from '../../components/add/AddSoftware'
 
-const addSoftwarePage = () => {
+const AddNewSoftware = () => {
   return (
     <div className="list">
       <Sidebar />
@@ -16,4 +16,4 @@ const addSoftwarePage = () => {
   )
 }
 
-export default addSoftwarePage
+export default AddNewSoftware
