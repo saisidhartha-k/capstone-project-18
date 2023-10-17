@@ -9,6 +9,9 @@ import ExpiredSoftwareList from "./pages/expiredsoftware/ExpiredSoftwareList";
 import AboutToExpireSoftwareList from "./pages/abouttoexpiresoftware/AboutToExpireSoftwareList";
 import SoftwareComapniesList from "./pages/softwarecompanies/SoftwareCompanies";
 import AllDevicesList from "./pages/devicepages/devicelist/DeviceList";
+import AboutToExpireDeviceList from "./pages/devicepages/abouttoexpiredevice/AboutToExpireDeviceList";
+import ExpiredDeviceList from "./pages/devicepages/expireddevice/ExpiredDeviceList";
+import DeviceCompaniesList from "./pages/devicepages/devicecompanies/DeviceCompanies";
 
 function App() {
   return (
@@ -22,11 +25,13 @@ function App() {
               <Route index element={<List />} />
               <Route path="expiredSoftware" element={<ExpiredSoftwareList/>}/>
               <Route path="abouttoexpireSoftware" element={<AboutToExpireSoftwareList />} />
-              <Route path="abouttoexpireSoftware" element={<AboutToExpireSoftwareList />} />
               <Route path="softwarecompanies" element={<SoftwareComapniesList />} />
             </Route>
             <Route path="device/">
               <Route index element={<AllDevicesList/>} />
+              <Route path="expireddevice" element={<ExpiredDeviceList />}/>
+              <Route path="abouttoexpireDevice" element={<AboutToExpireDeviceList />} />
+              <Route path="devicecompanies" element={< DeviceCompaniesList/>} />
             </Route>
           </Route>
         </Routes>

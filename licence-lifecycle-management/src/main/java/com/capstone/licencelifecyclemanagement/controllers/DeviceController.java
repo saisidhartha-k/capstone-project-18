@@ -18,8 +18,8 @@ import com.capstone.licencelifecyclemanagement.services.DeviceService;
 
 import jakarta.transaction.Transactional;
 
-@RestController
 @CrossOrigin()
+@RestController
 @RequestMapping("/device")
 public class DeviceController {
     @Autowired
@@ -50,6 +50,11 @@ public class DeviceController {
         return deviceService.expierdDevices();
     }
 
+    @GetMapping("/getAboutExpired")
+    public List<Device> getAboutExpired()
+    {
+        return deviceService.devicesAboutToExpire();
+    }
     
     @GetMapping("/aboutToExpireCount")
     public int getDevicesAboutToExpireCount() {

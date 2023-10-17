@@ -63,20 +63,20 @@ export const Sidebar = () => {
           </li>
 
           <li>
-            <Link to="/software/expiredSoftware">
+            <Link to="/device/expireddevice">
             <DevicesIcon className="icon" />
               <span>Expired Devices</span>
             </Link>
           </li>
           <li>
-            <Link to="/software/abouttoexpireSoftware">
+            <Link to="/device/abouttoexpireDevice">
             <DevicesIcon className="icon" />
               <span>About To Expire </span>
             </Link>
           </li>
 
           <li>
-            <Link to="/software/softwarecompanies">
+            <Link to="/device/devicecompanies">
               <DevicesIcon className="icon" />
               <span>All Device Companies</span>
             </Link>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './datatable.scss';
 import { DataGrid } from '@mui/x-data-grid';
 import { getAboutExpired } from '../../service/SoftwareService';
+import { getDevicesAboutToExpire } from '../../service/DeviceService';
 
 const columns = [
   { field: "id", headerName: "ID", width: 60 },
@@ -32,13 +33,13 @@ const columns = [
   },
 ];
 
-export default function AboutToExpireDataTable() {
+export default function AboutToExpireDeviceDataTable() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getAboutExpired();
+        const result = await getDevicesAboutToExpire();
         setData(result);
         console.log('data', data);
       } catch (error) {

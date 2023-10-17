@@ -1,5 +1,7 @@
 package com.capstone.licencelifecyclemanagement.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,11 @@ public class DeviceCompanyService {
 
     public DeviceCompany addCompany(DeviceCompany company) {
         return DeviceCompanyRepository.save(company);
+    }
+
+    public List<DeviceCompany> allDeviceCompany ()
+    {
+        return DeviceCompanyRepository.findAll();
     }
 }
 
