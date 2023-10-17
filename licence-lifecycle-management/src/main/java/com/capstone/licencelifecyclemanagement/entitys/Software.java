@@ -1,11 +1,18 @@
 package com.capstone.licencelifecyclemanagement.entitys;
 
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @Entity
@@ -16,9 +23,11 @@ public class Software {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private SoftwareCompany company;
+
     private String licenseNumber = String.valueOf(Math.ceil(Math.random() * 10000));
     private int numberOfEmployees;
     private int cost;
@@ -26,4 +35,13 @@ public class Software {
     private LocalDate expiryDate;
     private Boolean isExpired;
 
+    @PreUpdate
+    @PrePersist
+    private void updateIsExpired() {
+        if (expiryDate != null) {
+            isExpired = LocalDate.now().isAfter(expiryDate);
+        } else {
+            isExpired = false; 
+        }
+    }
 }
