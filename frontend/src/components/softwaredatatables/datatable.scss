@@ -1,30 +1,26 @@
 /* Your corrected combined SCSS file */
 .datatable {
-    overflow: auto;
-    height: 600px;
-    width: auto;
+  overflow: auto;
+  height: 600px;
+  width: auto;
+}
+.cellWithStatus {
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block; /* Display the text highlight as inline */
+}
 
-    
-  }
-  .cellWithStatus {
-    padding: 5px;
-    border-radius: 5px;
-    display: inline-block; /* Display the text highlight as inline */
-  }
-  
-  .cellWithStatus.Expired {
-    color: red;
-    background-color: rgba(189, 3, 3, 0.103);
+.cellWithStatus.Expired {
+  color: red;
+  background-color: rgba(189, 3, 3, 0.103);
+}
 
-  }
-  
-  .cellWithStatus.NotExpired {
-    color: green;
-    background-color: rgba(0, 128, 0, 0.151);
+.cellWithStatus.NotExpired {
+  color: green;
+  background-color: rgba(0, 128, 0, 0.151);
+}
 
-  }
-
-  /* Styling for the button */
+/* Styling for the button */
 button {
   padding: 5px 10px; /* Adjusted padding */
   background-color: transparent; /* Remove the default button background */
@@ -33,12 +29,43 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s; /* Smooth transition for the hover effect */
-  width: auto; /* Allow the button's width to adjust to its content */
-
-  font-size: 14px; /* Adjust the font size to make text fit comfortably */
+  width: auto;
+  width: "100px";
+  padding: "5px";
+  fontsize: "12px";
+  whitespace: "nowrap";
+  overflow: "hidden";
+  textoverflow: "ellipsis";
 
   &:hover {
     background-color: red; /* Red background on hover */
     color: white; /* White text color on hover */
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Transparent white background for frosted glass effect */
+  backdrop-filter: blur(10px); /* Apply the blur effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
