@@ -197,4 +197,19 @@ public class DeviceServiceTest {
 
     }
 
+    @Test
+    public void testDeviceAboutToExpireCount() {
+
+        mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
+
+        List<Device> mockDeviceList = new ArrayList<>();
+        mockDeviceList.add(mockDevice);
+
+        when(deviceService.devicesAboutToExpire()).thenReturn(mockDeviceList);
+
+        int result = deviceService.devicesAboutToExpireCount();
+
+        assertEquals(1, result);
+    }
+
 }

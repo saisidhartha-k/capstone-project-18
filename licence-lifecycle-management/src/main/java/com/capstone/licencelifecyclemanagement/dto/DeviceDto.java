@@ -5,8 +5,11 @@ import java.time.LocalDate;
 import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class DeviceDto {
     private int cost;
     private LocalDate expiryDate;

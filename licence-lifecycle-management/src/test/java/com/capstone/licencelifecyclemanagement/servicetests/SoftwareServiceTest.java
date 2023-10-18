@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +30,12 @@ import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
+import com.capstone.licencelifecyclemanagement.services.SoftwareCompanyService;
+import com.capstone.licencelifecyclemanagement.services.SoftwarePurchaseService;
 import com.capstone.licencelifecyclemanagement.services.SoftwareService;
 
 @SpringBootTest
@@ -41,6 +45,12 @@ public class SoftwareServiceTest {
 
     @InjectMocks
     private SoftwareService softwareService;
+
+    @InjectMocks
+    private SoftwareCompanyService softwareCompanyService;
+
+    @InjectMocks
+    private SoftwarePurchaseService softwarePurchaseService;
 
     @Mock
     private SoftwareRepository softwareRepository;
@@ -53,6 +63,8 @@ public class SoftwareServiceTest {
 
     private SoftwareCompany mockCompany1;
     private Software mockSoftware1;
+    private SoftwarePurchaseId purchaseId1;
+    private SoftwarePurchase purchase1;
 
     @BeforeEach
     public void setUp() {
@@ -69,6 +81,14 @@ public class SoftwareServiceTest {
         mockSoftware1.setCost(1000);
         mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
         mockSoftware1.setIsExpired(false);
+
+        purchaseId1 = new SoftwarePurchaseId();
+        purchaseId1.setLicenseNumber("License1");
+        purchaseId1.setSoftware(mockSoftware1);
+
+        purchase1 = new SoftwarePurchase(purchaseId1);
+        purchase1.setPurchaseDate(LocalDate.now());
+
     }
 
     @Test
@@ -198,7 +218,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testAboutToExpireCount() {
+    public void testSoftwareAboutToExpireCount() {
 
         mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
 
@@ -261,32 +281,154 @@ public class SoftwareServiceTest {
 
     // @Test
     // public void testPercentageOfExpiredSoftware() {
-    //     List<Software> mockSoftwareList = new ArrayList<>();
-    //     Software mockSoftware1 = new Software();
-    //     mockSoftware1.setId(1);
-    //     mockSoftware1.setIsExpired(false);
+    // List<Software> mockSoftwareList = new ArrayList<>();
+    // Software mockSoftware1 = new Software();
+    // mockSoftware1.setId(1);
+    // mockSoftware1.setIsExpired(false);
 
-    //     Software mockSoftware2 = new Software();
-    //     mockSoftware2.setId(2);
-    //     mockSoftware2.setIsExpired(true);
+    // Software mockSoftware2 = new Software();
+    // mockSoftware2.setId(2);
+    // mockSoftware2.setIsExpired(true);
 
-    //     Software mockSoftware3 = new Software();
-    //     mockSoftware3.setId(3);
-    //     mockSoftware3.setIsExpired(true);
+    // Software mockSoftware3 = new Software();
+    // mockSoftware3.setId(3);
+    // mockSoftware3.setIsExpired(true);
 
-    //     mockSoftwareList.add(mockSoftware1);
-    //     mockSoftwareList.add(mockSoftware2);
-    //     mockSoftwareList.add(mockSoftware3);
-    //     when(softwareRepository.findAll()).thenReturn(mockSoftwareList);
+    // mockSoftwareList.add(mockSoftware1);
+    // mockSoftwareList.add(mockSoftware2);
+    // mockSoftwareList.add(mockSoftware3);
+    // when(softwareRepository.findAll()).thenReturn(mockSoftwareList);
 
-    //     when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
-        
-    //     //when(softwareService.getTotalSoftwareCount()).thenReturn(3);
-    //     assertEquals(softwareService.getTotalSoftwareCount(), 3);
-    //     assertEquals(softwareRepository.findByIsExpired(true), 2);
+    // when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
 
-    //     int result = softwareService.percentageOfExpiredSoftware();
+    // //when(softwareService.getTotalSoftwareCount()).thenReturn(3);
+    // assertEquals(softwareService.getTotalSoftwareCount(), 3);
+    // assertEquals(softwareRepository.findByIsExpired(true), 2);
 
-    //     //assertEquals(67, result); 
+    // int result = softwareService.percentageOfExpiredSoftware();
+
+    // //assertEquals(67, result);
     // }
+
+    @Test
+    public void testGetSoftwareCompanies() {
+
+        List<SoftwareCompany> mockCompanyList = new ArrayList<>();
+        mockCompanyList.add(mockCompany1);
+
+        when(softwareCompanyRepository.findAll()).thenReturn(mockCompanyList);
+
+        List<SoftwareCompany> softwareCompanies = softwareCompanyService.getSoftwareCompanies();
+
+        assertEquals(1, softwareCompanies.size());
+        assertEquals(1, softwareCompanies.get(0).getId());
+        assertEquals("Company Name 1", softwareCompanies.get(0).getName());
+        assertEquals("Description for Company 1", softwareCompanies.get(0).getDescription());
+    }
+
+    @Test
+    void testGetAll() {
+
+        List<SoftwarePurchase> mockPurchaseList = Arrays.asList(purchase1);
+
+        when(softwarePurchaseRepository.findAll()).thenReturn(mockPurchaseList);
+
+        List<SoftwarePurchase> purchases = softwarePurchaseService.getAll();
+
+        assertEquals(1, purchases.size());
+
+        assertEquals("License1", purchases.get(0).getSoftwarePurchaseId().getLicenseNumber());
+        assertEquals("SoftwareName1", purchases.get(0).getSoftwarePurchaseId().getSoftware().getName());
+
+    }
+
+    @Test
+    public void testAddSoftwareelse() {
+
+        // Create a mock Software object
+        Software mockSoftware1 = new Software();
+        mockSoftware1.setName("SoftwareName1");
+        mockSoftware1.setNumberOfEmployees(50);
+        mockSoftware1.setCost(1000);
+        mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
+        mockSoftware1.setIsExpired(false);
+        mockSoftware1.setPurchaseDate(LocalDate.now());
+        mockSoftware1.setId(1);
+
+        // Create a mock SoftwareCompany object
+        SoftwareCompany mockCompany = new SoftwareCompany();
+        mockCompany.setId(999); // This ID should not exist in your repository
+        mockCompany.setName("NonExistentCompany");
+        mockSoftware1.setCompany(mockCompany);
+
+        // Mock the existsById method to return false
+        Mockito.when(softwareCompanyRepository.existsById(mockCompany.getId())).thenReturn(false);
+
+        // Mock the save methods
+        Mockito.when(softwareRepository.save(Mockito.any())).thenReturn(mockSoftware1);
+        Mockito.when(softwarePurchaseRepository.save(Mockito.any())).thenReturn(new SoftwarePurchase());
+
+        // Call the addSoftware method
+        Software addedSoftware = softwareService.addSoftware(mockSoftware1);
+
+        // Verify that existsById was called with the correct ID
+        Mockito.verify(softwareCompanyRepository).existsById(mockCompany.getId());
+
+        // Verify that save was called on the repositories
+        Mockito.verify(softwareRepository).save(Mockito.any());
+        Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
+
+        // Assert that the returned Software object has the expected values
+        assertEquals("SoftwareName1", addedSoftware.getName());
+    }
+
+    // @Test
+    // public void testRenewSoftwareif() {
+
+    //     // Create a mock Software object
+    //     Software mockSoftware1 = new Software();
+    //     mockSoftware1.setName("SoftwareName1");
+    //     mockSoftware1.setNumberOfEmployees(50);
+    //     mockSoftware1.setCost(1000);
+    //     mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
+    //     mockSoftware1.setIsExpired(false);
+    //     mockSoftware1.setPurchaseDate(LocalDate.now());
+    //     mockSoftware1.setId(1);
+
+    //     // Create a mock SoftwareCompany object
+    //     SoftwareCompany mockCompany = new SoftwareCompany();
+    //     mockCompany.setId(999); // This ID should exist in your repository
+    //     mockCompany.setName("ExistingCompany");
+    //     mockSoftware1.setCompany(mockCompany);
+
+    //     // Create a mock SoftwareDto object
+    //     SoftwareDto dto = new SoftwareDto();
+    //     dto.setCost(2000);
+    //     dto.setExpiryDate(LocalDate.now().plusMonths(12));
+    //     dto.setCompany(mockCompany);
+
+    //     // Mock the existsById method to return true
+    //     Mockito.when(softwareCompanyRepository.existsById(mockCompany.getId())).thenReturn(true);
+
+    //     // Mock the findById method to return the existing software
+    //     Mockito.when(softwareRepository.findById(mockSoftware1.getId())).thenReturn(Optional.of(mockSoftware1));
+
+    //     // Mock the save methods
+    //     Mockito.when(softwareRepository.save(Mockito.any())).thenReturn(mockSoftware1);
+    //     Mockito.when(softwarePurchaseRepository.save(Mockito.any())).thenReturn(new SoftwarePurchase());
+
+    //     // Call the renewSoftware method
+    //     String result = softwareService.renewSoftware(mockSoftware1.getId(), dto);
+
+    //     // Verify that existsById was called with the correct ID
+    //     Mockito.verify(softwareCompanyRepository).existsById(mockCompany.getId());
+
+    //     // Verify that save was called on the repositories
+    //     Mockito.verify(softwareRepository).save(Mockito.any());
+    //     Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
+
+    //     // Assert that the returned string is as expected
+    //     assertEquals("Software renewed: " + mockSoftware1.getId(), result);
+    // }
+    
 }

@@ -3,6 +3,7 @@ package com.capstone.licencelifecyclemanagement.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,11 +60,17 @@ public class SoftwareController {
         return softwareservice.aboutToExpire();
     } 
 
+    
     @GetMapping("/get")
-    public List<Software> getSoftwares()
-    {
-       // softwareservice.assetCheck();
-        return softwareservice.getSoftwares();
+    public ResponseEntity<List<Software>> getSoftwares() {
+        List<Software> softwareList = softwareservice.getSoftwares();
+        if (softwareList.isEmpty()) {
+            // Return 404 Not Found if the list is empty
+            return ResponseEntity.notFound().build();
+        } else {
+            // Return 200 OK with the list of software objects
+            return ResponseEntity.ok(softwareList);
+        }
     }
 
     @GetMapping("/getExpiredCount")

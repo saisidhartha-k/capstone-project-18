@@ -95,7 +95,7 @@ public class SoftwareService {
         return softwarerepository.findAll();
     }
 
-    private void setExistingCompany(Software software) {
+    public void setExistingCompany(Software software) {
         Optional<SoftwareCompany> existingCompany = softwareCompanyRepository.findById(software.getCompany().getId());
         if (existingCompany.isPresent()) {
             software.setCompany(existingCompany.get());
@@ -104,12 +104,12 @@ public class SoftwareService {
         }
     }
 
-    private void createNewCompany(Software software) {
+    public void createNewCompany(Software software) {
         SoftwareCompany newCompany = softwareCompanyRepository.save(software.getCompany());
         software.setCompany(newCompany);
     }
 
-    private void setExistingCompany(Software software, SoftwareCompany company) {
+    public void setExistingCompany(Software software, SoftwareCompany company) {
         Optional<SoftwareCompany> existingCompany = softwareCompanyRepository.findById(company.getId());
         if (existingCompany.isPresent()) {
             software.setCompany(existingCompany.get());
