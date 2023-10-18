@@ -23,4 +23,22 @@
     background-color: rgba(0, 128, 0, 0.151);
 
   }
-  
+
+  /* Styling for the button */
+button {
+  padding: 5px 10px; /* Adjusted padding */
+  background-color: transparent; /* Remove the default button background */
+  border: 1px solid red; /* Add a red border */
+  color: red; /* Set text color to red */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for the hover effect */
+  width: auto; /* Allow the button's width to adjust to its content */
+
+  font-size: 14px; /* Adjust the font size to make text fit comfortably */
+
+  &:hover {
+    background-color: red; /* Red background on hover */
+    color: white; /* White text color on hover */
+  }
+}

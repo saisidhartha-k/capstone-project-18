@@ -69,6 +69,7 @@ export const getAboutExpired = async () => {
   }
 };
 
+//change this later
 export const getSoftwareCompanies = async () => {
   try {
     const response = await axios.get('http://localhost:8080/softwarecompany/getcompanies');
@@ -77,6 +78,16 @@ export const getSoftwareCompanies = async () => {
     throw new Error('Error fetching companies');
   }
 };
+
+export const decommissionSoftware = async (id) => {
+  try {
+    await axios.delete(`${BASE_URL}/decomission/${id}`);
+  } catch (error) {
+    throw new Error('Error decommissioning software');
+  }
+};
+
+
 
 
 

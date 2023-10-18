@@ -85,6 +85,13 @@ public class SoftwareService {
         return "Software not found";
     }
 
+    public void decomissionSoftware(int id)
+    {
+        softwarePurchaseRepository.deleteBySoftwarePurchaseId_Software_Id(id);
+
+         softwarerepository.deleteById(id);
+    }
+
     public List<Software> getSoftware() {
         return softwarerepository.findAll();
     }
