@@ -85,11 +85,10 @@ public class SoftwareService {
         return "Software not found";
     }
 
-    public void decomissionSoftware(int id)
-    {
+    public void decomissionSoftware(int id) {
         softwarePurchaseRepository.deleteBySoftwarePurchaseId_Software_Id(id);
 
-         softwarerepository.deleteById(id);
+        softwarerepository.deleteById(id);
     }
 
     public List<Software> getSoftware() {
@@ -138,7 +137,7 @@ public class SoftwareService {
             if (remainingDays <= 30 && remainingDays > 0)
                 sendNotification(remainingDays, software);
 
-             if (remainingDays < 0) {
+            if (remainingDays < 0) {
                 software.setIsExpired(true);
                 softwarerepository.save(software);
             }
@@ -219,48 +218,46 @@ public class SoftwareService {
     public int percentageOfSoftwareAboutToExpire() {
         List<Software> softwareList = aboutToExpire();
         int totalSoftware = getTotalSoftwareCount();
-    
         if (totalSoftware == 0) {
             return 0;
         }
-    
+
         return (softwareList.size() * 100) / totalSoftware;
     }
-    
+
     public int percentageOfNotExpiredSoftware() {
-        List<Software> softwareList = notExpList();
+        int notExpiredSoftware = notExpListCount();
         int totalSoftware = getTotalSoftwareCount();
-    
+
         if (totalSoftware == 0) {
-            return 0; 
+            return 0;
         }
-    
-        return (softwareList.size() * 100) / totalSoftware;
+
+        return (notExpiredSoftware * 100) / totalSoftware;
     }
-    
+
     public int percentageOfExpiredSoftware() {
-        List<Software> softwareList = expiredSoftwares();
+        int expiredSoftware = expiredSoftwaresCount();
         int totalSoftware = getTotalSoftwareCount();
-    
+        
+
         if (totalSoftware == 0) {
-            return 0; 
+            return 0;
         }
-    
-        return (softwareList.size() * 100) / totalSoftware;
+
+        return (expiredSoftware * 100) / totalSoftware;
     }
-    
+
     public int getTotalSoftwareCount() {
         List<Software> allSoftware = getSoftware();
-    
+
         return allSoftware.size();
     }
 
-    //change this later
+    // change this later
 
-    public List<SoftwareCompany> getCompanies()
-    {
+    public List<SoftwareCompany> getCompanies() {
         return softwareCompanyRepository.findAll();
     }
-    
 
 }

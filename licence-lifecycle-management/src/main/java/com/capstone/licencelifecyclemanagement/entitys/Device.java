@@ -2,14 +2,16 @@ package com.capstone.licencelifecyclemanagement.entitys;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 public class Device {
     @Id
@@ -27,4 +29,13 @@ public class Device {
     private Boolean isExpired;
     private String location;
 
+    @PreUpdate
+    @PrePersist
+    private void updateIsExpired() {
+        if (expiryDate != null) {
+            isExpired = LocalDate.now().isAfter(expiryDate);
+        } else {
+            isExpired = false; 
+        }
+    }
 }
