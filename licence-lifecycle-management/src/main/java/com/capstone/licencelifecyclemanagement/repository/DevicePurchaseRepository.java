@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 
+import jakarta.transaction.Transactional;
+
 @Repository
 public interface DevicePurchaseRepository extends JpaRepository<DevicePurchase,Integer> {
-    
+    @Transactional
+    void deleteByDevicePurchaseId_Device_Id(int deviceId);
 }

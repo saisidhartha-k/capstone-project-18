@@ -42,3 +42,31 @@ export const getAllDeviceCompanies = async () => {
   }
 };
 
+export const addDevice = async (device) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/adddevice`, device, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error adding device');
+  }
+};
+
+export const decommissionDevice = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/decomissionDevice/${id}`);
+    console.log(response);
+    if (response.status === 200) {
+      return true; 
+    } else {
+      return false;
+    }
+  } catch (error) {
+    throw new Error('Error decommissioning device');
+  }
+};
+

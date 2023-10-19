@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { addDevice, getAllDeviceCompanies } from '../../service/DeviceService';
 import './index.scss'
 
-function SoftwareForm() {
+
+function DeviceForm() {
   const [formData, setFormData] = useState({
     name: '',
     company: {
@@ -11,39 +14,27 @@ function SoftwareForm() {
     numberOfEmployees: 0,
     cost: 0,
     expiryDate: '',
-    isExpired: false,
+    location: '', 
   });
 
   const [companies, setCompanies] = useState([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState('');
 
+
   useEffect(() => {
-    fetch('http://localhost:8080/softwarecompany/getcompanies')
-      .then((response) => response.json())
+    getAllDeviceCompanies()
       .then((data) => {
         setCompanies(data);
       })
-      .catch((error) => console.error('Error fetching companies:', error));
+      .catch((error) => console.error('Error fetching device companies:', error));
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name.includes('company.')) {
-      const companyField = name.split('.')[1];
-      setFormData({
-        ...formData,
-        company: {
-          ...formData.company,
-          [companyField]: value,
-        },
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleCompanySelect = (e) => {
@@ -61,41 +52,20 @@ function SoftwareForm() {
     }
   };
 
-  const addSoftware = async (softwareData) => {
-    try {
-      const response = await fetch('http://localhost:8080/software/addsoftware', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(softwareData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      } 
-    } catch (error) {
-      throw error;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await addSoftware(formData);
-
-      console.log('Software added:', response);
-
+      const response = await addDevice(formData);
+      console.log('Device added:', response);
     } catch (error) {
-      console.error('Error adding software:', error);
+      console.error('Error adding device:', error);
     }
   };
 
   return (
     <div className="form-container">
-      <h2>Software Form</h2>
+      <h2>Device Form</h2>
       <form className="form" onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
@@ -141,6 +111,15 @@ function SoftwareForm() {
           />
         </div>
         <div>
+          <label>Number of Employees:</label>
+          <input
+            type="number"
+            name="numberOfEmployees"
+            value={formData.numberOfEmployees}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
           <label>Cost:</label>
           <input
             type="number"
@@ -159,18 +138,20 @@ function SoftwareForm() {
           />
         </div>
         <div>
-          <label>Is Expired:</label>
+          <label>Location:</label>
           <input
-            type="checkbox"
-            name="isExpired"
-            checked={formData.isExpired}
-            onChange={(e) => setFormData({ ...formData, isExpired: e.target.checked })}
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
           />
         </div>
-        <button  className="submit-button" type="submit">Submit</button>
+        <button className="submit-button" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );
 }
 
-export default SoftwareForm;
+export default DeviceForm;

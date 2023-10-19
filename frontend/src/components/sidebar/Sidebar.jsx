@@ -87,7 +87,21 @@ export const Sidebar = () => {
           <li>
             <Link to="/device/devicecompanies">
               <DevicesIcon className="icon" />
-              <span>All Device Companies</span>
+              <span>Device Companies</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/device/adddevice">
+              <AddToPhotosIcon className="icon" />
+              <span>Add Device</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/software/softwarepurchasehistory">
+              <AddToPhotosIcon className="icon" />
+              <span>Device Purchases</span>
             </Link>
           </li>
 

@@ -228,7 +228,7 @@ public class DeviceService {
         int totalDevices = getTotalDeviceCount();
 
         if (totalDevices == 0) {
-            return 0; // Avoid division by zero
+            return 0; 
         }
 
         return (devices.size() * 100) / totalDevices;
@@ -238,6 +238,12 @@ public class DeviceService {
         List<Device> allDevices = getDevices();
 
         return allDevices.size();
+    }
+
+    public void decomissionDevice(int id) {
+        devicePurchaseRepository.deleteByDevicePurchaseId_Device_Id(id);
+
+        deviceRepository.deleteById(id);
     }
 
 }
