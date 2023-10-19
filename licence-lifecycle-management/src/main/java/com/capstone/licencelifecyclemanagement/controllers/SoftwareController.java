@@ -62,15 +62,9 @@ public class SoftwareController {
 
     
     @GetMapping("/get")
-    public ResponseEntity<List<Software>> getSoftwares() {
-        List<Software> softwareList = softwareservice.getSoftwares();
-        if (softwareList.isEmpty()) {
-            // Return 404 Not Found if the list is empty
-            return ResponseEntity.notFound().build();
-        } else {
-            // Return 200 OK with the list of software objects
-            return ResponseEntity.ok(softwareList);
-        }
+    public List<Software> getSoftwares() {
+       return softwareservice.getSoftwares();
+       
     }
 
     @GetMapping("/getExpiredCount")

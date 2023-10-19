@@ -21,6 +21,7 @@ import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
+import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.services.DeviceService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +54,10 @@ public class DeviceServiceTest {
 
     @Mock
     private DeviceCompanyRepository deviceCompanyRepository;
+
+     @Mock
+    private NotificationRepository notificationRepository;
+
 
     private Device mockDevice;
     private DeviceCompany mockCompany;
@@ -181,7 +187,7 @@ public class DeviceServiceTest {
     }
 
     @Test
-     void testAboutToExpireDevice() {
+    void testAboutToExpireDevice() {
 
         mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
 
@@ -210,6 +216,81 @@ public class DeviceServiceTest {
         int result = deviceService.devicesAboutToExpireCount();
 
         assertEquals(1, result);
+    }
+
+    @Test
+    public void testNotExpiredDevicesCount() {
+
+        List<Device> mockDeviceList = new ArrayList<>();
+
+        mockDevice.setIsExpired(true);
+
+        mockDeviceList.add(mockDevice);
+
+        Mockito.when(deviceRepository.findByIsExpired(false)).thenReturn(mockDeviceList);
+
+        int result = deviceService.devicesNotExpiredCount();
+
+        Mockito.verify(deviceRepository).findByIsExpired(false);
+
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void testExpiredDeviceCount() {
+
+        List<Device> mockDeviceList = new ArrayList<>();
+        Device mockDevice1 = new Device();
+        mockDevice1.setId(1);
+        mockDevice1.setIsExpired(false);
+
+        Device mockDevice2 = new Device();
+        mockDevice2.setId(2);
+        mockDevice2.setIsExpired(true);
+
+        Device mockDevice3 = new Device();
+        mockDevice3.setId(3);
+        mockDevice3.setIsExpired(true);
+
+        mockDeviceList.add(mockDevice1);
+        mockDeviceList.add(mockDevice2);
+        mockDeviceList.add(mockDevice3);
+
+        Mockito.when(deviceRepository.findByIsExpired(true)).thenReturn(mockDeviceList);
+
+        int result = deviceService.expiredDevicesCount();
+
+        Mockito.verify(deviceRepository).findByIsExpired(true);
+
+        assertEquals(3, result);
+    }
+
+    @Test
+    void testDeviceAssetCheck() {
+        Device device = new Device();
+        device.setExpiryDate(LocalDate.now().plusDays(15));
+
+        when(deviceService.getDevices()).thenReturn(Collections.singletonList(device));
+
+        deviceService.assetCheck();
+
+    }
+
+    @Test
+    public void testDeviceSendNotification() {
+        // Arrange
+        Device device = new Device();
+        device.setName("Test device");
+        device.setExpiryDate(LocalDate.now().plusDays(20));
+
+       
+    int remainingDays = 20;
+
+    // Act
+    deviceService.sendNotification(remainingDays, device);
+
+    // Assert
+    verify(notificationRepository, times(1)).save(any());
     }
 
 }

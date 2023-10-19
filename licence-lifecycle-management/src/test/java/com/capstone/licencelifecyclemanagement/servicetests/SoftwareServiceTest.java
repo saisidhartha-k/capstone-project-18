@@ -16,6 +16,10 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,6 +27,7 @@ import static org.mockito.Mockito.verify;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +36,7 @@ import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
@@ -60,6 +66,9 @@ public class SoftwareServiceTest {
 
     @Mock
     private SoftwarePurchaseRepository softwarePurchaseRepository;
+
+    @Mock
+    private NotificationRepository notificationRepository;
 
     private SoftwareCompany mockCompany1;
     private Software mockSoftware1;
@@ -382,53 +391,31 @@ public class SoftwareServiceTest {
         assertEquals("SoftwareName1", addedSoftware.getName());
     }
 
-    // @Test
-    // public void testRenewSoftwareif() {
+    @Test
+    void testSoftwareAssetCheck() {
+        Software software = new Software();
+        software.setExpiryDate(LocalDate.now().plusDays(15));
 
-    //     // Create a mock Software object
-    //     Software mockSoftware1 = new Software();
-    //     mockSoftware1.setName("SoftwareName1");
-    //     mockSoftware1.setNumberOfEmployees(50);
-    //     mockSoftware1.setCost(1000);
-    //     mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
-    //     mockSoftware1.setIsExpired(false);
-    //     mockSoftware1.setPurchaseDate(LocalDate.now());
-    //     mockSoftware1.setId(1);
+        when(softwareService.getSoftwares()).thenReturn(Collections.singletonList(software));
 
-    //     // Create a mock SoftwareCompany object
-    //     SoftwareCompany mockCompany = new SoftwareCompany();
-    //     mockCompany.setId(999); // This ID should exist in your repository
-    //     mockCompany.setName("ExistingCompany");
-    //     mockSoftware1.setCompany(mockCompany);
+        softwareService.assetCheck();
 
-    //     // Create a mock SoftwareDto object
-    //     SoftwareDto dto = new SoftwareDto();
-    //     dto.setCost(2000);
-    //     dto.setExpiryDate(LocalDate.now().plusMonths(12));
-    //     dto.setCompany(mockCompany);
+    }
 
-    //     // Mock the existsById method to return true
-    //     Mockito.when(softwareCompanyRepository.existsById(mockCompany.getId())).thenReturn(true);
+    @Test
+    public void testSoftwareSendNotification() {
+        // Arrange
+        Software software = new Software();
+        software.setName("Test Software");
+        software.setExpiryDate(LocalDate.now().plusDays(20));
 
-    //     // Mock the findById method to return the existing software
-    //     Mockito.when(softwareRepository.findById(mockSoftware1.getId())).thenReturn(Optional.of(mockSoftware1));
+       
+    int remainingDays = 20;
 
-    //     // Mock the save methods
-    //     Mockito.when(softwareRepository.save(Mockito.any())).thenReturn(mockSoftware1);
-    //     Mockito.when(softwarePurchaseRepository.save(Mockito.any())).thenReturn(new SoftwarePurchase());
+    // Act
+    softwareService.sendNotification(remainingDays, software);
 
-    //     // Call the renewSoftware method
-    //     String result = softwareService.renewSoftware(mockSoftware1.getId(), dto);
-
-    //     // Verify that existsById was called with the correct ID
-    //     Mockito.verify(softwareCompanyRepository).existsById(mockCompany.getId());
-
-    //     // Verify that save was called on the repositories
-    //     Mockito.verify(softwareRepository).save(Mockito.any());
-    //     Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
-
-    //     // Assert that the returned string is as expected
-    //     assertEquals("Software renewed: " + mockSoftware1.getId(), result);
-    // }
-    
+    // Assert
+    verify(notificationRepository, times(1)).save(any());
+    }
 }
