@@ -87,7 +87,21 @@ export const decommissionSoftware = async (id) => {
   }
 };
 
+export const fetchAssetCheck = async () => {
+  try {
+    const response = await axios.post(`${BASE_URL}/assetcheck`);
+    console.log(response);
 
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error('Failed to fetch asset check data');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Failed to fetch asset check data');
+  }
+};
 
 
 
