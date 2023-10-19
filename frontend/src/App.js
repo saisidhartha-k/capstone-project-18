@@ -3,18 +3,18 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import List from "./pages/Softwarelist/SoftwareList";
 import AddSoftwarePage from "./pages/addsoftware/AddSoftwarePage";
 import ExpiredSoftwareList from "./pages/expiredsoftware/ExpiredSoftwareList";
 import AboutToExpireSoftwareList from "./pages/abouttoexpiresoftware/AboutToExpireSoftwareList";
-import SoftwareComapniesList from "./pages/softwarecompanies/SoftwareCompanies";
 import AllDevicesList from "./pages/devicepages/devicelist/DeviceList";
 import AboutToExpireDeviceList from "./pages/devicepages/abouttoexpiredevice/AboutToExpireDeviceList";
 import ExpiredDeviceList from "./pages/devicepages/expireddevice/ExpiredDeviceList";
 import DeviceCompaniesList from "./pages/devicepages/devicecompanies/DeviceCompanies";
-import AddNewSoftware from "./pages/addsoftware/AddSoftwarePage";
 import SoftwarePurchaseHistoryList from "./pages/softwarepages/softwarepurchasehistory/SoftwarePurchaseHistoryPage";
 import AddNewDevice from "./pages/devicepages/adddevice/AddDevicePage";
+import AddNewSoftware from "./pages/addsoftware/AddSoftwarePage";
+import List, { SoftwareList } from "./pages/softwarepages/Softwarelist/SoftwareList";
+import SoftwareComapniesList from "./pages/softwarepages/softwarecompanies/SoftwareCompanies";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="software/">
-              <Route index element={<List />} />
+              <Route index element={<SoftwareList />} />
               <Route path="expiredSoftware" element={<ExpiredSoftwareList/>}/>
               <Route path="abouttoexpireSoftware" element={<AboutToExpireSoftwareList />} />
               <Route path="softwarecompanies" element={<SoftwareComapniesList />} />

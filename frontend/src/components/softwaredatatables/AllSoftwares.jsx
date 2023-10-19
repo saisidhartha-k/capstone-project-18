@@ -6,7 +6,7 @@ import {
   getSoftwares,
 } from "../../service/SoftwareService";
 
-export default function DataTable() {
+export default function AllSoftwareDataTable() {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [softwareIdToDecommission, setSoftwareIdToDecommission] =

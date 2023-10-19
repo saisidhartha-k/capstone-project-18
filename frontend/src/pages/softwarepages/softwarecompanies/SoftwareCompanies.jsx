@@ -1,8 +1,9 @@
 import React from "react";
-import { Sidebar } from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+
 import "./Index.scss";
-import SoftwareCompanies from "../../components/softwaredatatables/SoftwareCompanies";
+import { Sidebar } from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
+import SoftwareCompanies from "../../../components/softwaredatatables/SoftwareCompanies";
 
 export const SoftwareComapniesList = () => {
   return (
