@@ -6,28 +6,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +39,7 @@ import com.capstone.licencelifecyclemanagement.services.SoftwareService;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class SoftwareServiceTest {
+class SoftwareServiceTest {
 
     @InjectMocks
     private SoftwareService softwareService;
@@ -76,7 +68,7 @@ public class SoftwareServiceTest {
     private SoftwarePurchase purchase1;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mockCompany1 = new SoftwareCompany();
         mockCompany1.setId(1);
         mockCompany1.setName("Company Name 1");
@@ -100,9 +92,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testGetSoftware() {
-
-        SoftwareCompany mockCompany1 = new SoftwareCompany();
+    void testGetSoftware() {
 
         List<Software> mockSoftwareList = new ArrayList<>();
 
@@ -116,7 +106,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testAddSoftware() {
+    void testAddSoftware() {
 
         Mockito.when(softwareCompanyRepository.existsById(Mockito.anyInt())).thenReturn(true);
 
@@ -135,8 +125,6 @@ public class SoftwareServiceTest {
         Mockito.verify(softwareCompanyRepository).findById(Mockito.anyInt());
         Mockito.verify(softwareRepository).save(Mockito.any());
         Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
-
-        LocalDate today = LocalDate.now();
 
         assertEquals("SoftwareName1", addedSoftware.getName());
         assertEquals(50, addedSoftware.getNumberOfEmployees());
@@ -178,23 +166,23 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testNotExpList() {
+    void testNotExpList() {
         List<Software> mockSoftwareList = new ArrayList<>();
         mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
         mockSoftwareList.add(mockSoftware1);
         LocalDate today = LocalDate.now();
-    
+
         when(softwareRepository.findNonExpiredSoftware(today)).thenReturn(mockSoftwareList); // Correct method name
-    
+
         List<Software> result = softwareService.notExpList(); // Correct method name
-    
+
         verify(softwareRepository, times(1)).findNonExpiredSoftware(today);
-    
+
         assertEquals(1, result.size());
     }
 
     @Test
-    public void testExpiredSoftwares() {
+    void testExpiredSoftwares() {
 
         List<Software> mockSoftwareList = new ArrayList<>();
         LocalDate today = LocalDate.now();
@@ -211,7 +199,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testAboutToExpireSoftware() {
+    void testAboutToExpireSoftware() {
 
         mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
 
@@ -228,7 +216,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testSoftwareAboutToExpireCount() {
+    void testSoftwareAboutToExpireCount() {
 
         mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
 
@@ -243,7 +231,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testNotExpiredSoftwaresCount() {
+    void testNotExpiredSoftwaresCount() {
 
         List<Software> mockSoftwareList = new ArrayList<>();
 
@@ -261,7 +249,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testExpiredSoftwaresCount() {
+    void testExpiredSoftwaresCount() {
 
         List<Software> mockSoftwareList = new ArrayList<>();
         Software mockSoftware1 = new Software();
@@ -287,39 +275,8 @@ public class SoftwareServiceTest {
         assertEquals(3, result);
     }
 
-    // @Test
-    // public void testPercentageOfExpiredSoftware() {
-    // List<Software> mockSoftwareList = new ArrayList<>();
-    // Software mockSoftware1 = new Software();
-    // mockSoftware1.setId(1);
-    // mockSoftware1.setIsExpired(false);
-
-    // Software mockSoftware2 = new Software();
-    // mockSoftware2.setId(2);
-    // mockSoftware2.setIsExpired(true);
-
-    // Software mockSoftware3 = new Software();
-    // mockSoftware3.setId(3);
-    // mockSoftware3.setIsExpired(true);
-
-    // mockSoftwareList.add(mockSoftware1);
-    // mockSoftwareList.add(mockSoftware2);
-    // mockSoftwareList.add(mockSoftware3);
-    // when(softwareRepository.findAll()).thenReturn(mockSoftwareList);
-
-    // when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
-
-    // //when(softwareService.getTotalSoftwareCount()).thenReturn(3);
-    // assertEquals(softwareService.getTotalSoftwareCount(), 3);
-    // assertEquals(softwareRepository.findByIsExpired(true), 2);
-
-    // int result = softwareService.percentageOfExpiredSoftware();
-
-    // //assertEquals(67, result);
-    // }
-
     @Test
-    public void testGetSoftwareCompanies() {
+    void testGetSoftwareCompanies() {
 
         List<SoftwareCompany> mockCompanyList = new ArrayList<>();
         mockCompanyList.add(mockCompany1);
@@ -351,7 +308,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testAddSoftwareelse() {
+    void testAddSoftwareelse() {
 
         // Create a mock Software object
         Software mockSoftware1 = new Software();
@@ -390,7 +347,7 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    public void testAssetCheck() {
+    void testAssetCheck() {
         // Prepare mock data
         List<Software> softwareList = new ArrayList<>();
 
@@ -408,14 +365,14 @@ public class SoftwareServiceTest {
 
         List<String> notificationList = softwareService.assetCheck();
 
-
         assert notificationList.size() == 1;
         assert notificationList.get(0).contains("Expiring Software");
+        assertTrue(notificationList.get(0).contains("Expiring Software"));
+
     }
 
-
     @Test
-    public void testCalculateRemainingDays() {
+    void testCalculateRemainingDays() {
         SoftwareService softwareService = new SoftwareService();
         LocalDate expiryDate = LocalDate.now();
 

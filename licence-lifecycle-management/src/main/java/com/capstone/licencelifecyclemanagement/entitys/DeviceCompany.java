@@ -1,5 +1,7 @@
 package com.capstone.licencelifecyclemanagement.entitys;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-public class DeviceCompany {
+public class DeviceCompany implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -22,7 +22,7 @@ public class DevicePurchaseId implements Serializable {
         this.device = device;
     }
 
-    private String LicenseNumber;
+    private String licenseNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Device device;

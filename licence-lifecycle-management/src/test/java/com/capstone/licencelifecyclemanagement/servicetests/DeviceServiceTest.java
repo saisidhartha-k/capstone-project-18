@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +14,7 @@ import com.capstone.licencelifecyclemanagement.dto.DeviceDto;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
-import com.capstone.licencelifecyclemanagement.entitys.Software;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
+
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
@@ -25,9 +22,7 @@ import com.capstone.licencelifecyclemanagement.repository.NotificationRepository
 import com.capstone.licencelifecyclemanagement.services.DeviceService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,7 +36,7 @@ import java.util.Optional;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class DeviceServiceTest {
+class DeviceServiceTest {
 
     @InjectMocks
     private DeviceService deviceService;
@@ -55,9 +50,8 @@ public class DeviceServiceTest {
     @Mock
     private DeviceCompanyRepository deviceCompanyRepository;
 
-     @Mock
+    @Mock
     private NotificationRepository notificationRepository;
-
 
     private Device mockDevice;
     private DeviceCompany mockCompany;
@@ -153,25 +147,24 @@ public class DeviceServiceTest {
     }
 
     @Test
-    public void testNotExpiredDevice() {
+    void testNotExpiredDevice() {
         List<Device> mockDeviceList = new ArrayList<>();
         mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
         mockDeviceList.add(mockDevice);
         LocalDate today = LocalDate.now();
-    
+
         when(deviceRepository.findNonExpiredDevice(today)).thenReturn(mockDeviceList); // Correct method name
-    
+
         List<Device> result = deviceService.notExpiredDevice(); // Correct method name
-    
+
         verify(deviceRepository, times(1)).findNonExpiredDevice(today);
-    
+
         assertEquals(1, result.size());
     }
 
     @Test
-    public void testExpiredDevice() {
-                LocalDate today = LocalDate.now();
-
+    void testExpiredDevice() {
+        LocalDate today = LocalDate.now();
 
         List<Device> mockDeviceList = new ArrayList<>();
 
@@ -204,7 +197,7 @@ public class DeviceServiceTest {
     }
 
     @Test
-    public void testDeviceAboutToExpireCount() {
+    void testDeviceAboutToExpireCount() {
 
         mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
 
@@ -219,23 +212,23 @@ public class DeviceServiceTest {
     }
 
     @Test
-    public void testNotExpiredDevicesCount() {
+    void testNotExpiredDevicesCount() {
         List<Device> mockDeviceList = new ArrayList<>();
         mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
         mockDeviceList.add(mockDevice);
         LocalDate today = LocalDate.now();
-    
+
         when(deviceRepository.findNonExpiredDevice(today)).thenReturn(mockDeviceList);
-    
+
         int result = deviceService.devicesNotExpiredCount(); // Get the size of the returned list
-    
+
         verify(deviceRepository, times(1)).findNonExpiredDevice(today);
-    
+
         assertEquals(1, result);
     }
 
     @Test
-    public void testExpiredDeviceCount() {
+    void testExpiredDeviceCount() {
 
         List<Device> mockDeviceList = new ArrayList<>();
         Device mockDevice1 = new Device();
@@ -274,20 +267,19 @@ public class DeviceServiceTest {
     }
 
     @Test
-    public void testDeviceSendNotification() {
+    void testDeviceSendNotification() {
         // Arrange
         Device device = new Device();
         device.setName("Test device");
         device.setExpiryDate(LocalDate.now().plusDays(20));
 
-       
-    int remainingDays = 20;
+        int remainingDays = 20;
 
-    // Act
-    deviceService.sendNotification(remainingDays, device);
+        // Act
+        deviceService.sendNotification(remainingDays, device);
 
-    // Assert
-    verify(notificationRepository, times(1)).save(any());
+        // Assert
+        verify(notificationRepository, times(1)).save(any());
     }
 
 }

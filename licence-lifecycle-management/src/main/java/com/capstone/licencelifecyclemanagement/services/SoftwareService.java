@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +46,8 @@ public class SoftwareService {
         }
 
         Software softwareNew = softwarerepository.save(software);
-        SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(), softwareNew);
-        SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
+        SoftwarePurchaseId softwarePurchaseId = new SoftwarePurchaseId(software.getLicenseNumber(), softwareNew);
+        SoftwarePurchase sPurchase = new SoftwarePurchase(softwarePurchaseId);
         softwarePurchaseRepository.save(sPurchase);
         return softwareNew;
     }
@@ -70,8 +69,8 @@ public class SoftwareService {
             software.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
             softwarerepository.save(software);
 
-            SoftwarePurchaseId SPID = new SoftwarePurchaseId(software.getLicenseNumber(), software);
-            SoftwarePurchase sPurchase = new SoftwarePurchase(SPID);
+            SoftwarePurchaseId softwarePurchaseId = new SoftwarePurchaseId(software.getLicenseNumber(), software);
+            SoftwarePurchase sPurchase = new SoftwarePurchase(softwarePurchaseId);
             softwarePurchaseRepository.save(sPurchase);
 
             return "Software renewed: " + softwareId;
@@ -152,7 +151,7 @@ public class SoftwareService {
     }
 
     public List<Software> notExpList() {
-        LocalDate today = LocalDate.now(); 
+        LocalDate today = LocalDate.now();
         return softwarerepository.findNonExpiredSoftware(today);
     }
 
@@ -162,44 +161,38 @@ public class SoftwareService {
     }
 
     public int aboutToExpireCount() {
-        List<Software> Softwares = aboutToExpire();
-        return Softwares.size();
+        List<Software> softwares = aboutToExpire();
+        return softwares.size();
     }
 
     public int notExpListCount() {
-        List<Software> Softwares = notExpList();
-        return Softwares.size();
+        List<Software> softwares = notExpList();
+        return softwares.size();
     }
 
     public int expiredSoftwaresCount() {
-        List<Software> Softwares = expiredSoftwares();
-        return Softwares.size();
+        List<Software> softwares = expiredSoftwares();
+        return softwares.size();
     }
 
     public List<Software> aboutToExpire() {
         List<Software> aboutToExpireSoftwares = new ArrayList<>();
         List<Software> softwareList = getSoftwares();
-        System.out.println("1");
         for (Software software : softwareList) {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
-            System.out.println(remainingDays);
             if (remainingDays <= 30 && remainingDays > 0) {
                 aboutToExpireSoftwares.add(software);
             }
         }
-        System.out.println("ok");
-        System.out.println(aboutToExpireSoftwares);
         return aboutToExpireSoftwares;
     }
 
     public int calculateRemainingDays(LocalDate expiryDate) {
         LocalDate currentDate = LocalDate.now();
 
-        int remainingDays = (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
-        return remainingDays;
+        return (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
     }
-
 
     public int percentageOfSoftwareAboutToExpire() {
         List<Software> softwareList = aboutToExpire();

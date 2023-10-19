@@ -32,7 +32,7 @@ public class DeviceService {
     private DevicePurchaseRepository devicePurchaseRepository;
 
     @Autowired
-    private DeviceCompanyRepository DeviceCompanyRepository;
+    private DeviceCompanyRepository deviceCompanyRepository;
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -40,7 +40,7 @@ public class DeviceService {
     String toEmail = "admin@prodapt.com";
 
     public Device addDevice(Device device) {
-        if (device.getCompany() != null && DeviceCompanyRepository.existsById(device.getCompany().getId())) {
+        if (device.getCompany() != null && deviceCompanyRepository.existsById(device.getCompany().getId())) {
             setExistingCompany(device);
         } else {
             createNewCompany(device);
@@ -59,7 +59,7 @@ public class DeviceService {
         if (existingDevice.isPresent()) {
             Device device = existingDevice.get();
 
-            if (dto.getCompany() != null && DeviceCompanyRepository.existsById(dto.getCompany().getId())) {
+            if (dto.getCompany() != null && deviceCompanyRepository.existsById(dto.getCompany().getId())) {
                 setExistingCompany(device, dto.getCompany());
             } else {
                 createNewCompany(device, dto.getCompany());
@@ -111,16 +111,16 @@ public class DeviceService {
     }
 
     public void assetCheck() {
-        List<Device> DeviceList = getDevices();
+        List<Device> deviceList = getDevices();
 
-        for (Device device : DeviceList) {
+        for (Device device : deviceList) {
             LocalDate expiryDate = device.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
             if (remainingDays <= 30 && remainingDays > 0)
                 sendNotification(remainingDays, device);
 
-             if (remainingDays <= 0) {
+            if (remainingDays <= 0) {
                 deviceRepository.save(device);
             }
         }
@@ -130,13 +130,11 @@ public class DeviceService {
     public int calculateRemainingDays(LocalDate expiryDate) {
         LocalDate currentDate = LocalDate.now();
 
-        int remainingDays = (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
-        return remainingDays;
+        return (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
     }
 
     public void sendNotification(int remainingDays, Device device) {
         if (device != null) {
-            String subject = "device License Expiry Reminder";
             String meesage = "Your device license for " + device.getName() +
                     " will expire in " + remainingDays + " days. Please take action.";
 
@@ -152,13 +150,11 @@ public class DeviceService {
 
             System.out.println(meesage);
 
-        } else {
-            System.out.println("device not found or expired.");
         }
     }
 
     private void setExistingCompany(Device device) {
-        Optional<DeviceCompany> existingCompany = DeviceCompanyRepository.findById(device.getCompany().getId());
+        Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(device.getCompany().getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
         } else {
@@ -167,12 +163,12 @@ public class DeviceService {
     }
 
     private void createNewCompany(Device device) {
-        DeviceCompany newCompany = DeviceCompanyRepository.save(device.getCompany());
+        DeviceCompany newCompany = deviceCompanyRepository.save(device.getCompany());
         device.setCompany(newCompany);
     }
 
     private void setExistingCompany(Device device, DeviceCompany company) {
-        Optional<DeviceCompany> existingCompany = DeviceCompanyRepository.findById(company.getId());
+        Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(company.getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
         } else {
@@ -181,7 +177,7 @@ public class DeviceService {
     }
 
     private void createNewCompany(Device device, DeviceCompany company) {
-        DeviceCompany newCompany = DeviceCompanyRepository.save(company);
+        DeviceCompany newCompany = deviceCompanyRepository.save(company);
         device.setCompany(newCompany);
     }
 
@@ -227,7 +223,7 @@ public class DeviceService {
         int totalDevices = getTotalDeviceCount();
 
         if (totalDevices == 0) {
-            return 0; 
+            return 0;
         }
 
         return (devices.size() * 100) / totalDevices;

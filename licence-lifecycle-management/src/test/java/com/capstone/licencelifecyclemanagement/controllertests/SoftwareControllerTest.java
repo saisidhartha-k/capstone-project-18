@@ -35,7 +35,7 @@ public class SoftwareControllerTest {
     private SoftwareService softwareService;
 
     @Test
-    public void testGetSoftwares() {
+    void testGetSoftwares() {
         
 
         SoftwareCompany mockCompany1 = new SoftwareCompany();
