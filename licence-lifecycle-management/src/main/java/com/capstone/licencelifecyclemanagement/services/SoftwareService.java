@@ -70,7 +70,7 @@ public class SoftwareService {
 
             software.setCost(dto.getCost());
             software.setExpiryDate(dto.getExpiryDate());
-            //software.setIsExpired(false);
+            // software.setIsExpired(false);
             software.setPurchaseDate(LocalDate.now());
             software.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
             softwarerepository.save(software);
@@ -127,33 +127,43 @@ public class SoftwareService {
         return softwarerepository.findAll();
     }
 
-    public void assetCheck() {
+    public List<String> assetCheck() {
         List<Software> softwareList = getSoftwares();
-
+        List<String> notificationList = new ArrayList<>();
         for (Software software : softwareList) {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
-            if (remainingDays < 0 ) {
-                //software.setIsExpired(true);
-                softwarerepository.save(software);
+
+            if (remainingDays <= 30 && remainingDays > 0) {
+
+                String meesage = "Your software license for " + software.getName() +
+                        " will expire in " + remainingDays + " days. Please take action.";
+
+                notificationList.add(meesage);
+                Notification notification = new Notification();
+                notification.setMessage(meesage);
+                notification.setExpiryDate(software.getExpiryDate());
+                notification.setNumberOfDaysLeft(remainingDays);
+                notification.setSoftware(software);
+                notification.setName(software.getName());
+                notification.setIsSoftware(true);
+                notificationRepository.save(notification);
+
+                System.out.println(meesage);
+
             }
-
-            // if (remainingDays <= 30 && remainingDays > 0)
-            //     sendNotification(remainingDays, software);
-
-            
         }
-
+        return notificationList;
     }
 
     public List<Software> notExpList() {
         LocalDate today = LocalDate.now(); // Get the current date
-    return softwarerepository.findExpiredSoftware(today);
+        return softwarerepository.findExpiredSoftware(today);
     }
 
     public List<Software> expiredSoftwares() {
         LocalDate today = LocalDate.now(); // Get the current date
-    return softwarerepository.findExpiredSoftware(today);
+        return softwarerepository.findExpiredSoftware(today);
     }
 
     public int aboutToExpireCount() {
@@ -195,28 +205,6 @@ public class SoftwareService {
         return remainingDays;
     }
 
-    public void sendNotification(int remainingDays, Software software) {
-
-        if (software != null) {
-            String subject = "Software License Expiry Reminder";
-            String meesage = "Your software license for " + software.getName() +
-                    " will expire in " + remainingDays + " days. Please take action.";
-
-            Notification notification = new Notification();
-            notification.setMessage(meesage);
-            notification.setExpiryDate(software.getExpiryDate());
-            notification.setNumberOfDaysLeft(remainingDays);
-            notification.setSoftware(software);
-            notification.setName(software.getName());
-            notification.setIsSoftware(true);
-            notificationRepository.save(notification);
-
-            System.out.println(meesage);
-
-        } else {
-            System.out.println("Software not found or expired.");
-        }
-    }
 
     public int percentageOfSoftwareAboutToExpire() {
         List<Software> softwareList = aboutToExpire();
@@ -242,7 +230,6 @@ public class SoftwareService {
     public int percentageOfExpiredSoftware() {
         int expiredSoftware = expiredSoftwaresCount();
         int totalSoftware = getTotalSoftwareCount();
-        
 
         if (totalSoftware == 0) {
             return 0;

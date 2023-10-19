@@ -112,9 +112,9 @@ public class SoftwareController {
     }
    
     @PostMapping("/assetcheck")
-    public void assetCheck()
+    public List<String> assetCheck()
     {
-        softwareservice.assetCheck();
+        return softwareservice.assetCheck();
     }
 
 }

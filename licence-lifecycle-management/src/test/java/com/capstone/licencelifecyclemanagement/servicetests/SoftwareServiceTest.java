@@ -390,31 +390,29 @@ public class SoftwareServiceTest {
     }
 
     @Test
-    void testSoftwareAssetCheck() {
-        Software software = new Software();
-        software.setExpiryDate(LocalDate.now().plusDays(15));
+    public void testAssetCheck() {
+        // Prepare mock data
+        List<Software> softwareList = new ArrayList<>();
 
-        when(softwareService.getSoftwares()).thenReturn(Collections.singletonList(software));
+        Software expiringSoftware = new Software();
+        expiringSoftware.setName("Expiring Software");
+        expiringSoftware.setExpiryDate(LocalDate.now().plusDays(25));
+        softwareList.add(expiringSoftware);
 
-        softwareService.assetCheck();
+        Software nonExpiringSoftware = new Software();
+        nonExpiringSoftware.setName("Non-Expiring Software");
+        nonExpiringSoftware.setExpiryDate(LocalDate.now().plusDays(35));
+        softwareList.add(nonExpiringSoftware);
 
+        Mockito.when(softwareRepository.findAll()).thenReturn(softwareList);
+
+        List<String> notificationList = softwareService.assetCheck();
+
+
+        assert notificationList.size() == 1;
+        assert notificationList.get(0).contains("Expiring Software");
     }
 
-    @Test
-    public void testSoftwareSendNotification() {
-        // Arrange
-        Software software = new Software();
-        software.setName("Test Software");
-        software.setExpiryDate(LocalDate.now().plusDays(20));
-
-        int remainingDays = 20;
-
-        // Act
-        softwareService.sendNotification(remainingDays, software);
-
-        // Assert
-        verify(notificationRepository, times(1)).save(any());
-    }
 
     @Test
     public void testCalculateRemainingDays() {
