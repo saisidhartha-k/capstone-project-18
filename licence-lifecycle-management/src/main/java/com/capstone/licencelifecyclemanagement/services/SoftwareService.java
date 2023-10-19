@@ -70,7 +70,7 @@ public class SoftwareService {
 
             software.setCost(dto.getCost());
             software.setExpiryDate(dto.getExpiryDate());
-            software.setIsExpired(false);
+            //software.setIsExpired(false);
             software.setPurchaseDate(LocalDate.now());
             software.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
             softwarerepository.save(software);
@@ -133,24 +133,27 @@ public class SoftwareService {
         for (Software software : softwareList) {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
-
-            if (remainingDays <= 30 && remainingDays > 0)
-                sendNotification(remainingDays, software);
-
-            if (remainingDays < 0) {
-                software.setIsExpired(true);
+            if (remainingDays < 0 ) {
+                //software.setIsExpired(true);
                 softwarerepository.save(software);
             }
+
+            // if (remainingDays <= 30 && remainingDays > 0)
+            //     sendNotification(remainingDays, software);
+
+            
         }
 
     }
 
     public List<Software> notExpList() {
-        return softwarerepository.findByIsExpired(false);
+        LocalDate today = LocalDate.now(); // Get the current date
+    return softwarerepository.findExpiredSoftware(today);
     }
 
     public List<Software> expiredSoftwares() {
-        return softwarerepository.findByIsExpired(true);
+        LocalDate today = LocalDate.now(); // Get the current date
+    return softwarerepository.findExpiredSoftware(today);
     }
 
     public int aboutToExpireCount() {

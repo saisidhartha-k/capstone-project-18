@@ -111,6 +111,10 @@ public class SoftwareController {
         softwareservice.decomissionSoftware(id);
     }
    
-
+    @PostMapping("/assetcheck")
+    public void assetCheck()
+    {
+        softwareservice.assetCheck();
+    }
 
 }

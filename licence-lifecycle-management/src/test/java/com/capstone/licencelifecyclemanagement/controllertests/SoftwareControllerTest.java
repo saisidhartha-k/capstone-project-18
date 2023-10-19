@@ -49,7 +49,7 @@ public class SoftwareControllerTest {
         mockSoftware1.setNumberOfEmployees(50);
         mockSoftware1.setCost(1000);
         mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
-        mockSoftware1.setIsExpired(false);
+        //mockSoftware1.setIsExpired(false);
 
         when(softwareService.getSoftwares()).thenReturn(mockSoftwareList);
 

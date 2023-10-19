@@ -68,7 +68,7 @@ public class DeviceService {
 
             device.setCost(dto.getCost());
             device.setExpiryDate(dto.getExpiryDate());
-            device.setIsExpired(false);
+            //device.setIsExpired(false);
             device.setLocation(dto.getLocation());
             device.setPurchaseDate(LocalDate.now());
             device.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
@@ -89,12 +89,13 @@ public class DeviceService {
     }
 
     public List<Device> expierdDevices() {
-        return deviceRepository.findByIsExpired(true);
+        LocalDate today = LocalDate.now();
+        return deviceRepository.findExpiredDevice(today);
     }
 
     public List<Device> notExpiredDevice() {
-        return deviceRepository.findByIsExpired(false);
-    }
+        LocalDate today = LocalDate.now();
+        return deviceRepository.findExpiredDevice(today);    }
 
     public List<Device> devicesAboutToExpire() {
         List<Device> aboutToExpireDevices = new ArrayList<>();
@@ -117,11 +118,11 @@ public class DeviceService {
             LocalDate expiryDate = device.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
-            // if (remainingDays <= 30 && remainingDays > 0)
-            //     sendNotification(remainingDays, device);
+            if (remainingDays <= 30 && remainingDays > 0)
+                sendNotification(remainingDays, device);
 
-             if (remainingDays < 0) {
-                device.setIsExpired(true);
+             if (remainingDays <= 0) {
+                //device.setIsExpired(true);
                 deviceRepository.save(device);
             }
         }

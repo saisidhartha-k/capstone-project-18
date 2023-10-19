@@ -22,12 +22,13 @@ const columns = [
     headerName: "Status",
     width: 100,
     renderCell: (params) => {
-      const statusText = params.row.isExpired ? 'Expired' : 'Not Expired';
-      const statusClass = params.row.isExpired ? 'Expired' : 'NotExpired';
+      const today = new Date();
+      const expiryDate = new Date(params.row.expiryDate);
+      const isExpired = expiryDate <= today;
+      const statusText = isExpired ? "Expired" : "Not Expired";
+      const statusClass = isExpired ? "Expired" : "NotExpired";
       return (
-        <div className={`cellWithStatus ${statusClass}`}>
-          {statusText}
-        </div>
+        <div className={`cellWithStatus ${statusClass}`}>{statusText}</div>
       );
     },
   },

@@ -26,16 +26,16 @@ public class Device {
     private int cost;
     private LocalDate purchaseDate = LocalDate.now();
     private LocalDate expiryDate;
-    private Boolean isExpired;
+    // private Boolean isExpired;
     private String location;
 
-    @PreUpdate
-    @PrePersist
-    private void updateIsExpired() {
-        if (expiryDate != null) {
-            isExpired = LocalDate.now().isAfter(expiryDate);
-        } else {
-            isExpired = false; 
-        }
-    }
+    // @PreUpdate
+    // @PrePersist
+    // private void updateIsExpired() {
+    //     if (expiryDate != null) {
+    //         isExpired = LocalDate.now().isAfter(expiryDate);
+    //     } else {
+    //         isExpired = false; 
+    //     }
+    // }
 }

@@ -20,7 +20,6 @@ public class DeviceTest {
         assertEquals(0, device.getCost());
         assertNotNull(device.getPurchaseDate());
         assertNull(device.getExpiryDate());
-        assertNull(device.getIsExpired());
         assertNull(device.getLocation());
     }
 

@@ -89,7 +89,6 @@ public class SoftwareServiceTest {
         mockSoftware1.setNumberOfEmployees(50);
         mockSoftware1.setCost(1000);
         mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
-        mockSoftware1.setIsExpired(false);
 
         purchaseId1 = new SoftwarePurchaseId();
         purchaseId1.setLicenseNumber("License1");
@@ -137,11 +136,12 @@ public class SoftwareServiceTest {
         Mockito.verify(softwareRepository).save(Mockito.any());
         Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
 
+        LocalDate today = LocalDate.now();
+
         assertEquals("SoftwareName1", addedSoftware.getName());
         assertEquals(50, addedSoftware.getNumberOfEmployees());
         assertEquals(1000, addedSoftware.getCost());
         assertEquals(LocalDate.now().plusMonths(6), addedSoftware.getExpiryDate());
-        assertFalse(addedSoftware.getIsExpired());
         assertEquals(LocalDate.now(), addedSoftware.getPurchaseDate());
         assertEquals(1, addedSoftware.getId());
 
@@ -182,12 +182,13 @@ public class SoftwareServiceTest {
         List<Software> mockSoftwareList = new ArrayList<>();
 
         mockSoftwareList.add(mockSoftware1);
+        LocalDate today = LocalDate.now();
 
-        Mockito.when(softwareRepository.findByIsExpired(false)).thenReturn(mockSoftwareList);
+        Mockito.when(softwareRepository.findExpiredSoftware(today)).thenReturn(mockSoftwareList);
 
         List<Software> result = softwareService.notExpList();
 
-        Mockito.verify(softwareRepository).findByIsExpired(false);
+        Mockito.verify(softwareRepository).findExpiredSoftware(today);
 
         assertEquals(1, result.size());
     }
@@ -196,15 +197,15 @@ public class SoftwareServiceTest {
     public void testExpiredSoftwares() {
 
         List<Software> mockSoftwareList = new ArrayList<>();
-        mockSoftware1.setIsExpired(true);
+        LocalDate today = LocalDate.now();
 
         mockSoftwareList.add(mockSoftware1);
 
-        Mockito.when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
+        Mockito.when(softwareRepository.findExpiredSoftware(today)).thenReturn(mockSoftwareList);
 
         List<Software> result = softwareService.expiredSoftwares();
 
-        Mockito.verify(softwareRepository).findByIsExpired(true);
+        Mockito.verify(softwareRepository).findExpiredSoftware(today);
 
         assertEquals(1, result.size());
     }
@@ -246,15 +247,15 @@ public class SoftwareServiceTest {
 
         List<Software> mockSoftwareList = new ArrayList<>();
 
-        mockSoftware1.setIsExpired(true);
+        LocalDate today = LocalDate.now();
 
         mockSoftwareList.add(mockSoftware1);
 
-        Mockito.when(softwareRepository.findByIsExpired(false)).thenReturn(mockSoftwareList);
+        Mockito.when(softwareRepository.findExpiredSoftware(today)).thenReturn(mockSoftwareList);
 
         int result = softwareService.notExpListCount();
 
-        Mockito.verify(softwareRepository).findByIsExpired(false);
+        Mockito.verify(softwareRepository).findExpiredSoftware(today);
 
         assertEquals(1, result);
     }
@@ -265,25 +266,23 @@ public class SoftwareServiceTest {
         List<Software> mockSoftwareList = new ArrayList<>();
         Software mockSoftware1 = new Software();
         mockSoftware1.setId(1);
-        mockSoftware1.setIsExpired(false);
 
         Software mockSoftware2 = new Software();
         mockSoftware2.setId(2);
-        mockSoftware2.setIsExpired(true);
 
         Software mockSoftware3 = new Software();
         mockSoftware3.setId(3);
-        mockSoftware3.setIsExpired(true);
 
         mockSoftwareList.add(mockSoftware1);
         mockSoftwareList.add(mockSoftware2);
         mockSoftwareList.add(mockSoftware3);
+        LocalDate today = LocalDate.now();
 
-        Mockito.when(softwareRepository.findByIsExpired(true)).thenReturn(mockSoftwareList);
+        Mockito.when(softwareRepository.findExpiredSoftware(today)).thenReturn(mockSoftwareList);
 
         int result = softwareService.expiredSoftwaresCount();
 
-        Mockito.verify(softwareRepository).findByIsExpired(true);
+        Mockito.verify(softwareRepository).findExpiredSoftware(today);
 
         assertEquals(3, result);
     }
@@ -360,7 +359,6 @@ public class SoftwareServiceTest {
         mockSoftware1.setNumberOfEmployees(50);
         mockSoftware1.setCost(1000);
         mockSoftware1.setExpiryDate(LocalDate.now().plusMonths(6));
-        mockSoftware1.setIsExpired(false);
         mockSoftware1.setPurchaseDate(LocalDate.now());
         mockSoftware1.setId(1);
 
@@ -409,13 +407,22 @@ public class SoftwareServiceTest {
         software.setName("Test Software");
         software.setExpiryDate(LocalDate.now().plusDays(20));
 
-       
-    int remainingDays = 20;
+        int remainingDays = 20;
 
-    // Act
-    softwareService.sendNotification(remainingDays, software);
+        // Act
+        softwareService.sendNotification(remainingDays, software);
 
-    // Assert
-    verify(notificationRepository, times(1)).save(any());
+        // Assert
+        verify(notificationRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void testCalculateRemainingDays() {
+        SoftwareService softwareService = new SoftwareService();
+        LocalDate expiryDate = LocalDate.now();
+
+        int remainingDays = softwareService.calculateRemainingDays(expiryDate);
+
+        assertEquals(0, remainingDays);
     }
 }

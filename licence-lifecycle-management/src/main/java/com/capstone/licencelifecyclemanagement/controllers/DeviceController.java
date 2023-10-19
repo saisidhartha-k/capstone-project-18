@@ -93,4 +93,5 @@ public class DeviceController {
         deviceService.decomissionDevice(id);
     }
 
+    // @GetMapping
 }

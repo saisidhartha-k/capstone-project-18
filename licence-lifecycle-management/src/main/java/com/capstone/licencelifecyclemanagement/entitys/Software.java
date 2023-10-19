@@ -35,17 +35,21 @@ public class Software {
     private int cost;
     private LocalDate purchaseDate = LocalDate.now();
     private LocalDate expiryDate;
-    private Boolean isExpired;
+    // private Boolean isExpired;
 
-    @PreUpdate
-    @PrePersist
-    private void updateIsExpired() {
-        if (expiryDate != null) {
-            isExpired = LocalDate.now().isAfter(expiryDate);
-        } else {
-            isExpired = false; 
-        }
-    }
+    // @PreUpdate
+    // @PrePersist
+    // private void updateIsExpired() {
+    //     if (expiryDate != null) {
+    //         isExpired = LocalDate.now().isAfter(expiryDate);
+    //     } else {
+    //         isExpired = false; 
+    //     }
+    // }
+
+    // public boolean isExpired() {
+    //     return LocalDate.now().isAfter(expiryDate);
+    // }
 
   
 }

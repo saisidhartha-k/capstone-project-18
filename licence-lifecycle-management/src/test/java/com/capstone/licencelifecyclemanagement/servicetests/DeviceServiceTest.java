@@ -76,7 +76,6 @@ public class DeviceServiceTest {
         mockDevice.setNumberOfEmployees(50);
         mockDevice.setCost(1000);
         mockDevice.setExpiryDate(LocalDate.now().plusMonths(6));
-        mockDevice.setIsExpired(false);
         mockDevice.setLocation("hyderabad");
     }
 
@@ -116,7 +115,6 @@ public class DeviceServiceTest {
         assertEquals(50, addedDevice.getNumberOfEmployees());
         assertEquals(1000, addedDevice.getCost());
         assertEquals(LocalDate.now().plusMonths(6), addedDevice.getExpiryDate());
-        assertFalse(addedDevice.getIsExpired());
         assertEquals(LocalDate.now(), addedDevice.getPurchaseDate());
         assertEquals(1, addedDevice.getId());
     }
@@ -159,29 +157,31 @@ public class DeviceServiceTest {
         List<Device> mockDeviceList = new ArrayList<>();
 
         mockDeviceList.add(mockDevice);
+        LocalDate today = LocalDate.now();
 
-        when(deviceRepository.findByIsExpired(false)).thenReturn(mockDeviceList);
+        when(deviceRepository.findExpiredDevice(today)).thenReturn(mockDeviceList);
 
         List<Device> result = deviceService.notExpiredDevice();
 
-        verify(deviceRepository, times(1)).findByIsExpired(false);
+        verify(deviceRepository, times(1)).findExpiredDevice(today);
 
         assertEquals(1, result.size());
     }
 
     @Test
     public void testExpiredDevice() {
+                LocalDate today = LocalDate.now();
+
 
         List<Device> mockDeviceList = new ArrayList<>();
-        mockDevice.setIsExpired(true);
 
         mockDeviceList.add(mockDevice);
 
-        Mockito.when(deviceRepository.findByIsExpired(true)).thenReturn(mockDeviceList);
+        Mockito.when(deviceRepository.findExpiredDevice(today)).thenReturn(mockDeviceList);
 
         List<Device> result = deviceService.expierdDevices();
 
-        Mockito.verify(deviceRepository).findByIsExpired(true);
+        Mockito.verify(deviceRepository).findExpiredDevice(today);
 
         assertEquals(1, result.size());
     }
@@ -223,15 +223,14 @@ public class DeviceServiceTest {
 
         List<Device> mockDeviceList = new ArrayList<>();
 
-        mockDevice.setIsExpired(true);
-
+        LocalDate today = LocalDate.now();
         mockDeviceList.add(mockDevice);
 
-        Mockito.when(deviceRepository.findByIsExpired(false)).thenReturn(mockDeviceList);
+        Mockito.when(deviceRepository.findExpiredDevice(today)).thenReturn(mockDeviceList);
 
         int result = deviceService.devicesNotExpiredCount();
 
-        Mockito.verify(deviceRepository).findByIsExpired(false);
+        Mockito.verify(deviceRepository).findExpiredDevice(today);
 
         assertEquals(1, result);
     }
@@ -242,25 +241,24 @@ public class DeviceServiceTest {
         List<Device> mockDeviceList = new ArrayList<>();
         Device mockDevice1 = new Device();
         mockDevice1.setId(1);
-        mockDevice1.setIsExpired(false);
 
         Device mockDevice2 = new Device();
         mockDevice2.setId(2);
-        mockDevice2.setIsExpired(true);
 
         Device mockDevice3 = new Device();
         mockDevice3.setId(3);
-        mockDevice3.setIsExpired(true);
 
         mockDeviceList.add(mockDevice1);
         mockDeviceList.add(mockDevice2);
         mockDeviceList.add(mockDevice3);
 
-        Mockito.when(deviceRepository.findByIsExpired(true)).thenReturn(mockDeviceList);
+        LocalDate today = LocalDate.now();
+
+        Mockito.when(deviceRepository.findExpiredDevice(today)).thenReturn(mockDeviceList);
 
         int result = deviceService.expiredDevicesCount();
 
-        Mockito.verify(deviceRepository).findByIsExpired(true);
+        Mockito.verify(deviceRepository).findExpiredDevice(today);
 
         assertEquals(3, result);
     }
