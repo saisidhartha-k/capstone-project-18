@@ -25,10 +25,18 @@ const columns = [
   { field: "expiryDate", headerName: "Expiry Date", width: 150 },
   {
     field: "isExpired",
-    headerName: "Expired",
+    headerName: "Status",
     width: 100,
-    cellClassName: (params) =>
-      params.value ? "status.Pending" : "status.Approved",
+    renderCell: (params) => {
+      const today = new Date();
+      const expiryDate = new Date(params.row.expiryDate);
+      const isExpired = expiryDate <= today;
+      const statusText = isExpired ? "Expired" : "Not Expired";
+      const statusClass = isExpired ? "Expired" : "NotExpired";
+      return (
+        <div className={`cellWithStatus ${statusClass}`}>{statusText}</div>
+      );
+    },
   },
 ];
 
