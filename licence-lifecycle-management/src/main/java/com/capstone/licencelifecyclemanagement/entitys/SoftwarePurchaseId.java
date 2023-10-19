@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +19,7 @@ public class SoftwarePurchaseId  implements Serializable {
         this.software = software;
     }
 
-    private String LicenseNumber;
+    private String licenseNumber;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Software software;

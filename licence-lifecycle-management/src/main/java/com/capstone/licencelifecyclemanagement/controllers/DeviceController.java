@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.licencelifecyclemanagement.dto.DeviceDto;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
-import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.services.DeviceService;
 
 import jakarta.transaction.Transactional;
@@ -93,5 +92,4 @@ public class DeviceController {
         deviceService.decomissionDevice(id);
     }
 
-    // @GetMapping
 }

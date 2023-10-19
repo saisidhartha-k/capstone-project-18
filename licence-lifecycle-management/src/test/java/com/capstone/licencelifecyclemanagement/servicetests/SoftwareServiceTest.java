@@ -180,16 +180,16 @@ public class SoftwareServiceTest {
     @Test
     public void testNotExpList() {
         List<Software> mockSoftwareList = new ArrayList<>();
-
+        mockSoftware1.setExpiryDate(LocalDate.now().plusDays(10));
         mockSoftwareList.add(mockSoftware1);
         LocalDate today = LocalDate.now();
-
-        Mockito.when(softwareRepository.findExpiredSoftware(today)).thenReturn(mockSoftwareList);
-
-        List<Software> result = softwareService.notExpList();
-
-        Mockito.verify(softwareRepository).findExpiredSoftware(today);
-
+    
+        when(softwareRepository.findNonExpiredSoftware(today)).thenReturn(mockSoftwareList); // Correct method name
+    
+        List<Software> result = softwareService.notExpList(); // Correct method name
+    
+        verify(softwareRepository, times(1)).findNonExpiredSoftware(today);
+    
         assertEquals(1, result.size());
     }
 
@@ -251,11 +251,11 @@ public class SoftwareServiceTest {
 
         mockSoftwareList.add(mockSoftware1);
 
-        Mockito.when(softwareRepository.findExpiredSoftware(today)).thenReturn(mockSoftwareList);
+        Mockito.when(softwareRepository.findNonExpiredSoftware(today)).thenReturn(mockSoftwareList);
 
         int result = softwareService.notExpListCount();
 
-        Mockito.verify(softwareRepository).findExpiredSoftware(today);
+        Mockito.verify(softwareRepository).findNonExpiredSoftware(today);
 
         assertEquals(1, result);
     }

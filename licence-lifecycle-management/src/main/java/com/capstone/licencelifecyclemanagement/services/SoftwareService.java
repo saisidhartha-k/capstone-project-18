@@ -4,13 +4,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import javax.swing.text.html.Option;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.mail.SimpleMailMessage;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
@@ -70,7 +66,6 @@ public class SoftwareService {
 
             software.setCost(dto.getCost());
             software.setExpiryDate(dto.getExpiryDate());
-            // software.setIsExpired(false);
             software.setPurchaseDate(LocalDate.now());
             software.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
             softwarerepository.save(software);
@@ -157,8 +152,8 @@ public class SoftwareService {
     }
 
     public List<Software> notExpList() {
-        LocalDate today = LocalDate.now(); // Get the current date
-        return softwarerepository.findExpiredSoftware(today);
+        LocalDate today = LocalDate.now(); 
+        return softwarerepository.findNonExpiredSoftware(today);
     }
 
     public List<Software> expiredSoftwares() {

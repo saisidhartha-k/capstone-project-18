@@ -11,15 +11,15 @@ import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepositor
 @Service
 public class DeviceCompanyService {
     @Autowired
-    private DeviceCompanyRepository DeviceCompanyRepository;
+    private DeviceCompanyRepository deviceCompanyRepository; 
 
     public DeviceCompany addCompany(DeviceCompany company) {
-        return DeviceCompanyRepository.save(company);
+        return deviceCompanyRepository.save(company);
     }
 
     public List<DeviceCompany> allDeviceCompany ()
     {
-        return DeviceCompanyRepository.findAll();
+        return deviceCompanyRepository.findAll();
     }
 }
 

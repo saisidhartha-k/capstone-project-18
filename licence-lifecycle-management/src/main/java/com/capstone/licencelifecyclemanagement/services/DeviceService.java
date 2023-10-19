@@ -15,7 +15,6 @@ import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
-import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
@@ -68,7 +67,6 @@ public class DeviceService {
 
             device.setCost(dto.getCost());
             device.setExpiryDate(dto.getExpiryDate());
-            //device.setIsExpired(false);
             device.setLocation(dto.getLocation());
             device.setPurchaseDate(LocalDate.now());
             device.setLicenseNumber(String.valueOf(Math.floor(Math.random() * 10000)));
@@ -95,7 +93,8 @@ public class DeviceService {
 
     public List<Device> notExpiredDevice() {
         LocalDate today = LocalDate.now();
-        return deviceRepository.findExpiredDevice(today);    }
+        return deviceRepository.findNonExpiredDevice(today);
+    }
 
     public List<Device> devicesAboutToExpire() {
         List<Device> aboutToExpireDevices = new ArrayList<>();
@@ -122,7 +121,6 @@ public class DeviceService {
                 sendNotification(remainingDays, device);
 
              if (remainingDays <= 0) {
-                //device.setIsExpired(true);
                 deviceRepository.save(device);
             }
         }

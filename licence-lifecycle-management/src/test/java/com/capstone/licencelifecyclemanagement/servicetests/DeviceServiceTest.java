@@ -155,16 +155,16 @@ public class DeviceServiceTest {
     @Test
     public void testNotExpiredDevice() {
         List<Device> mockDeviceList = new ArrayList<>();
-
+        mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
         mockDeviceList.add(mockDevice);
         LocalDate today = LocalDate.now();
-
-        when(deviceRepository.findExpiredDevice(today)).thenReturn(mockDeviceList);
-
-        List<Device> result = deviceService.notExpiredDevice();
-
-        verify(deviceRepository, times(1)).findExpiredDevice(today);
-
+    
+        when(deviceRepository.findNonExpiredDevice(today)).thenReturn(mockDeviceList); // Correct method name
+    
+        List<Device> result = deviceService.notExpiredDevice(); // Correct method name
+    
+        verify(deviceRepository, times(1)).findNonExpiredDevice(today);
+    
         assertEquals(1, result.size());
     }
 
@@ -220,18 +220,17 @@ public class DeviceServiceTest {
 
     @Test
     public void testNotExpiredDevicesCount() {
-
         List<Device> mockDeviceList = new ArrayList<>();
-
-        LocalDate today = LocalDate.now();
+        mockDevice.setExpiryDate(LocalDate.now().plusDays(10));
         mockDeviceList.add(mockDevice);
-
-        Mockito.when(deviceRepository.findExpiredDevice(today)).thenReturn(mockDeviceList);
-
-        int result = deviceService.devicesNotExpiredCount();
-
-        Mockito.verify(deviceRepository).findExpiredDevice(today);
-
+        LocalDate today = LocalDate.now();
+    
+        when(deviceRepository.findNonExpiredDevice(today)).thenReturn(mockDeviceList);
+    
+        int result = deviceService.devicesNotExpiredCount(); // Get the size of the returned list
+    
+        verify(deviceRepository, times(1)).findNonExpiredDevice(today);
+    
         assertEquals(1, result);
     }
 

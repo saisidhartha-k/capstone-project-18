@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

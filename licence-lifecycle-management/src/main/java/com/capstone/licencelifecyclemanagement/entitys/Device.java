@@ -1,19 +1,19 @@
 package com.capstone.licencelifecyclemanagement.entitys;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-public class Device {
+public class Device implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -26,16 +26,7 @@ public class Device {
     private int cost;
     private LocalDate purchaseDate = LocalDate.now();
     private LocalDate expiryDate;
-    // private Boolean isExpired;
     private String location;
 
-    // @PreUpdate
-    // @PrePersist
-    // private void updateIsExpired() {
-    //     if (expiryDate != null) {
-    //         isExpired = LocalDate.now().isAfter(expiryDate);
-    //     } else {
-    //         isExpired = false; 
-    //     }
-    // }
+
 }

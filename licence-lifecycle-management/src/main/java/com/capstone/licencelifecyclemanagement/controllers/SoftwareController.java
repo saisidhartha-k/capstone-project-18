@@ -3,7 +3,6 @@ package com.capstone.licencelifecyclemanagement.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
-import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
-import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 import com.capstone.licencelifecyclemanagement.services.SoftwareService;
 
 import jakarta.transaction.Transactional;
@@ -42,21 +36,18 @@ public class SoftwareController {
     @GetMapping("/getNotExpired")
      public List<Software> getNotExpired()
     {
-        //softwareservice.assetCheck();
         return softwareservice.notExpList();
     } 
 
     @GetMapping("/getExpired")
       public List<Software> getExpired()
     {
-       // softwareservice.assetCheck();
         return softwareservice.expiredSoftwares();
     } 
 
      @GetMapping("/getAboutExpired")
       public List<Software> getAboutExpired()
     {
-        //softwareservice.assetCheck();
         return softwareservice.aboutToExpire();
     } 
 

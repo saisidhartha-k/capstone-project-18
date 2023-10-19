@@ -7,8 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +30,7 @@ public class Notification {
     @JoinColumn(name = "device_id")
     private Device device;
 
-    private String Name;
+    private String name;
     private LocalDate expiryDate;
     private int numberOfDaysLeft;
     private String message;
