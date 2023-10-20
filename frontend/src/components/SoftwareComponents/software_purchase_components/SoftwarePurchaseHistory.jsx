@@ -4,8 +4,14 @@ import { DataGrid } from '@mui/x-data-grid';
 import { getAllSoftwareOrders } from '../../../service/SoftwarePurchaseService';
 
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "purchaseDate", headerName: "purchase Date", width: 100 },
+  { field: "id", headerName: "ID", width: 30 },
+  { field: "purchaseDate", headerName: "purchase Date", width: 150 },
+  {
+    field: "expirydate",
+    headerName: "expiry Date",
+    width: 150,
+    valueGetter: (params) => params.row.softwarePurchaseId.software.expiryDate,
+  },
   {
     field: "licenseNumber",
     headerName: "licenseNumber",
@@ -15,9 +21,22 @@ const columns = [
   {
     field: "software name",
     headerName: "software name",
-    width: 150,
+    width: 170,
     valueGetter: (params) => params.row.softwarePurchaseId.software.name,
   },
+  {
+    field: "software cost",
+    headerName: "software cost",
+    width: 150,
+    valueGetter: (params) => params.row.softwarePurchaseId.software.cost,
+  },
+  {
+    field: "software company",
+    headerName: "software company",
+    width: 200,
+    valueGetter: (params) => params.row.softwarePurchaseId.software.company.name,
+  },
+  
 
 ];
 
@@ -30,7 +49,7 @@ export default function SoftwarePurchasesDataTable() {
         const result = await getAllSoftwareOrders();
         const dataWithCustomIds = result.map((row, index) => ({
           ...row,
-          id: `custom-id-${index}`,
+          id: `${index}`,
         }));
         setData(dataWithCustomIds);
       } catch (error) {
@@ -47,7 +66,6 @@ export default function SoftwarePurchasesDataTable() {
         rows={data}
         columns={columns}
         pageSize={5}
-        checkboxSelection
       />
     </div>
   );

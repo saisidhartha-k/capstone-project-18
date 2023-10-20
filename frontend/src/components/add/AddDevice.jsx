@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { addDevice, getAllDeviceCompanies } from '../../service/DeviceService';
 import './index.scss'
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 function DeviceForm() {
@@ -58,8 +61,12 @@ function DeviceForm() {
     try {
       const response = await addDevice(formData);
       console.log('Device added:', response);
+      toast.success('Device added successfully!', { autoClose: 3000 });
+
     } catch (error) {
       console.error('Error adding device:', error);
+      toast.error('Failed to add the device. Please try again.', { autoClose: 3000 });
+
     }
   };
 
@@ -150,6 +157,19 @@ function DeviceForm() {
           Submit
         </button>
       </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <ToastContainer />
     </div>
   );
 }

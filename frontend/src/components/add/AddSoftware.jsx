@@ -90,7 +90,9 @@ function SoftwareForm() {
         });
       }
     } catch (error) {
-      throw error;
+      console.error('Error adding device:', error);
+      toast.error('Failed to add the software. Please try again.', { autoClose: 3000 });
+
     }
   };
 
