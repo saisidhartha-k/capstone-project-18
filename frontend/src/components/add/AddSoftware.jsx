@@ -1,36 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import './index.scss'
+import React, { useState, useEffect } from "react";
+import "./index.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function SoftwareForm() {
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     company: {
-      id: '',
-      name: '',
+      id: "",
+      name: "",
     },
     numberOfEmployees: 0,
     cost: 0,
-    expiryDate: '',
+    expiryDate: "",
     isExpired: false,
   });
 
   const [companies, setCompanies] = useState([]);
-  const [selectedCompanyId, setSelectedCompanyId] = useState('');
+  const [selectedCompanyId, setSelectedCompanyId] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:8080/softwarecompany/getcompanies')
+    fetch("http://localhost:8080/softwarecompany/getcompanies")
       .then((response) => response.json())
       .then((data) => {
         setCompanies(data);
       })
-      .catch((error) => console.error('Error fetching companies:', error));
+      .catch((error) => console.error("Error fetching companies:", error));
   }, []);
+  const showCustomNotification = () => {
+    toast.info("Custom notification message", {
+      autoClose: 3000
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name.includes('company.')) {
-      const companyField = name.split('.')[1];
+    if (name.includes("company.")) {
+      const companyField = name.split(".")[1];
       setFormData({
         ...formData,
         company: {
@@ -47,7 +55,9 @@ function SoftwareForm() {
   };
 
   const handleCompanySelect = (e) => {
-    const selectedCompany = companies.find((company) => company.name === e.target.value);
+    const selectedCompany = companies.find(
+      (company) => company.name === e.target.value
+    );
 
     if (selectedCompany) {
       setFormData({
@@ -63,18 +73,22 @@ function SoftwareForm() {
 
   const addSoftware = async (softwareData) => {
     try {
-      const response = await fetch('http://localhost:8080/software/addsoftware', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(softwareData),
-      });
+      const response = await fetch(
+        "http://localhost:8080/software/addsoftware",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(softwareData),
+        }
+      );
 
       if (response.ok) {
-        const data = await response.json();
-        return data;
-      } 
+        toast.success("Software added successfully!", {
+          autoClose: 3000, 
+        });
+      }
     } catch (error) {
       throw error;
     }
@@ -86,10 +100,9 @@ function SoftwareForm() {
     try {
       const response = await addSoftware(formData);
 
-      console.log('Software added:', response);
-
+      console.log("Software added:", response);
     } catch (error) {
-      console.error('Error adding software:', error);
+      console.error("Error adding software:", error);
     }
   };
 
@@ -141,6 +154,15 @@ function SoftwareForm() {
           />
         </div>
         <div>
+          <label>Number of Employees:</label>
+          <input
+            type="number"
+            name="numberOfEmployees"
+            value={formData.numberOfEmployees}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
           <label>Cost:</label>
           <input
             type="number"
@@ -158,17 +180,24 @@ function SoftwareForm() {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label>Is Expired:</label>
-          <input
-            type="checkbox"
-            name="isExpired"
-            checked={formData.isExpired}
-            onChange={(e) => setFormData({ ...formData, isExpired: e.target.checked })}
-          />
-        </div>
-        <button  className="submit-button" type="submit">Submit</button>
+        <button className="submit-button" type="submit">
+          Submit
+        </button>
       </form>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <ToastContainer />
     </div>
   );
 }

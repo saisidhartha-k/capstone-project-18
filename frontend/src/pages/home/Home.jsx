@@ -11,6 +11,8 @@ import DangerousIcon from "@mui/icons-material/Dangerous";
 import ReportIcon from "@mui/icons-material/Report";
 import { ToastContainer, toast } from "react-toastify";
 import { fetchAssetCheck } from "../../service/SoftwareService";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export const Home = () => {
   const [notifications, setNotifications] = useState([]); // State to store notifications
@@ -122,8 +124,8 @@ export const Home = () => {
         </div>
       </div>
       <ToastContainer
-        position="top-center"
-        autoClose={1000}
+        position="top-right"
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -131,7 +133,7 @@ export const Home = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="light"
         style={{ position: "fixed", top: "60px", right: "0" }}
       />
     </div>
