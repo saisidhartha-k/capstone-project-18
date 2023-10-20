@@ -77,14 +77,14 @@ export default function DataTable() {
   const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     padding: 6,
     position: "relative",
-    '& .MuiIconButton-label': {
+    "& .MuiIconButton-label": {
       position: "absolute",
       left: "50%",
       top: "50%",
       transform: "translate(-50%, -50%)",
       display: "flex",
       flexDirection: "row",
-      '& .MuiIconButton-edgeEnd': {
+      "& .MuiIconButton-edgeEnd": {
         marginLeft: 0,
       },
     },
@@ -95,25 +95,19 @@ export default function DataTable() {
   return (
     <div>
       <h1>{tableHeading}</h1>
-      <MaterialUISwitch
-        checked={showSoftwareData}
-        onChange={toggleData}
-        sx={{
-          "&.Mui-checked": { color: switchColor },
-          "&.Mui-checked + .MuiSwitch-track": { backgroundColor: switchColor },
-        }}
-      >
-        <IconButton
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <MaterialUISwitch
+          checked={showSoftwareData}
+          onChange={toggleData}
           sx={{
-            "& svg": {
-              width: 32,
-              height: 32,
-            },
+            "&.Mui-checked": { color: switchColor },
+            "&.Mui-checked + .MuiSwitch-track": { backgroundColor: switchColor },
           }}
-        >
-          {showSoftwareData ? <TerminalIcon /> : <DevicesIcon />}
-        </IconButton>
-      </MaterialUISwitch>
+        />
+        <div style={{ marginLeft: "10px" }}>
+          {showSoftwareData ? "Show Expired Device" : "Show Expired Software"  }
+        </div>
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}

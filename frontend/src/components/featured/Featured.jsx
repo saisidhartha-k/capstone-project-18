@@ -3,10 +3,9 @@ import "./featured.scss";
 import Chart from "chart.js/auto";
 import { getSoftwares } from "../../service/SoftwareService";
 import { getDevices } from "../../service/DeviceService";
-import Switch from "@mui/material/Switch"; // Import the MUI Switch component
+import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Tooltip from "@mui/material/Tooltip"; // Import the Tooltip component
-
+import Tooltip from "@mui/material/Tooltip";
 
 const Featured = () => {
   const chartRef = useRef(null);
@@ -15,17 +14,19 @@ const Featured = () => {
   const [leastSpentCompany, setLeastSpentCompany] = useState("");
   const [dataType, setDataType] = useState("software");
   const [data, setData] = useState(null);
+  const [customLabel, setCustomLabel] = useState("Show Software Costs");
 
   const toggleData = () => {
     if (dataType === "software") {
       setDataType("device");
+      setCustomLabel("Show Software Costs");
     } else {
       setDataType("software");
+      setCustomLabel("Show Device Costs");
     }
   };
 
   useEffect(() => {
-    // Fetch and display data based on the selected data type
     const fetchData = async () => {
       let dataResponse;
       if (dataType === "software") {
@@ -54,7 +55,17 @@ const Featured = () => {
         datasets: [
           {
             data: costs,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#4BC0C0",
+              "#9966FF",
+              "#FF9A8B",
+              "#77DD77",
+              "#FFD700",
+              "#C23B22",
+            ],
           },
         ],
       };
@@ -71,7 +82,7 @@ const Featured = () => {
 
       chartInstanceRef.current = newChartInstance;
 
-      const maxCost = Math.max(...costs);
+    const maxCost = Math.max(...costs);
       const minCost = Math.min(...costs);
 
       const mostSpentCompanyIndex = costs.indexOf(maxCost);
@@ -90,6 +101,16 @@ const Featured = () => {
       <h2 className="chart-heading">
         {dataType === "software" ? "Software Costs" : "Device Costs"}
       </h2>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={dataType === "device"}
+            onChange={toggleData}
+            color="primary"
+          />
+        }
+        label={customLabel}
+      />
       <div className="chart-container">
         <canvas ref={chartRef} width={300} height={300}></canvas>
       </div>
@@ -101,17 +122,6 @@ const Featured = () => {
           Company with the least money spent: {leastSpentCompany}
         </p>
       </div>
-      <Tooltip title={`Press to show ${dataType === "software" ? "Device" : "Software"} Costs`} arrow>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={dataType === "device"}
-              onChange={toggleData}
-              color="primary"
-            />
-          }
-        />
-      </Tooltip>
     </div>
   );
 };

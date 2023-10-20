@@ -8,7 +8,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const Navbar = ({ toggleNotifications }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(true);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -37,7 +37,7 @@ function DashboardChart() {
   const softwareChartData = softwareData.map((software) => ({
     name: software.name,
     numberOfEmployees: software.numberOfEmployees,
-    company: software.company.name, // Include the company name
+    company: software.company.name, 
   }));
 
   return (
@@ -58,7 +58,7 @@ function DashboardChart() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip content={<CustomTooltip />} /> {/* Use custom tooltip content */}
+          <Tooltip content={<CustomTooltip />} /> 
           <Line type="monotone" dataKey="numberOfEmployees" stroke="#8884d8" fill="#8884d8" />
         </LineChart>
       </ResponsiveContainer>
@@ -70,7 +70,8 @@ function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip" style={{ background: 'rgba(169, 169, 169, 0.8)', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
-        <p>{`${label} : number of employees using ${payload[0].value}`}</p>
+        <p>{`Product name : ${label}` }</p>
+        <p>{`number of employees using : ${payload[0].value}`}</p>
         <p>{`Company: ${payload[0].payload.company}`}</p>
       </div>
     );

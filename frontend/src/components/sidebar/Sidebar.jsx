@@ -6,12 +6,14 @@ import DevicesIcon from "@mui/icons-material/Devices";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import { Link, Route } from "react-router-dom";
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import DvrIcon from '@mui/icons-material/Dvr';
 
 export const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <span className="logo">logo</span>
+        <span className="logo">LLM</span>
       </div>
       <div className="center">
         <ul>
@@ -44,8 +46,8 @@ export const Sidebar = () => {
 
           <li>
             <Link to="/software/softwarecompanies">
-              <DevicesIcon className="icon" />
-              <span>All Companies</span>
+              <TerminalIcon className="icon" />
+              <span>Software Companies</span>
             </Link>
           </li>
 
@@ -58,7 +60,7 @@ export const Sidebar = () => {
 
           <li>
             <Link to="/software/softwarepurchasehistory">
-              <AddToPhotosIcon className="icon" />
+              <WorkHistoryIcon className="icon" />
               <span>Software Purchases</span>
             </Link>
           </li>
@@ -66,27 +68,27 @@ export const Sidebar = () => {
           <p className="title"> Device menu </p>
           <li>
             <Link to="/device">
-              <DevicesIcon className="icon" />
+              <DvrIcon className="icon" />
               <span>Devices</span>
             </Link>
           </li>
 
           <li>
             <Link to="/device/expireddevice">
-              <DevicesIcon className="icon" />
+              <DvrIcon className="icon" />
               <span>Expired Devices</span>
             </Link>
           </li>
           <li>
             <Link to="/device/abouttoexpireDevice">
-              <DevicesIcon className="icon" />
+              <DvrIcon className="icon" />
               <span>About To Expire </span>
             </Link>
           </li>
 
           <li>
             <Link to="/device/devicecompanies">
-              <DevicesIcon className="icon" />
+              <DvrIcon className="icon" />
               <span>Device Companies</span>
             </Link>
           </li>
@@ -100,7 +102,7 @@ export const Sidebar = () => {
 
           <li>
             <Link to="/software/softwarepurchasehistory">
-              <AddToPhotosIcon className="icon" />
+              <WorkHistoryIcon className="icon" />
               <span>Device Purchases</span>
             </Link>
           </li>

@@ -10,13 +10,11 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import ReportIcon from "@mui/icons-material/Report";
 import { ToastContainer, toast } from "react-toastify";
-import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { fetchAssetCheck } from "../../service/SoftwareService";
-import { FormControlLabel, FormGroup, Switch } from "@mui/material";
 
 export const Home = () => {
   const [notifications, setNotifications] = useState([]); // State to store notifications
-  const [showNotifications, setShowNotifications] = useState(true); // State to control notification visibility
+  const [showNotifications, setShowNotifications] = useState(false); // State to control notification visibility
 
   useEffect(() => {
     const notificationInterval = setInterval(() => {
