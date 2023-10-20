@@ -12,40 +12,42 @@ import ReportIcon from "@mui/icons-material/Report";
 import { ToastContainer, toast } from "react-toastify";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { fetchAssetCheck } from "../../service/SoftwareService";
+import { FormControlLabel, FormGroup, Switch } from "@mui/material";
 
 export const Home = () => {
   const [notifications, setNotifications] = useState([]); // State to store notifications
+  const [showNotifications, setShowNotifications] = useState(true); // State to control notification visibility
 
-  // useEffect(() => {
-  //   // Fetch data for notifications every 10 seconds
-  //   const notificationInterval = setInterval(() => {
-  //     fetchDataForNotifications();
-  //   }, 10000);
+  useEffect(() => {
+    const notificationInterval = setInterval(() => {
+      if (showNotifications) {
+        fetchDataForNotifications();
+      }
+    }, 5000);
 
-  //   return () => {
-  //     clearInterval(notificationInterval);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(notificationInterval);
+    };
+  }, [showNotifications]);
 
-  // Function to fetch data for notifications
-  // const fetchDataForNotifications = async () => {
-  //   try {
-  //     //const data = await fetchAssetCheck();
+  const fetchDataForNotifications = async () => {
+    try {
+      const data = await fetchAssetCheck();
 
-  //     // Check if data is an array of strings (notifications)
-  //     if (Array.isArray(data)) {
-  //       setNotifications(data);
-  //       showNotifications(data);
-  //     } else {
-  //       console.error("Invalid data format received from the API.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+      if (Array.isArray(data)) {
+        setNotifications(data);
+        if (showNotifications) {
+          displayNotifications(data);
+        }
+      } else {
+        console.error("Invalid data format received from the API.");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-  // Function to show notifications
-  const showNotifications = (data) => {
+  const displayNotifications = (data) => {
     data.forEach((message) => {
       toast(message, {
         autoClose: 5000,
@@ -53,12 +55,16 @@ export const Home = () => {
     });
   };
 
+  const toggleNotifications = () => {
+    setShowNotifications((prevShowNotifications) => !prevShowNotifications);
+  };
+
 
   return (
     <div className="home">
       <Sidebar />
       <div className="homeContainer">
-        <Navbar />
+        <Navbar toggleNotifications={toggleNotifications}/>
         <div className="widgets">
           <Widget
             title="Softwares with Valid License"
@@ -117,6 +123,18 @@ export const Home = () => {
             <Table />
           </div>
         </div>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={showNotifications}
+                onChange={toggleNotifications}
+                name="showNotificationsSwitch"
+              />
+            }
+            label="Show Notifications"
+          />
+        </FormGroup>
       </div>
       <ToastContainer
         position="top-right"
