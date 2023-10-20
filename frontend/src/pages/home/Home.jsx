@@ -59,12 +59,11 @@ export const Home = () => {
     setShowNotifications((prevShowNotifications) => !prevShowNotifications);
   };
 
-
   return (
     <div className="home">
       <Sidebar />
       <div className="homeContainer">
-        <Navbar toggleNotifications={toggleNotifications}/>
+        <Navbar toggleNotifications={toggleNotifications} />
         <div className="widgets">
           <Widget
             title="Softwares with Valid License"
@@ -123,22 +122,10 @@ export const Home = () => {
             <Table />
           </div>
         </div>
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={showNotifications}
-                onChange={toggleNotifications}
-                name="showNotificationsSwitch"
-              />
-            }
-            label="Show Notifications"
-          />
-        </FormGroup>
       </div>
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
+        position="top-center"
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -147,10 +134,9 @@ export const Home = () => {
         draggable
         pauseOnHover
         theme="dark"
-        style={{ position: "fixed", top: "0", right: "0" }}
+        style={{ position: "fixed", top: "60px", right: "0" }}
       />
-        </div>
-        
+    </div>
   );
 };
 export default Home;

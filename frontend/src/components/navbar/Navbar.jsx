@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./navbar.scss";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import { FormControlLabel, FormGroup } from "@mui/material";
+import { FormControlLabel, FormGroup, Tooltip } from "@mui/material";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
@@ -17,7 +17,6 @@ const Navbar = ({ toggleNotifications }) => {
       } else {
         setIsScrolled(false);
       }
-      console.log(showNotifications);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -31,15 +30,19 @@ const Navbar = ({ toggleNotifications }) => {
     <div className={`navbar ${isScrolled ? "fixed" : ""}`}>
       <div className="wrapper">
         <div className="items">
-          <div className="item" onClick={() => {
-            setShowNotifications(!showNotifications);
-            toggleNotifications();
-          }}>
-            {showNotifications ? (
-              <NotificationsActiveIcon className="icon" />
-            ) : (
-              <NotificationsIcon className="icon" />
-            )}
+          <div className="item">
+            <Tooltip title={showNotifications ? "Mute Notifications" : "Show Notifications"} arrow>
+              <div onClick={() => {
+                setShowNotifications(!showNotifications);
+                toggleNotifications();
+              }}>
+                {showNotifications ? (
+                  <NotificationsActiveIcon className="icon" />
+                ) : (
+                  <NotificationsIcon className="icon" />
+                )}
+              </div>
+            </Tooltip>
           </div>
           <div className="item">
             <DarkModeOutlinedIcon className="icon" />
