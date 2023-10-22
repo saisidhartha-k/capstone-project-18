@@ -117,12 +117,12 @@ public class DeviceService {
             LocalDate expiryDate = device.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
-            if (remainingDays <= 30 && remainingDays > 0)
-                sendNotification(remainingDays, device);
+            // if (remainingDays <= 30 && remainingDays > 0)
+            //     sendNotification(remainingDays, device);
 
-            if (remainingDays <= 0) {
-                deviceRepository.save(device);
-            }
+            // if (remainingDays <= 0) {
+            //     deviceRepository.save(device);
+            // }
         }
 
     }
@@ -133,25 +133,7 @@ public class DeviceService {
         return (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
     }
 
-    public void sendNotification(int remainingDays, Device device) {
-        if (device != null) {
-            String meesage = "Your device license for " + device.getName() +
-                    " will expire in " + remainingDays + " days. Please take action.";
-
-            Notification notification = new Notification();
-            notification.setMessage(meesage);
-            notification.setExpiryDate(device.getExpiryDate());
-            notification.setNumberOfDaysLeft(remainingDays);
-            notification.setDevice(device);
-            notification.setName(device.getName());
-            notification.setIsSoftware(false);
-
-            notificationRepository.save(notification);
-
-            System.out.println(meesage);
-
-        }
-    }
+  
 
     private void setExistingCompany(Device device) {
         Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(device.getCompany().getId());

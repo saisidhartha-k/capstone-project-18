@@ -266,20 +266,20 @@ class DeviceServiceTest {
 
     }
 
-    @Test
-    void testDeviceSendNotification() {
-        // Arrange
-        Device device = new Device();
-        device.setName("Test device");
-        device.setExpiryDate(LocalDate.now().plusDays(20));
+    // @Test
+    // void testDeviceSendNotification() {
+    //     // Arrange
+    //     Device device = new Device();
+    //     device.setName("Test device");
+    //     device.setExpiryDate(LocalDate.now().plusDays(20));
 
-        int remainingDays = 20;
+    //     int remainingDays = 20;
 
-        // Act
-        deviceService.sendNotification(remainingDays, device);
+    //     // Act
+    //     deviceService.sendNotification(remainingDays, device);
 
-        // Assert
-        verify(notificationRepository, times(1)).save(any());
-    }
+    //     // Assert
+    //     verify(notificationRepository, times(1)).save(any());
+    // }
 
 }

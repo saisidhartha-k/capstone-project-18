@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.capstone.licencelifecyclemanagement.entitys.Notification;
+
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
@@ -368,6 +370,7 @@ class SoftwareServiceTest {
         assert notificationList.size() == 1;
         assert notificationList.get(0).contains("Expiring Software");
         assertTrue(notificationList.get(0).contains("Expiring Software"));
+        
 
     }
 

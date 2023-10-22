@@ -1,5 +1,6 @@
 package com.capstone.licencelifecyclemanagement.servicetests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -10,6 +11,7 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -107,6 +109,8 @@ public class RmaServiceTest {
         RMA rma = new RMA();
         rma.setProductType("Software");
         rma.setReason("defect");
+        rma.setId(1);
+        rma.setRequestDate(LocalDate.now());
 
         when(softwareRepository.findById(id)).thenReturn(Optional.of(mockSoftware1));
 
@@ -117,6 +121,21 @@ public class RmaServiceTest {
         verify(rmaRepository, times(1)).save(any(RMA.class));
         verify(softwarePurchaseRepository, times(1)).deleteBySoftwarePurchaseId_Software_Id(id);
         verify(softwareRepository, times(1)).deleteById(id);
+        ArgumentCaptor<RMA> rmaCaptor = ArgumentCaptor.forClass(RMA.class);
+        verify(rmaRepository).save(rmaCaptor.capture());
+        RMA savedRMA = rmaCaptor.getValue();
+        assertEquals(mockCompany1.getId(), savedRMA.getCompanyId());
+        assertEquals(mockCompany1.getName(), savedRMA.getCompanyName());
+        assertEquals(mockSoftware1.getExpiryDate(), savedRMA.getExpiryDate());
+        assertEquals(mockSoftware1.getLicenseNumber(), savedRMA.getLicenseNumber());
+        assertEquals(mockSoftware1.getName(), savedRMA.getProductName());
+        assertEquals(mockSoftware1.getCost(), savedRMA.getCost());
+        assertEquals(mockSoftware1.getNumberOfEmployees(), savedRMA.getNumberOfEmployees());
+        assertEquals(rma.getId(),savedRMA.getId());
+        assertEquals(rma.getReason(),savedRMA.getReason());
+        assertEquals(mockSoftware1.getPurchaseDate(),savedRMA.getPurchasDate());
+        assertEquals(rma.getRequestDate(),savedRMA.getRequestDate());
+
     }
 
     @Test
