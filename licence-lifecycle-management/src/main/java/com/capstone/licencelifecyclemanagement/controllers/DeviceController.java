@@ -35,7 +35,6 @@ public class DeviceController {
     @GetMapping("/get")
     public List<Device> getSoftwares()
     {
-        deviceService.assetCheck();
         return deviceService.getDevices();
     }
 
