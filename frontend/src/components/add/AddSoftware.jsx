@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./index.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios"; // Import the Axios library
-
-const BASE_URL = "http://localhost:8080"; // Update with your API base URL
+import { addSoftware, getSoftwareCompanies, getSoftwares, renewSoftware } from "../../service/SoftwareService";
 
 function SoftwareForm() {
   const [formData, setFormData] = useState({
@@ -33,20 +31,22 @@ function SoftwareForm() {
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [mode, setMode] = useState("Add"); // "Add" or "Renew"
 
+  const [software, setSoftware] = useState([]);
+  const [selectedSoftwareId, setSelectedSoftwareId] = useState("");
+
   useEffect(() => {
-    fetch(`${BASE_URL}/softwarecompany/getcompanies`)
-      .then((response) => response.json())
+    getSoftwareCompanies()
       .then((data) => {
         setCompanies(data);
       })
       .catch((error) => console.error("Error fetching companies:", error));
-  }, []);
 
-  const showCustomNotification = () => {
-    toast.info("Custom notification message", {
-      autoClose: 3000,
-    });
-  };
+    getSoftwares()
+      .then((data) => {
+        setSoftware(data);
+      })
+      .catch((error) => console.error("Error fetching software:", error));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,57 +85,17 @@ function SoftwareForm() {
     }
   };
 
-  const addSoftware = async (softwareData) => {
+  const handleRenewSubmit = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8080/software/addsoftware",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(softwareData),
-
-     
-        }
-      );
-      if (response.ok) {
-        toast.success("Software added successfully!", {
-          autoClose: 3000, 
-        });
-      }
-    } catch (error) {
-      console.error('Error adding device:', error);
-      toast.error('Failed to add the software. Please try again.', { autoClose: 3000 });
-
-    }
-  };
-
-  const renewSoftware = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/software/renew/${renewData.id}`,
-        {
-          cost: renewData.cost,
-          expiryDate: renewData.expiryDate,
-          company: renewData.company,
-        }
-      );
-
-      if (response.status === 200) {
-        toast.success("Software renewed successfully!", {
-          autoClose: 3000,
-        });
-      } else {
-        toast.error("Failed to renew the software. Please try again.", {
-          autoClose: 3000,
-        });
-      }
-    } catch (error) {
-      console.error("Error renewing software:", error);
-      toast.error("Failed to renew the software. Please try again.", {
-        autoClose: 3000,
+      await renewSoftware(renewData.id, {
+        cost: renewData.cost,
+        expiryDate: renewData.expiryDate,
+        company: renewData.company,
       });
+      toast.success('Software renewed successfully!', { autoClose: 3000 });
+    } catch (error) {
+      console.error('Error renewing software:', error);
+      toast.error('Failed to renew the software. Please try again.', { autoClose: 3000 });
     }
   };
 
@@ -145,14 +105,17 @@ function SoftwareForm() {
     if (mode === "Add") {
       try {
         await addSoftware(formData);
+        toast.success('Software added successfully!', { autoClose: 3000 });
       } catch (error) {
-        console.error("Error adding software:", error);
+        console.error('Error adding software:', error);
+        toast.error('Failed to add the software. Please try again.', { autoClose: 3000 });
       }
     } else if (mode === "Renew") {
       try {
-        await renewSoftware();
+        await handleRenewSubmit();
       } catch (error) {
         console.error("Error renewing software:", error);
+        toast.error('Failed to renew the software. Please try again.', { autoClose: 3000 });
       }
     }
   };
@@ -241,13 +204,19 @@ function SoftwareForm() {
         <form className="form" onSubmit={handleSubmit}>
           <div>
             <label>Software ID to Renew:</label>
-            <input
-              type="text"
+            <select
               name="renewData.id"
               value={renewData.id}
               onChange={(e) => setRenewData({ ...renewData, id: e.target.value })}
               required
-            />
+            >
+              <option value="">Select a Software</option>
+              {software.map((sw) => (
+                <option key={sw.id} value={sw.id}>
+                  {sw.id} - {sw.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label>Cost:</label>
@@ -255,21 +224,34 @@ function SoftwareForm() {
               type="number"
               name="renewData.cost"
               value={renewData.cost}
-              onChange={(e) =>
-                setRenewData({ ...renewData, cost: e.target.value })
-              }
+              onChange={(e) => setRenewData({ ...renewData, cost: e.target.value })}
             />
           </div>
           <div>
-            <label>Expiry Date:</label>
-            <input
-              type="date"
-              name="renewData.expiryDate"
-              value={renewData.expiryDate}
-              onChange={(e) =>
-                setRenewData({ ...renewData, expiryDate: e.target.value })
-              }
-            />
+              <label>Expiry Date:</label>
+              <input
+                type="date"
+                name="renewData.expiryDate"
+                value={renewData.expiryDate}
+                onChange={(e) =>
+                  setRenewData({ ...renewData, expiryDate: e.target.value })
+                }
+              />
+            </div>
+          <div>
+            <label>Company Name (Select):</label>
+            <select
+              name="renewData.company.name"
+              value={renewData.company.name}
+              onChange={(e) => setRenewData({ ...renewData, company: { ...renewData.company, name: e.target.value } })
+              }>
+              <option value="">Select a Company</option>
+              {companies.map((company) => (
+                <option key={company.id} value={company.name}>
+                  {company.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label>Company ID:</label>
@@ -277,26 +259,7 @@ function SoftwareForm() {
               type="number"
               name="renewData.company.id"
               value={renewData.company.id}
-              onChange={(e) =>
-                setRenewData({
-                  ...renewData,
-                  company: { ...renewData.company, id: e.target.value },
-                })
-              }
-            />
-          </div>
-          <div>
-            <label>Company Name:</label>
-            <input
-              type="text"
-              name="renewData.company.name"
-              value={renewData.company.name}
-              onChange={(e) =>
-                setRenewData({
-                  ...renewData,
-                  company: { ...renewData.company, name: e.target.value },
-                })
-              }
+              onChange={handleChange}
             />
           </div>
           <button className="submit-button" type="submit">
@@ -317,9 +280,8 @@ function SoftwareForm() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="light"
       />
-      <ToastContainer />
     </div>
   );
 }

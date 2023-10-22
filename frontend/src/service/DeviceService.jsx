@@ -60,13 +60,19 @@ export const decommissionDevice = async (id) => {
   try {
     const response = await axios.delete(`${BASE_URL}/decomissionDevice/${id}`);
     console.log(response);
-    if (response.status === 200) {
-      return true; 
-    } else {
-      return false;
-    }
+    return response.status === 200;
   } catch (error) {
     throw new Error('Error decommissioning device');
+  }
+};
+
+export const renewDevice = async (id, deviceDto) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/renew/${id}`, deviceDto);
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    throw new Error('Error renewing device');
   }
 };
 
