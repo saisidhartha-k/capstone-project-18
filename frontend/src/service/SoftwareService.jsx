@@ -103,7 +103,14 @@ export const fetchAssetCheck = async () => {
   }
 };
 
-
+export const renewSoftware = async (id, softwareData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/renew/${id}`, softwareData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error renewing software');
+  }
+};
 
 
 

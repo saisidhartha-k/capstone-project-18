@@ -15,6 +15,7 @@ import AddNewDevice from "./pages/devicepages/adddevice/AddDevicePage";
 import AddNewSoftware from "./pages/addsoftware/AddSoftwarePage";
 import List, { SoftwareList } from "./pages/softwarepages/Softwarelist/SoftwareList";
 import SoftwareComapniesList from "./pages/softwarepages/softwarecompanies/SoftwareCompanies";
+import SoftwareRenewalForm from "./components/add/RenewSoftware";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
               <Route path="softwarecompanies" element={<SoftwareComapniesList />} />
               <Route path="addSoftware" element={<AddNewSoftware />} />
               <Route path="softwarepurchasehistory" element={<SoftwarePurchaseHistoryList />}/>
+              <Route path="renew" element={<SoftwareRenewalForm />}/>
+
             </Route>
             <Route path="device/">
               <Route index element={<AllDevicesList/>} />

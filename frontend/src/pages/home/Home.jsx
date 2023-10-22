@@ -30,6 +30,25 @@ export const Home = () => {
     };
   }, [showNotifications]);
 
+  const handleMuteUnmute = (notification) => {
+    const mutedNotifications = JSON.parse(localStorage.getItem("mutedNotifications")) || [];
+
+    if (mutedNotifications.includes(notification)) {
+      // Unmute the notification
+      const updatedMutedNotifications = mutedNotifications.filter((item) => item !== notification);
+      localStorage.setItem("mutedNotifications", JSON.stringify(updatedMutedNotifications));
+    } else {
+      // Mute the notification
+      mutedNotifications.push(notification);
+      localStorage.setItem("mutedNotifications", JSON.stringify(mutedNotifications));
+    }
+  };
+
+  const isMuted = (notification) => {
+    const mutedNotifications = JSON.parse(localStorage.getItem("mutedNotifications")) || [];
+    return mutedNotifications.includes(notification);
+  };
+
   const fetchDataForNotifications = async () => {
     try {
       const data = await fetchAssetCheck();
@@ -49,9 +68,20 @@ export const Home = () => {
 
   const displayNotifications = (data) => {
     data.forEach((message) => {
-      toast(message, {
-        autoClose: 5000,
-      });
+      if (!isMuted(message)) {
+        const isMutedNotification = isMuted(message);
+        toast(
+          <div>
+            <span>{message}</span>
+            <button onClick={() => handleMuteUnmute(message)}>
+              {isMutedNotification ? "Unmute" : "Mute"}
+            </button>
+          </div>,
+          {
+            autoClose: 5000,
+          }
+        );
+      }
     });
   };
 
