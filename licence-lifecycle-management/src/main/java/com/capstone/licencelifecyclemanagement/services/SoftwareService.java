@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
+import com.capstone.licencelifecyclemanagement.entitys.ProductType;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
@@ -80,9 +81,10 @@ public class SoftwareService {
     }
 
     public void decomissionSoftware(int id) {
-        softwarePurchaseRepository.deleteBySoftwarePurchaseId_Software_Id(id);
+         softwarePurchaseRepository.deleteBySoftwarePurchaseId_Software_Id(id);
 
         softwarerepository.deleteById(id);
+       // notificationRepository.deleteAllById(id);
     }
 
     public List<Software> getSoftware() {
@@ -138,9 +140,8 @@ public class SoftwareService {
                 notification.setMessage(meesage);
                 notification.setExpiryDate(software.getExpiryDate());
                 notification.setNumberOfDaysLeft(remainingDays);
-                notification.setSoftware(software);
-                notification.setName(software.getName());
-                notification.setIsSoftware(true);
+                notification.setProductName(software.getName());
+                notification.setProductType(ProductType.SOFTWARE);
                 notificationRepository.save(notification);
 
                 System.out.println(meesage);

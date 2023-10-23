@@ -21,6 +21,6 @@ public class SoftwarePurchaseId  implements Serializable {
 
     private String licenseNumber;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Software software;
 }

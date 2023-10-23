@@ -1,19 +1,17 @@
 package com.capstone.licencelifecyclemanagement.services;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capstone.licencelifecyclemanagement.entitys.Available;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
-import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
-import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
-import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
 import com.capstone.licencelifecyclemanagement.entitys.RMA;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
-import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
 import com.capstone.licencelifecyclemanagement.repository.RMARepository;
@@ -37,86 +35,85 @@ public class RmaService {
     @Autowired
     private DevicePurchaseRepository devicePurchaseRepository;
 
-    public void moveToRma(int id, RMA rma) {
-        Optional<Software> softwareOptional = softwareRepository.findById(id);
-        Optional<Device> deviceOptional = deviceRepository.findById(id);
-
-        if (softwareOptional.isPresent() && rma.getProductType().equals("Software")) {
-            Software software = softwareOptional.get();
-
-            // Copy software details into the RMA object
-            rma.setCompanyId(software.getCompany().getId());
-            rma.setCompanyName(software.getCompany().getName());
-            rma.setExpiryDate(software.getExpiryDate());
-            rma.setLicenseNumber(software.getLicenseNumber());
-            rma.setProductName(software.getName());
-            rma.setPurchasDate(software.getPurchaseDate());
-            rma.setCost(software.getCost());
-            rma.setNumberOfEmployees(software.getNumberOfEmployees());
-
+    public void moveSoftwareToRma(int softwareId, String reason) {
+        Optional<Software> softwareOpt = softwareRepository.findById(softwareId);
+        if (softwareOpt.isPresent()) {
+            RMA rma = new RMA();
+            Software software = softwareOpt.get();
+            software.setAvailable(Available.NOT_AVAILABLE);
+            rma.setSoftware(software);
+            rma.setRequestDate(LocalDate.now());
+            rma.setReason(reason);
             rmaRepository.save(rma);
-            softwarePurchaseRepository.deleteBySoftwarePurchaseId_Software_Id(id);
-            softwareRepository.deleteById(id);
-        } else if (deviceOptional.isPresent() && rma.getProductType().equals("Device")) {
-            System.out.println("inside");
-            Device device = deviceOptional.get();
-
-            // Copy device details into the RMA object
-            rma.setCompanyId(device.getCompany().getId());
-            rma.setCompanyName(device.getCompany().getName());
-            rma.setExpiryDate(device.getExpiryDate());
-            rma.setLicenseNumber(device.getLicenseNumber());
-            rma.setProductName(device.getName());
-            rma.setCost(device.getCost());
-            rma.setPurchasDate(device.getPurchaseDate());
-
-            rmaRepository.save(rma);
-            devicePurchaseRepository.deleteByDevicePurchaseId_Device_Id(id);
-            deviceRepository.deleteById(id);
         }
     }
 
-    public void putBackFromRma(int rmaId) {
-        Optional<RMA> rmaOptional = rmaRepository.findById(rmaId);
-
-        if (rmaOptional.isPresent()) {
-            RMA rma = rmaOptional.get();
-
-            if ("software".equalsIgnoreCase(rma.getProductType())) {
-                // Handle software
-                Software software = new Software();
-                software.setName(rma.getProductName());
-                SoftwareCompany company = new SoftwareCompany();
-                company.setId(rma.getCompanyId());
-                software.setCompany(company);
-                software.setExpiryDate(rma.getExpiryDate());
-                software.setLicenseNumber(rma.getLicenseNumber());
-                software.setNumberOfEmployees(rma.getNumberOfEmployees());
-                software.setCost(rma.getCost());
-
-                // Save to Software repository
-                softwareRepository.save(software);
-                SoftwarePurchaseId softwarePurchaseId = new SoftwarePurchaseId(software.getLicenseNumber(), software);
-                SoftwarePurchase sPurchase = new SoftwarePurchase(softwarePurchaseId);
-                softwarePurchaseRepository.save(sPurchase);
-            } else if ("device".equalsIgnoreCase(rma.getProductType())) {
-                // Handle device
-                Device device = new Device();
-                device.setName(rma.getProductName());
-                DeviceCompany company = new DeviceCompany();
-                company.setId(rma.getCompanyId());
-                device.setCompany(company);
-                device.setExpiryDate(rma.getExpiryDate());
-                device.setLicenseNumber(rma.getLicenseNumber());
-                device.setCost(rma.getCost());
-
-                deviceRepository.save(device);
-                DevicePurchaseId devicePurchaseId = new DevicePurchaseId(device.getLicenseNumber(), device);
-                DevicePurchase devicePurchase = new DevicePurchase(devicePurchaseId);
-                devicePurchaseRepository.save(devicePurchase);
-            }
-
-            rmaRepository.deleteById(rmaId);
+    public void moveDeviceToRma(int deviceId, String reason) {
+        Optional<Device> deviceOpt = deviceRepository.findById(deviceId);
+        if (deviceOpt.isPresent()) {
+            RMA rma = new RMA();
+            Device device = deviceOpt.get();
+            device.setAvailable(Available.NOT_AVAILABLE);
+            rma.setDevice(device);
+            rma.setRequestDate(LocalDate.now());
+            rma.setReason(reason);
+            rmaRepository.save(rma);
         }
     }
+
+    private String randomLicense() {
+        String salt = "abcdefghijklmno0123456789";
+        int randomLength = 10;
+        String randomString = "";
+        Random rand = new Random();
+        for (int i = 0; i < randomLength; i++) {
+            randomString += salt.charAt(rand.nextInt(salt.length()));
+        }
+        return randomString;
+    }
+
+    public void putBackSoftwareFromRma(int rmaId) {
+        Optional<RMA> rmaOpt = rmaRepository.findById(rmaId);
+        if (rmaOpt.isPresent() && rmaOpt.get().getSoftware() != null) {
+            RMA rma = rmaOpt.get();
+            Software software = rma.getSoftware();
+
+            LocalDate requestDate = rma.getRequestDate();
+            LocalDate currentDate = LocalDate.now();
+            Period period = Period.between(requestDate, currentDate);
+            int months = period.getYears() * 12 + period.getMonths();
+
+            LocalDate expiryDate = software.getExpiryDate();
+            expiryDate = expiryDate.plusMonths(months);
+            software.setExpiryDate(expiryDate);
+
+            software.setLicenseNumber(randomLicense());
+            software.setAvailable(Available.AVAILABLE);
+            rmaRepository.delete(rma);
+        }
+
+    }
+
+    public void putBackDeviceFromRma(int rmaId) {
+        Optional<RMA> rmaOpt = rmaRepository.findById(rmaId);
+    
+        if (rmaOpt.isPresent() && rmaOpt.get().getDevice() != null) {
+            RMA rma = rmaOpt.get();
+            Device device = rma.getDevice();
+    
+            LocalDate requestDate = rma.getRequestDate();
+            LocalDate currentDate = LocalDate.now();
+            Period period = Period.between(requestDate, currentDate);
+            int months = period.getYears() * 12 + period.getMonths();
+    
+            LocalDate expiryDate = device.getExpiryDate();
+            expiryDate = expiryDate.plusMonths(months);
+            device.setExpiryDate(expiryDate);
+    
+            device.setLicenseNumber(randomLicense()); // Implement your serial number generation logic
+            device.setAvailable(Available.AVAILABLE); // Assuming you have an enumeration for device status
+            rmaRepository.delete(rma);
+        }
+    }
+    
 }

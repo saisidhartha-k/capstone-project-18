@@ -20,19 +20,34 @@ public class RmaController {
     @Autowired
     private RmaService rmaService;
 
-    @PostMapping("/move/{softwareId}")
+    @PostMapping("/moveSoftware/{softwareId}")
     public ResponseEntity<Void> moveSoftwareToRma(@PathVariable int softwareId, @RequestBody RMA rma) {
         try {
-            rmaService.moveToRma(softwareId, rma);
+            rmaService.moveSoftwareToRma(softwareId, rma.getReason());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/putback/{id}")
-    public void moveSoftwareToRma(@PathVariable int id) {
-
-        rmaService.putBackFromRma(id);
+    @PostMapping("/moveDevice/{deviceId}")
+    public ResponseEntity<Void> moveDeviceToRma(@PathVariable int deviceId, @RequestBody RMA rma) {
+        try {
+            rmaService.moveDeviceToRma(deviceId, rma.getReason());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+    @PostMapping("/putBackSoftware/{id}")
+    public void putBackSoftware(@PathVariable int id) {
+        rmaService.putBackSoftwareFromRma(id);
+    }
+
+    @PostMapping("/putBackDevice/{id}")
+    public void putBackDevice(@PathVariable int id) {
+        rmaService.putBackDeviceFromRma(id);
+    }
+
 }

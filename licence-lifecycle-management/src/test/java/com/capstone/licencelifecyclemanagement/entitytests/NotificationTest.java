@@ -19,13 +19,10 @@ public class NotificationTest {
     public void setUp() {
         notification = new Notification();
         notification.setId(1);
-        notification.setSoftware(new Software());
-        notification.setDevice(new Device());
-        notification.setName("Test Notification");
+        notification.setProductName("Test Notification");
         notification.setExpiryDate(LocalDate.now());
         notification.setNumberOfDaysLeft(30);
         notification.setMessage("Test Message");
-        notification.setIsSoftware(true);
     }
 
     @Test
@@ -35,17 +32,17 @@ public class NotificationTest {
 
     // @Test
     // public void testGetSoftware() {
-    //     assertEquals(new Software(), notification.getSoftware());
+    // assertEquals(new Software(), notification.getSoftware());
     // }
 
     // @Test
     // public void testGetDevice() {
-    //     assertEquals(new Device(), notification.getDevice());
+    // assertEquals(new Device(), notification.getDevice());
     // }
 
     @Test
     public void testGetName() {
-        assertEquals("Test Notification", notification.getName());
+        assertEquals("Test Notification", notification.getProductName());
     }
 
     @Test
@@ -63,7 +60,4 @@ public class NotificationTest {
         assertEquals("Test Message", notification.getMessage());
     }
 
-
-
-   
 }

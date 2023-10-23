@@ -3,7 +3,9 @@ package com.capstone.licencelifecyclemanagement.entitys;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +25,7 @@ public class Software implements Serializable {
     private int id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "company_id")
     private SoftwareCompany company;
 
@@ -32,6 +34,7 @@ public class Software implements Serializable {
     private int cost;
     private LocalDate purchaseDate = LocalDate.now();
     private LocalDate expiryDate;
+    @Enumerated
+    private Available available = Available.AVAILABLE;
 
-  
 }

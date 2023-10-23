@@ -2,6 +2,7 @@ package com.capstone.licencelifecyclemanagement.entitys;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,22 +23,11 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "software_id")
-    private Software software;
-
-    @ManyToOne
-    @JoinColumn(name = "device_id")
-    private Device device;
-
-    private String name;
+    private String productName;
     private LocalDate expiryDate;
     private int numberOfDaysLeft;
     private String message;
-    private boolean isSoftware ;
-
-    public void setIsSoftware(boolean isSoftware) {
-        this.isSoftware = isSoftware;
-    }
+    @Enumerated
+    private ProductType productType;
     
 }
