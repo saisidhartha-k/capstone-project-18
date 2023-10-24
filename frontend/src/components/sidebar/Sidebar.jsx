@@ -110,8 +110,10 @@ export const Sidebar = () => {
           <p className="title"> Others </p>
 
           <li>
+          <Link to="/notification">
             <NotificationsActiveIcon className="icon" />
             <span>Notifications</span>
+          </Link>
           </li>
         </ul>
       </div>

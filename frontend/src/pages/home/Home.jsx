@@ -15,8 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 export const Home = () => {
-  const [notifications, setNotifications] = useState([]); // State to store notifications
-  const [showNotifications, setShowNotifications] = useState(false); // State to control notification visibility
+  const [notifications, setNotifications] = useState([]); 
+  const [showNotifications, setShowNotifications] = useState(false); 
 
   useEffect(() => {
     const notificationInterval = setInterval(() => {

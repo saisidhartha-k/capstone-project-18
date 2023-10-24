@@ -91,4 +91,10 @@ public class DeviceController {
         deviceService.decomissionDevice(id);
     }
 
+    @PostMapping("/assetcheck")
+    public List<String> assetCheck()
+    {
+        return deviceService.assetCheck();
+    }
+
 }

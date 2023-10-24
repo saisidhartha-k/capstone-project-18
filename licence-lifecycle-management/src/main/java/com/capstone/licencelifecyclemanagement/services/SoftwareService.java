@@ -125,30 +125,30 @@ public class SoftwareService {
 
     public List<String> assetCheck() {
         List<Software> softwareList = getSoftwares();
-        List<String> notificationList = new ArrayList<>();
+        List<String> softwareNotificationList = new ArrayList<>();
         for (Software software : softwareList) {
             LocalDate expiryDate = software.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
             if (remainingDays <= 30 && remainingDays > 0) {
 
-                String meesage = "Your software license for " + software.getName() +
+                String message = "Your software license for " + software.getName() +
                         " will expire in " + remainingDays + " days. Please take action.";
 
-                notificationList.add(meesage);
+                softwareNotificationList.add(message);
                 Notification notification = new Notification();
-                notification.setMessage(meesage);
+                notification.setMessage(message);
                 notification.setExpiryDate(software.getExpiryDate());
                 notification.setNumberOfDaysLeft(remainingDays);
                 notification.setProductName(software.getName());
                 notification.setProductType(ProductType.SOFTWARE);
                 notificationRepository.save(notification);
 
-                System.out.println(meesage);
+                System.out.println(message);
 
             }
         }
-        return notificationList;
+        return softwareNotificationList;
     }
 
     public List<Software> notExpList() {

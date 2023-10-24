@@ -15,6 +15,8 @@ import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
+import com.capstone.licencelifecyclemanagement.entitys.ProductType;
+import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
@@ -110,21 +112,32 @@ public class DeviceService {
         return aboutToExpireDevices;
     }
 
-    public void assetCheck() {
+     public List<String> assetCheck() {
         List<Device> deviceList = getDevices();
-
+        List<String> deviceNotificationList = new ArrayList<>();
         for (Device device : deviceList) {
             LocalDate expiryDate = device.getExpiryDate();
             int remainingDays = calculateRemainingDays(expiryDate);
 
-            // if (remainingDays <= 30 && remainingDays > 0)
-            //     sendNotification(remainingDays, device);
+            if (remainingDays <= 30 && remainingDays > 0) {
 
-            // if (remainingDays <= 0) {
-            //     deviceRepository.save(device);
-            // }
+                String message = "Your device license for " + device.getName() +
+                        " will expire in " + remainingDays + " days. Please take action.";
+
+                deviceNotificationList.add(message);
+                Notification notification = new Notification();
+                notification.setMessage(message);
+                notification.setExpiryDate(device.getExpiryDate());
+                notification.setNumberOfDaysLeft(remainingDays);
+                notification.setProductName(device.getName());
+                notification.setProductType(ProductType.DEVICE);
+                notificationRepository.save(notification);
+
+                System.out.println(message);
+
+            }
         }
-
+        return deviceNotificationList;
     }
 
     public int calculateRemainingDays(LocalDate expiryDate) {
