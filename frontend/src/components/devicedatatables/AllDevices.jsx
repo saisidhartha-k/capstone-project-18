@@ -1,12 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import './datatable.scss';
-import { DataGrid } from '@mui/x-data-grid';
-import { getDevices, decommissionDevice } from '../../service/DeviceService';
+import React, { useEffect, useState } from "react";
+import "./datatable.scss";
+import { DataGrid } from "@mui/x-data-grid";
+import { getDevices, decommissionDevice } from "../../service/DeviceService";
+import Modal from "react-modal"; 
+import { moveDeviceToRma } from "../../service/RMAService";
 
 export default function AllDevicesDataTable() {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [deviceIdToDecommission, setDeviceIdToDecommission] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [rmaData, setRmaData] = useState({ reason: "" });
+  const [selectedDeviceId, setSelectedDeviceId] = useState(null);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const handleDecommission = async (deviceId) => {
     setDeviceIdToDecommission(deviceId);
@@ -27,14 +40,35 @@ export default function AllDevicesDataTable() {
     setShowModal(false);
   };
 
+  const saveRMA = async () => {
+    try {
+      await moveDeviceToRma(selectedDeviceId, rmaData);
+
+      // After successful RMA, update the UI as needed
+      setData((prevData) =>
+        prevData.filter((device) => device.id !== selectedDeviceId)
+      );
+
+      closeModal(); // Close the modal
+      setRmaData({ reason: "" }); // Reset the reason input
+      setSelectedDeviceId(null); // Reset the selectedDeviceId
+    } catch (error) {
+      console.error("Error moving device to RMA", error);
+    }
+  };
+
+  const handleRMA = (deviceId) => {
+    setSelectedDeviceId(deviceId);
+    openModal(); // Open the modal when "RMA" button is clicked
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
         const result = await getDevices();
         setData(result);
-        console.log('data', data);
       } catch (error) {
-        console.error('Error fetching device data', error);
+        console.error("Error fetching device data", error);
       }
     }
 
@@ -42,18 +76,18 @@ export default function AllDevicesDataTable() {
   }, []);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 7 },
-    { field: 'name', headerName: 'Name', width: 190 },
+    { field: "id", headerName: "ID", width: 7 },
+    { field: "name", headerName: "Name", width: 190 },
     {
-      field: 'company',
-      headerName: 'Company',
+      field: "company",
+      headerName: "Company",
       width: 150,
       valueGetter: (params) => params.row.company.name,
     },
-    { field: 'licenseNumber', headerName: 'License', width: 100 },
-    { field: 'cost', headerName: 'Cost', width: 70 },
-    { field: 'purchaseDate', headerName: 'Purchase Date', width: 120 },
-    { field: 'expiryDate', headerName: 'Expiry Date', width: 120 },
+    { field: "licenseNumber", headerName: "License", width: 100 },
+    { field: "cost", headerName: "Cost", width: 70 },
+    { field: "purchaseDate", headerName: "Purchase Date", width: 120 },
+    { field: "expiryDate", headerName: "Expiry Date", width: 120 },
     {
       field: "isExpired",
       headerName: "Status",
@@ -70,21 +104,19 @@ export default function AllDevicesDataTable() {
       },
     },
     {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 180, 
+      field: "actions",
+      headerName: "Actions",
+      width: 180,
       renderCell: (params) => {
         return (
-          <div className='action-buttons'>
+          <div className="action-buttons">
             <button onClick={() => handleDecommission(params.row.id)}>
               Decommission
             </button>
-            <button >
-              RMA
-            </button>
+            <button onClick={() => handleRMA(params.row.id)}>RMA</button>
             {showModal && (
-              <div className='modal-overlay'>
-                <div className='modal-content'>
+              <div className="modal-overlay">
+                <div className="modal-content">
                   <h2>Do you want to decommission this device?</h2>
                   <button onClick={confirmDecommission}>Yes</button>
                   <button onClick={closeConfirmationModal}>No</button>
@@ -97,13 +129,41 @@ export default function AllDevicesDataTable() {
     },
   ];
 
+  const getRowStyle = (params) => {
+    if (
+      params.row.device &&
+      params.row.device.available === "NOT_AVAILABLE"
+    ) {
+      return { display: "none" };
+    } else if (params.row.available === "NOT_AVAILABLE") {
+      return { display: "none" };
+    }
+    return {};
+  };
+
   return (
-    <div className='datatable'>
+    <div className="datatable">
       <DataGrid
         rows={data}
         columns={columns}
         pageSize={5}
+        getRowStyle={getRowStyle}
       />
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="RMA Reason Modal"
+      >
+        <h2>Enter RMA Reason</h2>
+        <input
+          type="text"
+          value={rmaData.reason}
+          onChange={(e) => setRmaData({ reason: e.target.value })}
+        />
+        <button onClick={saveRMA}>Save</button>
+        <button onClick={closeModal}>Cancel</button>
+      </Modal>
     </div>
   );
 }

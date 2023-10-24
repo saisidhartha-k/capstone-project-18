@@ -10,12 +10,12 @@
     display: inline-block; /* Display the text highlight as inline */
   }
   
-  .cellWithStatus.Expired {
-    color: red;
-    background-color: rgba(189, 3, 3, 0.103);
+  .cellWithStatus.Device {
+    color: rgb(0, 26, 255);
+    background-color: rgba(3, 105, 189, 0.103);
   }
   
-  .cellWithStatus.NotExpired {
+  .cellWithStatus.Software {
     color: green;
     background-color: rgba(0, 128, 0, 0.151);
   }

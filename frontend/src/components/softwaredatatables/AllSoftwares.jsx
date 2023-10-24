@@ -40,6 +40,10 @@ export default function AllSoftwareDataTable() {
     setShowModal(false);
   };
 
+  const closeConfirmationModal = () => {
+    setShowModal(false);
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -113,6 +117,15 @@ export default function AllSoftwareDataTable() {
               Decommission
             </button>
             <button onClick={() => handleRMA(params.row.id)}>RMA</button>
+            {showModal && (
+              <div className='modal-overlay'>
+                <div className='modal-content'>
+                  <h2>Do you want to decommission this device?</h2>
+                  <button onClick={confirmDecommission}>Yes</button>
+                  <button onClick={closeConfirmationModal}>No</button>
+                </div>
+              </div>
+            )}
           </div>
         );
       },
