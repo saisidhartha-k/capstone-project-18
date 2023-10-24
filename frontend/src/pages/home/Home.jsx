@@ -12,7 +12,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import { ToastContainer, toast } from "react-toastify";
 import { fetchAssetCheck } from "../../service/SoftwareService";
 import "react-toastify/dist/ReactToastify.css";
-
+import { deviceAssetCheck } from "../../service/DeviceService";
 
 export const Home = () => {
   const [notifications, setNotifications] = useState([]); 
@@ -21,7 +21,8 @@ export const Home = () => {
   useEffect(() => {
     const notificationInterval = setInterval(() => {
       if (showNotifications) {
-        fetchDataForNotifications();
+        fetchSoftwareNotifications(); // Updated function name for software notifications
+        fetchDeviceNotifications(); // Added function for device notifications
       }
     }, 5000);
 
@@ -49,7 +50,8 @@ export const Home = () => {
     return mutedNotifications.includes(notification);
   };
 
-  const fetchDataForNotifications = async () => {
+  // Rename to fetchSoftwareNotifications
+  const fetchSoftwareNotifications = async () => {
     try {
       const data = await fetchAssetCheck();
 
@@ -65,6 +67,24 @@ export const Home = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  const fetchDeviceNotifications = async () => {
+    try {
+      const data = await deviceAssetCheck(); // Fetch device notifications
+      
+      if (Array.isArray(data)) {
+        setNotifications(data);
+        if (showNotifications) {
+          displayNotifications(data);
+        }
+      } else {
+        console.error("Invalid data format received from the API.");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
 
   const displayNotifications = (data) => {
     data.forEach((message) => {
@@ -102,7 +122,6 @@ export const Home = () => {
             value="http://localhost:8080/software/percentageNotExpired"
             icon={<TaskAltIcon style={{ color: "green" }} />}
           />
-
           <Widget
             title="Expired Softwares"
             endpoint="http://localhost:8080/software/getExpiredCount"
@@ -110,7 +129,6 @@ export const Home = () => {
             value="http://localhost:8080/software/percentageExpired"
             icon={<DangerousIcon style={{ color: "red" }} />}
           />
-
           <Widget
             title="Softwares About to Expire"
             endpoint="http://localhost:8080/software/getAboutExpiredCount"
