@@ -2,6 +2,7 @@ package com.capstone.licencelifecyclemanagement.services;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -12,10 +13,8 @@ import com.capstone.licencelifecyclemanagement.entitys.Available;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.RMA;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
-import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
 import com.capstone.licencelifecyclemanagement.repository.RMARepository;
-import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 
 @Service
@@ -28,12 +27,6 @@ public class RmaService {
 
     @Autowired
     private DeviceRepository deviceRepository;
-
-    @Autowired
-    private SoftwarePurchaseRepository softwarePurchaseRepository;
-
-    @Autowired
-    private DevicePurchaseRepository devicePurchaseRepository;
 
     public void moveSoftwareToRma(int softwareId, String reason) {
         Optional<Software> softwareOpt = softwareRepository.findById(softwareId);
@@ -114,6 +107,11 @@ public class RmaService {
             device.setAvailable(Available.AVAILABLE); // Assuming you have an enumeration for device status
             rmaRepository.delete(rma);
         }
+    }
+
+    public List<RMA> getRma()
+    {
+        return rmaRepository.findAll();
     }
     
 }

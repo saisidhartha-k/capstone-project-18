@@ -36,6 +36,7 @@ button {
   whitespace: "nowrap";
   overflow: "hidden";
   textoverflow: "ellipsis";
+  margin-right: 7px;
 
   &:hover {
     background-color: red; /* Red background on hover */

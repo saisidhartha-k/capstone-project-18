@@ -42,7 +42,7 @@ export default function AllDevicesDataTable() {
   }, []);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 60 },
+    { field: 'id', headerName: 'ID', width: 7 },
     { field: 'name', headerName: 'Name', width: 190 },
     {
       field: 'company',
@@ -50,7 +50,7 @@ export default function AllDevicesDataTable() {
       width: 150,
       valueGetter: (params) => params.row.company.name,
     },
-    { field: 'licenseNumber', headerName: 'License', width: 110 },
+    { field: 'licenseNumber', headerName: 'License', width: 100 },
     { field: 'cost', headerName: 'Cost', width: 70 },
     { field: 'purchaseDate', headerName: 'Purchase Date', width: 120 },
     { field: 'expiryDate', headerName: 'Expiry Date', width: 120 },
@@ -72,12 +72,15 @@ export default function AllDevicesDataTable() {
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 120,
+      width: 180, 
       renderCell: (params) => {
         return (
-          <>
+          <div className='action-buttons'>
             <button onClick={() => handleDecommission(params.row.id)}>
               Decommission
+            </button>
+            <button >
+              RMA
             </button>
             {showModal && (
               <div className='modal-overlay'>
@@ -88,7 +91,7 @@ export default function AllDevicesDataTable() {
                 </div>
               </div>
             )}
-          </>
+          </div>
         );
       },
     },

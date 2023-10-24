@@ -16,6 +16,7 @@ import { SoftwareList } from "./pages/softwarepages/Softwarelist/SoftwareList";
 import SoftwareComapniesList from "./pages/softwarepages/softwarecompanies/SoftwareCompanies";
 import SoftwareRenewalForm from "./components/add/RenewSoftware";
 import AllNotificationList from "./pages/notificationpage/NotificationPage";
+import RMAList from "./pages/rmapage/RMAPage";
 
 function App() {
   return (
@@ -44,6 +45,9 @@ function App() {
             </Route>
             <Route path="notification">
               <Route index element={<AllNotificationList />} />
+            </Route>
+            <Route path="rma">
+              <Route index element={<RMAList />} />
             </Route>
           </Route>
         </Routes>

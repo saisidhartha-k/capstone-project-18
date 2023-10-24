@@ -5,6 +5,7 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import { FormControlLabel, FormGroup, Tooltip } from "@mui/material";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { Link } from "react-router-dom";
 
 const Navbar = ({ toggleNotifications }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,6 +32,11 @@ const Navbar = ({ toggleNotifications }) => {
       <div className="wrapper">
         <div className="items">
           <div className="item">
+          <Link to="/notification">
+            <span>ALL Notifications</span>
+          </Link>
+          </div>
+          <div className="item">
             <Tooltip title={showNotifications ? "Mute Notifications" : "Show Notifications"} arrow>
               <div onClick={() => {
                 setShowNotifications(!showNotifications);
@@ -44,9 +50,9 @@ const Navbar = ({ toggleNotifications }) => {
               </div>
             </Tooltip>
           </div>
-          <div className="item">
+          {/* <div className="item">
             <DarkModeOutlinedIcon className="icon" />
-          </div>
+          </div> */}
           <div className="item">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdsHr0_k8PrNgg8SYhwVlV4ONxwliFxDLSDCC6TTqe&s"
