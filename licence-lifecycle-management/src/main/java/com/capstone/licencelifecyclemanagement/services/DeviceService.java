@@ -151,7 +151,7 @@ public class DeviceService {
         return (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
     }
 
-    private void setExistingCompany(Device device) {
+    public void setExistingCompany(Device device) {
         Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(device.getCompany().getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
@@ -160,12 +160,12 @@ public class DeviceService {
         }
     }
 
-    private void createNewCompany(Device device) {
+    public void createNewCompany(Device device) {
         DeviceCompany newCompany = deviceCompanyRepository.save(device.getCompany());
         device.setCompany(newCompany);
     }
 
-    private void setExistingCompany(Device device, DeviceCompany company) {
+    public void setExistingCompany(Device device, DeviceCompany company) {
         Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(company.getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
@@ -174,7 +174,7 @@ public class DeviceService {
         }
     }
 
-    private void createNewCompany(Device device, DeviceCompany company) {
+    public void createNewCompany(Device device, DeviceCompany company) {
         DeviceCompany newCompany = deviceCompanyRepository.save(company);
         device.setCompany(newCompany);
     }

@@ -23,12 +23,5 @@ public class UserService {
         return userRepository.findByName("admin");
     }
 
-    private userDTO convertToDTO(User user) {
-        userDTO userDTO = new userDTO();
-        userDTO.setId(user.getId());
-        userDTO.setName(user.getName());
-       
-        return userDTO;
-    }
-    
+ 
 }

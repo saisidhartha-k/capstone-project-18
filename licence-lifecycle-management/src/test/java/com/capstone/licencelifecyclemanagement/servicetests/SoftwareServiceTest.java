@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.capstone.licencelifecyclemanagement.entitys.DecommissionedItem;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
@@ -30,6 +32,7 @@ import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.DecommisionedItemRepository;
 import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
@@ -37,6 +40,8 @@ import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 import com.capstone.licencelifecyclemanagement.services.SoftwareCompanyService;
 import com.capstone.licencelifecyclemanagement.services.SoftwarePurchaseService;
 import com.capstone.licencelifecyclemanagement.services.SoftwareService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -63,6 +68,9 @@ class SoftwareServiceTest {
 
     @Mock
     private NotificationRepository notificationRepository;
+
+    @Mock
+    private DecommisionedItemRepository decommisionedItemRepository;
 
     private SoftwareCompany mockCompany1;
     private Software mockSoftware1;
@@ -370,7 +378,6 @@ class SoftwareServiceTest {
         assert notificationList.size() == 1;
         assert notificationList.get(0).contains("Expiring Software");
         assertTrue(notificationList.get(0).contains("Expiring Software"));
-        
 
     }
 
@@ -383,4 +390,118 @@ class SoftwareServiceTest {
 
         assertEquals(0, remainingDays);
     }
+
+    @Test
+    void testDecommissionSoftware() {
+        // Arrange
+        int id = 1;
+        Software software = new Software();
+        software.setId(id);
+        software.setName("Test Software");
+
+        SoftwarePurchaseId softwarePurchaseId = new SoftwarePurchaseId();
+        softwarePurchaseId.setSoftware(software);
+        softwarePurchaseId.setLicenseNumber("12345");
+
+        SoftwarePurchase softwarePurchase = new SoftwarePurchase();
+        softwarePurchase.setSoftwarePurchaseId(softwarePurchaseId);
+        softwarePurchase.setPurchaseDate(LocalDate.now());
+
+        List<SoftwarePurchase> softwarePurchases = Arrays.asList(softwarePurchase);
+
+        when(softwareRepository.findById(id)).thenReturn(Optional.of(software));
+        when(softwarePurchaseRepository.findBySoftwarePurchaseId_Software_Id(id)).thenReturn(softwarePurchases);
+
+        // Act
+        softwareService.decommissionSoftware(id);
+
+        // Assert
+        verify(decommisionedItemRepository, times(1)).save(any(DecommissionedItem.class));
+        verify(softwarePurchaseRepository, times(1)).delete(softwarePurchase);
+        verify(softwareRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    void testSetExistingCompany() {
+        // Arrange
+        int companyId = 1;
+        Software software = new Software();
+        SoftwareCompany company = new SoftwareCompany();
+        company.setId(companyId);
+
+        when(softwareCompanyRepository.findById(companyId)).thenReturn(Optional.of(company));
+
+        // Act
+        softwareService.setExistingCompany(software, company);
+
+        // Assert
+        assertEquals(company, software.getCompany());
+    }
+
+    @Test
+    void testPercentageOfSoftwareAboutToExpire() {
+        // Arrange
+        SoftwareService softwareService = new SoftwareService() {
+            @Override
+            public List<Software> aboutToExpire() {
+                return Arrays.asList(new Software(), new Software());
+            }
+
+            @Override
+            public int getTotalSoftwareCount() {
+                return 5;
+            }
+        };
+
+        // Act
+        int percentage = softwareService.percentageOfSoftwareAboutToExpire();
+
+        // Assert
+        assertEquals(40, percentage);
+    }
+
+    @Test
+    void testPercentageOfNotExpiredSoftware() {
+        // Arrange
+        SoftwareService softwareService = new SoftwareService() {
+            @Override
+            public int notExpListCount() {
+                return 2;
+            }
+
+            @Override
+            public int getTotalSoftwareCount() {
+                return 5;
+            }
+        };
+
+        // Act
+        int percentage = softwareService.percentageOfNotExpiredSoftware();
+
+        // Assert
+        assertEquals(40, percentage);
+    }
+
+    @Test
+    void testPercentageOfExpiredSoftware() {
+        // Arrange
+        SoftwareService softwareService = new SoftwareService() {
+            @Override
+            public int expiredSoftwaresCount() {
+                return 2;
+            }
+
+            @Override
+            public int getTotalSoftwareCount() {
+                return 5;
+            }
+        };
+
+        // Act
+        int percentage = softwareService.percentageOfExpiredSoftware();
+
+        // Assert
+        assertEquals(40, percentage);
+    }
+
 }

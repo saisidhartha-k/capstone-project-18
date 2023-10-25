@@ -11,15 +11,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.capstone.licencelifecyclemanagement.dto.DeviceDto;
+import com.capstone.licencelifecyclemanagement.entitys.DecommissionedItem;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
-
+import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.DecommisionedItemRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
 import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.services.DeviceService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,6 +33,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +57,9 @@ class DeviceServiceTest {
 
     @Mock
     private NotificationRepository notificationRepository;
+
+    @Mock
+    private DecommisionedItemRepository decommisionedItemRepository;
 
     private Device mockDevice;
     private DeviceCompany mockCompany;
@@ -266,20 +274,146 @@ class DeviceServiceTest {
 
     }
 
-    // @Test
-    // void testDeviceSendNotification() {
-    //     // Arrange
-    //     Device device = new Device();
-    //     device.setName("Test device");
-    //     device.setExpiryDate(LocalDate.now().plusDays(20));
+    @Test
+    public void testDecommissionDevice() {
+        // Arrange
+        int id = 1;
+        Device device = new Device();
+        device.setId(id);
+        device.setName("Test Device");
 
-    //     int remainingDays = 20;
+        DevicePurchaseId devicePurchaseId = new DevicePurchaseId();
+        devicePurchaseId.setDevice(device);
+        devicePurchaseId.setLicenseNumber("12345");
 
-    //     // Act
-    //     deviceService.sendNotification(remainingDays, device);
+        DevicePurchase devicePurchase = new DevicePurchase();
+        devicePurchase.setDevicePurchaseId(devicePurchaseId);
+        devicePurchase.setPurchaseDate(LocalDate.now());
 
-    //     // Assert
-    //     verify(notificationRepository, times(1)).save(any());
-    // }
+        List<DevicePurchase> devicePurchases = Arrays.asList(devicePurchase);
+
+        when(deviceRepository.findById(id)).thenReturn(Optional.of(device));
+        when(devicePurchaseRepository.findByDevicePurchaseId_Device_Id(id)).thenReturn(devicePurchases);
+
+        deviceService.decomissionDevice(id);
+
+        verify(decommisionedItemRepository, times(1)).save(any(DecommissionedItem.class));
+        verify(devicePurchaseRepository, times(1)).delete(devicePurchase);
+        verify(deviceRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void testCreateNewCompany() {
+        // Arrange
+        Device device = new Device();
+        DeviceCompany company = new DeviceCompany();
+        device.setCompany(company);
+
+        when(deviceCompanyRepository.save(company)).thenReturn(company);
+
+        // Act
+        deviceService.createNewCompany(device);
+
+        // Assert
+        assertEquals(company, device.getCompany());
+    }
+
+    @Test
+    public void testSetExistingCompany() {
+        int companyId = 1;
+        Device device = new Device();
+        DeviceCompany company = new DeviceCompany();
+        company.setId(companyId);
+
+        when(deviceCompanyRepository.findById(companyId)).thenReturn(Optional.of(company));
+
+        deviceService.setExistingCompany(device, company);
+
+        assertEquals(company, device.getCompany());
+    }
+
+    @Test
+    public void testPercentageOfDevicesAboutToExpire() {
+        // Arrange
+        DeviceService deviceService = new DeviceService() {
+            @Override
+            public List<Device> devicesAboutToExpire() {
+                return Arrays.asList(new Device(), new Device());
+            }
+
+            @Override
+            public int getTotalDeviceCount() {
+                return 5;
+            }
+        };
+
+        int percentage = deviceService.percentageOfDevicesAboutToExpire();
+
+        assertEquals(40, percentage);
+    }
+
+    @Test
+    public void testPercentageOfDevicesAboutToExpire0() {
+        // Arrange
+        DeviceService deviceService = new DeviceService() {
+            @Override
+            public List<Device> devicesAboutToExpire() {
+                return Arrays.asList(new Device(), new Device());
+            }
+
+            @Override
+            public int getTotalDeviceCount() {
+                return 0;
+            }
+        };
+
+        int percentage = deviceService.percentageOfDevicesAboutToExpire();
+
+        assertEquals(0, percentage);
+    }
+
+    @Test
+    void testPercentageOfNotExpiredDevices() {
+        // Arrange
+        DeviceService deviceService = new DeviceService() {
+            @Override
+            public List<Device> notExpiredDevice() {
+                return Arrays.asList(new Device(), new Device());
+            }
+
+            @Override
+            public int getTotalDeviceCount() {
+                return 5;
+            }
+        };
+
+        // Act
+        int percentage = deviceService.percentageOfNotExpiredDevices();
+
+        // Assert
+        assertEquals(40, percentage);
+    }
+
+    @Test
+    void testPercentageOfExpiredDevices() {
+        // Arrange
+        DeviceService deviceService = new DeviceService() {
+            @Override
+            public List<Device> expierdDevices() {
+                return Arrays.asList(new Device(), new Device());
+            }
+
+            @Override
+            public int getTotalDeviceCount() {
+                return 5;
+            }
+        };
+
+        // Act
+        int percentage = deviceService.percentageOfExpiredDevices();
+
+        // Assert
+        assertEquals(40, percentage);
+    }
 
 }
