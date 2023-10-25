@@ -1,8 +1,9 @@
 import React from "react";
-import '../../pages/pages.scss';
-import RMADataTable from "../../components/rma/RmaDataTable";
-import { Sidebar } from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
+import './pages.scss';
+import RMADataTable from "../components/rma/RmaDataTable";
+import { Sidebar } from "../components/sidebar/Sidebar";
+import Navbar from "../components/navbar/Navbar";
+
 
 export const RMAList = () => {
   return (
