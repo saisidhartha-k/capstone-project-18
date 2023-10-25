@@ -11,10 +11,16 @@ import org.springframework.stereotype.Service;
 
 import com.capstone.licencelifecyclemanagement.entitys.Available;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
+import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
+import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
 import com.capstone.licencelifecyclemanagement.entitys.RMA;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
+import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
 import com.capstone.licencelifecyclemanagement.repository.RMARepository;
+import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 
 @Service
@@ -27,6 +33,12 @@ public class RmaService {
 
     @Autowired
     private DeviceRepository deviceRepository;
+
+    @Autowired
+    private DevicePurchaseRepository devicePurchaseRepository;
+
+    @Autowired
+    private SoftwarePurchaseRepository softwarePurchaseRepository;
 
     public void moveSoftwareToRma(int softwareId, String reason) {
         Optional<Software> softwareOpt = softwareRepository.findById(softwareId);
@@ -82,6 +94,9 @@ public class RmaService {
 
             software.setLicenseNumber(randomLicense());
             software.setAvailable(Available.AVAILABLE);
+            SoftwarePurchaseId softwarePurchaseId = new SoftwarePurchaseId(software.getLicenseNumber(), software);
+            SoftwarePurchase sPurchase = new SoftwarePurchase(softwarePurchaseId);
+            softwarePurchaseRepository.save(sPurchase);
             rmaRepository.delete(rma);
         }
 
@@ -89,29 +104,30 @@ public class RmaService {
 
     public void putBackDeviceFromRma(int rmaId) {
         Optional<RMA> rmaOpt = rmaRepository.findById(rmaId);
-    
+
         if (rmaOpt.isPresent() && rmaOpt.get().getDevice() != null) {
             RMA rma = rmaOpt.get();
             Device device = rma.getDevice();
-    
+
             LocalDate requestDate = rma.getRequestDate();
             LocalDate currentDate = LocalDate.now();
             Period period = Period.between(requestDate, currentDate);
             int months = period.getYears() * 12 + period.getMonths();
-    
+
             LocalDate expiryDate = device.getExpiryDate();
             expiryDate = expiryDate.plusMonths(months);
             device.setExpiryDate(expiryDate);
-    
+
             device.setLicenseNumber(randomLicense()); // Implement your serial number generation logic
             device.setAvailable(Available.AVAILABLE); // Assuming you have an enumeration for device status
+            DevicePurchaseId devicePurchaseId = new DevicePurchaseId(device.getLicenseNumber(), device);
+            DevicePurchase devicePurchase = new DevicePurchase(devicePurchaseId);
+            devicePurchaseRepository.save(devicePurchase);
             rmaRepository.delete(rma);
         }
     }
 
-    public List<RMA> getRma()
-    {
+    public List<RMA> getRma() {
         return rmaRepository.findAll();
     }
-    
 }

@@ -101,7 +101,7 @@ export const Sidebar = () => {
           </li>
 
           <li>
-            <Link to="/software/softwarepurchasehistory">
+            <Link to="/device/devicepurchases">
               <WorkHistoryIcon className="icon" />
               <span>Device Purchases</span>
             </Link>
@@ -119,6 +119,12 @@ export const Sidebar = () => {
           <Link to="/rma">
             <NotificationsActiveIcon className="icon" />
             <span>RMA</span>
+          </Link>
+          </li>
+          <li>
+          <Link to="/decomissioneditems">
+            <NotificationsActiveIcon className="icon" />
+            <span>decomissioned items</span>
           </Link>
           </li>
         </ul>

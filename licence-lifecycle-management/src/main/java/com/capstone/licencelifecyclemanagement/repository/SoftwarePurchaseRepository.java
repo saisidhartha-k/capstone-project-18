@@ -1,5 +1,7 @@
 package com.capstone.licencelifecyclemanagement.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,7 @@ import jakarta.transaction.Transactional;
 public interface SoftwarePurchaseRepository extends JpaRepository<SoftwarePurchase, SoftwarePurchaseId> {
     @Transactional
     void deleteBySoftwarePurchaseId_Software_Id(int softwareId);
+
+    List<SoftwarePurchase> findBySoftwarePurchaseId_Software_Id(int softwareId);
+
 }

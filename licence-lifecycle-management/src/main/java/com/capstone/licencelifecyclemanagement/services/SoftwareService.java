@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capstone.licencelifecyclemanagement.dto.SoftwareDto;
+import com.capstone.licencelifecyclemanagement.entitys.DecommissionedItem;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
 import com.capstone.licencelifecyclemanagement.entitys.ProductType;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwareCompany;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.SoftwarePurchaseId;
+import com.capstone.licencelifecyclemanagement.repository.DecommisionedItemRepository;
 import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
@@ -35,6 +37,9 @@ public class SoftwareService {
 
     @Autowired
     private NotificationRepository notificationRepository;
+
+    @Autowired
+    private DecommisionedItemRepository decommisionedItemRepository;
 
     String toEmail = "admin@prodapt.com";
 
@@ -80,12 +85,25 @@ public class SoftwareService {
         return "Software not found";
     }
 
-    public void decomissionSoftware(int id) {
-         softwarePurchaseRepository.deleteBySoftwarePurchaseId_Software_Id(id);
+   public void decommissionSoftware(int id) {
+    List<SoftwarePurchase> softwarePurchases = softwarePurchaseRepository.findBySoftwarePurchaseId_Software_Id(id);
+    Software software = softwarerepository.findById(id).get();
 
-        softwarerepository.deleteById(id);
-       // notificationRepository.deleteAllById(id);
+    for (SoftwarePurchase softwarePurchase : softwarePurchases) {
+        DecommissionedItem decommissionedItem = new DecommissionedItem();
+        decommissionedItem.setPurchaseDate(softwarePurchase.getPurchaseDate());
+        decommissionedItem.setExpiryDate(softwarePurchase.getSoftwarePurchaseId().getSoftware().getExpiryDate());
+        decommissionedItem.setLicenseNumber(softwarePurchase.getSoftwarePurchaseId().getLicenseNumber());
+        decommissionedItem.setProductName(software.getName());
+        decommissionedItem.setProductType(ProductType.SOFTWARE);
+
+        decommisionedItemRepository.save(decommissionedItem);
+
+        softwarePurchaseRepository.delete(softwarePurchase);
     }
+
+    softwarerepository.deleteById(id);
+}
 
     public List<Software> getSoftware() {
         return softwarerepository.findAll();

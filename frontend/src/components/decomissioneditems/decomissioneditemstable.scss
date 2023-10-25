@@ -1,0 +1,22 @@
+/* Your corrected combined SCSS file */
+.datatable {
+    overflow: auto;
+    height: 600px;
+    width: auto;
+  }
+  .cellWithStatus {
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block; /* Display the text highlight as inline */
+  }
+  
+  .cellWithStatus.Software {
+    color: green; /* Green color for SOFTWARE product type */
+    background-color: rgba(0, 128, 0, 0.151);
+  }
+  
+  .cellWithStatus.Device {
+    color: red; /* Red color for DEVICE product type */
+    background-color: rgba(189, 3, 3, 0.103);
+  }
+  

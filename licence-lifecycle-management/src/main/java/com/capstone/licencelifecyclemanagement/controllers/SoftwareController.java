@@ -101,7 +101,7 @@ public class SoftwareController {
 
   @DeleteMapping("/decomission/{id}")
     public void deleteSoftware(@PathVariable int id) {
-        softwareservice.decomissionSoftware(id);
+        softwareservice.decommissionSoftware(id);
     }
    
     @PostMapping("/assetcheck")

@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.capstone.licencelifecyclemanagement.dto.DeviceDto;
 import com.capstone.licencelifecyclemanagement.entitys.DeviceCompany;
+import com.capstone.licencelifecyclemanagement.entitys.DecommissionedItem;
 import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
 import com.capstone.licencelifecyclemanagement.entitys.ProductType;
 import com.capstone.licencelifecyclemanagement.entitys.Software;
+import com.capstone.licencelifecyclemanagement.repository.DecommisionedItemRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
@@ -38,6 +40,9 @@ public class DeviceService {
 
     @Autowired
     private NotificationRepository notificationRepository;
+
+    @Autowired
+    private DecommisionedItemRepository decommisionedItemRepository;
 
     String toEmail = "admin@prodapt.com";
 
@@ -112,7 +117,7 @@ public class DeviceService {
         return aboutToExpireDevices;
     }
 
-     public List<String> assetCheck() {
+    public List<String> assetCheck() {
         List<Device> deviceList = getDevices();
         List<String> deviceNotificationList = new ArrayList<>();
         for (Device device : deviceList) {
@@ -145,8 +150,6 @@ public class DeviceService {
 
         return (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
     }
-
-  
 
     private void setExistingCompany(Device device) {
         Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(device.getCompany().getId());
@@ -231,7 +234,21 @@ public class DeviceService {
     }
 
     public void decomissionDevice(int id) {
-        devicePurchaseRepository.deleteByDevicePurchaseId_Device_Id(id);
+        List<DevicePurchase> devicePurchases = devicePurchaseRepository.findByDevicePurchaseId_Device_Id(id);
+        Device device = deviceRepository.findById(id).orElse(null);
+
+        for (DevicePurchase devicePurchase : devicePurchases) {
+            DecommissionedItem decommissionedItem = new DecommissionedItem();
+            decommissionedItem.setPurchaseDate(devicePurchase.getPurchaseDate());
+            decommissionedItem.setExpiryDate(devicePurchase.getDevicePurchaseId().getDevice().getExpiryDate());
+            decommissionedItem.setLicenseNumber(devicePurchase.getDevicePurchaseId().getLicenseNumber());
+            decommissionedItem.setProductName(device.getName());
+            decommissionedItem.setProductType(ProductType.DEVICE);
+
+            decommisionedItemRepository.save(decommissionedItem);
+
+            devicePurchaseRepository.delete(devicePurchase);
+        }
 
         deviceRepository.deleteById(id);
     }

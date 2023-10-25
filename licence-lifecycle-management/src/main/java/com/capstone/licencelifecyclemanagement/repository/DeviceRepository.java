@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.capstone.licencelifecyclemanagement.entitys.Device;
+import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Integer> {
@@ -18,4 +19,6 @@ public interface DeviceRepository extends JpaRepository<Device, Integer> {
 
         @Query("SELECT s FROM Device s WHERE s.expiryDate > :today")
         List<Device> findNonExpiredDevice(@Param("today") LocalDate today);
+
+
 }

@@ -37,7 +37,6 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-	
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-suite-engine</artifactId>

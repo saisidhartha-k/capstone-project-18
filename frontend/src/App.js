@@ -17,6 +17,8 @@ import SoftwareComapniesList from "./pages/softwarepages/softwarecompanies/Softw
 import SoftwareRenewalForm from "./components/add/RenewSoftware";
 import AllNotificationList from "./pages/notificationpage/NotificationPage";
 import RMAList from "./pages/rmapage/RMAPage";
+import DevicePurchaseHistoryList from "./pages/devicepages/devicepurchasehistorypage/DevicePurchaseHistoryPage";
+import DecomissionedItemsList from "./pages/decomissioneditemspage/DecomissionedItemsPage";
 
 function App() {
   return (
@@ -42,12 +44,16 @@ function App() {
               <Route path="abouttoexpireDevice" element={<AboutToExpireDeviceList />} />
               <Route path="devicecompanies" element={< DeviceCompaniesList/>} />
               <Route path="adddevice" element={<AddNewDevice/>} />
+              <Route path="devicepurchases" element={<DevicePurchaseHistoryList />} />
             </Route>
             <Route path="notification">
               <Route index element={<AllNotificationList />} />
             </Route>
             <Route path="rma">
               <Route index element={<RMAList />} />
+            </Route>
+            <Route path="decomissioneditems">
+              <Route index element={<DecomissionedItemsList />} />
             </Route>
           </Route>
         </Routes>
