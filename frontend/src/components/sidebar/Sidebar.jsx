@@ -108,13 +108,6 @@ export const Sidebar = () => {
           </li>
 
           <p className="title"> Others </p>
-
-          {/* <li>
-          <Link to="/notification">
-            <NotificationsActiveIcon className="icon" />
-            <span>Notifications</span>
-          </Link>
-          </li> */}
           <li>
           <Link to="/rma">
             <NotificationsActiveIcon className="icon" />
