@@ -30,7 +30,6 @@ public class SoftwareController {
     @Transactional
     public Software addSoftware(@RequestBody Software software)
     {
-        System.out.println(software);
         return softwareservice.addSoftware(software);
     }
 
@@ -79,7 +78,6 @@ public class SoftwareController {
 
     @PostMapping("/renew/{id}")
     public String renewSoftware(@PathVariable("id") int id, @RequestBody SoftwareDto dto) {
-        System.out.println(dto);
         return softwareservice.renewSoftware(id, dto);
     }
 

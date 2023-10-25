@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.services.DevicePurchaseHistoryService;
-import com.capstone.licencelifecyclemanagement.services.DeviceService;
 
 @CrossOrigin()
 @RestController

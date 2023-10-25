@@ -2,7 +2,6 @@ package com.capstone.licencelifecyclemanagement.entitys;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import lombok.Getter;

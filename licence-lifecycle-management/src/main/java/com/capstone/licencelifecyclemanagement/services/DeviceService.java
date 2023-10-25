@@ -12,10 +12,7 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +24,6 @@ import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 import com.capstone.licencelifecyclemanagement.entitys.DevicePurchaseId;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
 import com.capstone.licencelifecyclemanagement.entitys.ProductType;
-import com.capstone.licencelifecyclemanagement.entitys.Software;
 import com.capstone.licencelifecyclemanagement.repository.DecommisionedItemRepository;
 import com.capstone.licencelifecyclemanagement.repository.DeviceCompanyRepository;
 import com.capstone.licencelifecyclemanagement.repository.DevicePurchaseRepository;
@@ -147,9 +143,6 @@ public class DeviceService {
                 notification.setProductName(device.getName());
                 notification.setProductType(ProductType.DEVICE);
                 notificationRepository.save(notification);
-
-                System.out.println(message);
-
             }
         }
         sendServiceTerminationEmail();

@@ -162,7 +162,6 @@ public class SoftwareService {
                 notification.setProductType(ProductType.SOFTWARE);
                 notificationRepository.save(notification);
 
-                System.out.println(message);
 
             }
         }
@@ -250,8 +249,6 @@ public class SoftwareService {
 
         return allSoftware.size();
     }
-
-    // change this later
 
     public List<SoftwareCompany> getCompanies() {
         return softwareCompanyRepository.findAll();

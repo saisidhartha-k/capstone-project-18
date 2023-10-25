@@ -3,15 +3,12 @@ package com.capstone.licencelifecyclemanagement.entitytests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.capstone.licencelifecyclemanagement.entitys.Device;
 import com.capstone.licencelifecyclemanagement.entitys.Notification;
-import com.capstone.licencelifecyclemanagement.entitys.Software;
-
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class NotificationTest {
+class NotificationTest {
 
     private Notification notification;
 

@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.capstone.licencelifecyclemanagement.entitys.Device;
-import com.capstone.licencelifecyclemanagement.entitys.DevicePurchase;
 
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Integer> {
