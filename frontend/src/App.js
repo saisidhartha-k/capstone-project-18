@@ -11,7 +11,6 @@ import ExpiredDeviceList from "./pages/devicepages/ExpiredDeviceList";
 import DeviceCompaniesList from "./pages/devicepages/DeviceCompanies";
 import AddNewDevice from "./pages/devicepages/AddDevicePage";
 import AddNewSoftware from "./pages/softwarepages/AddSoftwarePage";
-import SoftwareRenewalForm from "./components/add/RenewSoftware";
 import AllNotificationList from "./pages/NotificationPage";
 import RMAList from "./pages/RMAPage";
 import DevicePurchaseHistoryList from "./pages/devicepages/DevicePurchaseHistoryPage";
@@ -35,8 +34,6 @@ function App() {
               <Route path="softwarecompanies" element={<SoftwareComapniesList />} />
               <Route path="addSoftware" element={<AddNewSoftware />} />
               <Route path="softwarepurchasehistory" element={<SoftwarePurchaseHistoryList />}/>
-              <Route path="renew" element={<SoftwareRenewalForm />}/>
-
             </Route>
             <Route path="device/">
               <Route index element={<AllDevicesList/>} />

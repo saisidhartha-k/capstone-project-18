@@ -124,8 +124,8 @@ function DeviceForm() {
               >
                 <option value="">Select a Company</option>
                 {companies.map((company) => (
-                  <option key={company.id} value={company.id}>
-                    {company.id} - {company.name}
+                  <option key={company.id} value={company.name}>
+                    {company.name}
                   </option>
                 ))}
               </select>

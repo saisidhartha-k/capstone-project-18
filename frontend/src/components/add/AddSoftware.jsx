@@ -37,7 +37,6 @@ function SoftwareForm() {
   const [mode, setMode] = useState("Add"); // "Add" or "Renew"
 
   const [software, setSoftware] = useState([]);
-  const [selectedSoftwareId, setSelectedSoftwareId] = useState("");
 
   const [manualCompanyName, setManualCompanyName] = useState(""); // Manually entered company name
 
