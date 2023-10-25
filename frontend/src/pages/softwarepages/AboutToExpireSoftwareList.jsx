@@ -1,10 +1,8 @@
 import React from "react";
+import "../../pages/pages.scss";
+import AboutToExpireDataTable from "../../components/softwaredatatables/AboutToExpireSoftware";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import "./Index.scss";
-import ExpiredDataTable from "../../components/softwaredatatables/ExpiredSoftware";
-import { Container } from "@mui/material";
-import AboutToExpireDataTable from "../../components/softwaredatatables/AboutToExpireSoftware";
 
 export const AboutToExpireSoftwareList = () => {
   return (

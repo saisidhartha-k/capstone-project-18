@@ -1,8 +1,9 @@
 import React from "react";
-import "./Styles.scss";
-import DeviceCompaniesDataTable from "../../../components/devicedatatables/DeviceCompanies";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
+import '../../pages/pages.scss';
+import DeviceCompaniesDataTable from "../../components/devicedatatables/DeviceCompanies";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
+
 
 export const DeviceCompaniesList = () => {
   return (

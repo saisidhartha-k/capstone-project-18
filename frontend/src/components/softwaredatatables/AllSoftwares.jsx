@@ -137,9 +137,7 @@ export default function AllSoftwareDataTable() {
       params.row.software.available === "NOT_AVAILABLE"
     ) {
       return { display: "none" };
-    } else if (params.row.available === "NOT_AVAILABLE") {
-      return { display: "none" };
-    }
+    } 
     return {};
   };
 

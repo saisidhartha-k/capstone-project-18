@@ -1,9 +1,9 @@
 import React from "react";
+import '../../pages/pages.scss';
 
-import "./softwarepurchasehistory.scss";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
-import SoftwarePurchasesDataTable from "../../../components/SoftwareComponents/software_purchase_components/SoftwarePurchaseHistory";
+import SoftwarePurchasesDataTable from "../../components/SoftwareComponents/software_purchase_components/SoftwarePurchaseHistory";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 export const SoftwarePurchaseHistoryList = () => {
   return (

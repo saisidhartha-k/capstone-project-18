@@ -1,5 +1,5 @@
 import React from "react";
-import "./notificationpage.scss";
+import '../../pages/pages.scss';
 import AllNotificationsDataTable from "../../components/notifications/NotificationDataTable";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";

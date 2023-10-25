@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./page.scss";
+import '../../pages/pages.scss';
 import DecomissionedItemsDataTable from "../../components/decomissioneditems/DecomissionedItemsTable";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";

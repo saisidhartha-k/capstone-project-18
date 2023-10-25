@@ -1,8 +1,8 @@
 import React from "react";
-import "./Styles.scss";
-import ExpiredDeviceDataTable from "../../../components/devicedatatables/ExpiredDevices";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
+import '../../pages/pages.scss';
+import ExpiredDeviceDataTable from "../../components/devicedatatables/ExpiredDevices";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 export const ExpiredDeviceList = () => {
   return (

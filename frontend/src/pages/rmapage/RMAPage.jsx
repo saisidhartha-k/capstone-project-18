@@ -1,5 +1,5 @@
 import React from "react";
-import "./rmapage.scss";
+import '../../pages/pages.scss';
 import RMADataTable from "../../components/rma/RmaDataTable";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";

@@ -1,7 +1,8 @@
 import React from 'react'
-import DeviceForm from '../../../components/add/AddDevice'
-import Navbar from '../../../components/navbar/Navbar'
-import { Sidebar } from '../../../components/sidebar/Sidebar'
+import DeviceForm from '../../components/add/AddDevice'
+import '../../pages/pages.scss';
+import { Sidebar } from '../../components/sidebar/Sidebar';
+import Navbar from '../../components/navbar/Navbar';
 
 
 const AddNewDevice = () => {

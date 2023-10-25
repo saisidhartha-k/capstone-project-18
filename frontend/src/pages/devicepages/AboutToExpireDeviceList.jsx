@@ -1,8 +1,9 @@
 import React from "react";
-import "./Styles.scss";
-import AboutToExpireDeviceDataTable from "../../../components/devicedatatables/AboutToExpireDevices";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
+import '../../pages/pages.scss';
+import AboutToExpireDeviceDataTable from "../../components/devicedatatables/AboutToExpireDevices";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
+
 
 export const AboutToExpireDeviceList = () => {
   return (

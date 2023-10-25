@@ -1,8 +1,9 @@
 import React from "react";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
-import "./softwarelist.scss";
-import AllSoftwareDataTable from "../../../components/softwaredatatables/AllSoftwares";
+
+import '../../pages/pages.scss';
+import AllSoftwareDataTable from "../../components/softwaredatatables/AllSoftwares";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 export const SoftwareList = () => {
   return (

@@ -1,10 +1,8 @@
 import React from "react";
-
-import "./devicepurchases.scss";
-
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
-import DevicePurchasesDataTable from "../../../components/devicedatatables/DevicePurchasesHistory";
+import '../../pages/pages.scss';
+import DevicePurchasesDataTable from "../../components/devicedatatables/DevicePurchasesHistory";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 export const DevicePurchaseHistoryList = () => {
   return (

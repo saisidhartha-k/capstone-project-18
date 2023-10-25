@@ -1,7 +1,7 @@
 import React from "react";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import "./expiredsoftwarelist.scss";
+import '../../pages/pages.scss';
 import ExpiredDataTable from "../../components/softwaredatatables/ExpiredSoftware";
 import { Container } from "@mui/material";
 

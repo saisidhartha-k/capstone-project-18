@@ -135,9 +135,7 @@ export default function AllDevicesDataTable() {
       params.row.device.available === "NOT_AVAILABLE"
     ) {
       return { display: "none" };
-    } else if (params.row.available === "NOT_AVAILABLE") {
-      return { display: "none" };
-    }
+    } 
     return {};
   };
 

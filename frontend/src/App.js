@@ -4,21 +4,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import ExpiredSoftwareList from "./pages/expiredsoftware/ExpiredSoftwareList";
-import AboutToExpireSoftwareList from "./pages/abouttoexpiresoftware/AboutToExpireSoftwareList";
-import AllDevicesList from "./pages/devicepages/devicelist/DeviceList";
-import AboutToExpireDeviceList from "./pages/devicepages/abouttoexpiredevice/AboutToExpireDeviceList";
-import ExpiredDeviceList from "./pages/devicepages/expireddevice/ExpiredDeviceList";
-import DeviceCompaniesList from "./pages/devicepages/devicecompanies/DeviceCompanies";
-import SoftwarePurchaseHistoryList from "./pages/softwarepages/softwarepurchasehistory/SoftwarePurchaseHistoryPage";
-import AddNewDevice from "./pages/devicepages/adddevice/AddDevicePage";
-import AddNewSoftware from "./pages/addsoftware/AddSoftwarePage";
-import { SoftwareList } from "./pages/softwarepages/Softwarelist/SoftwareList";
-import SoftwareComapniesList from "./pages/softwarepages/softwarecompanies/SoftwareCompanies";
+import AboutToExpireSoftwareList from "./pages/softwarepages/AboutToExpireSoftwareList";
+import AllDevicesList from "./pages/devicepages/DeviceList";
+import AboutToExpireDeviceList from "./pages/devicepages/AboutToExpireDeviceList";
+import ExpiredDeviceList from "./pages/devicepages/ExpiredDeviceList";
+import DeviceCompaniesList from "./pages/devicepages/DeviceCompanies";
+import AddNewDevice from "./pages/devicepages/AddDevicePage";
+import AddNewSoftware from "./pages/softwarepages/AddSoftwarePage";
 import SoftwareRenewalForm from "./components/add/RenewSoftware";
 import AllNotificationList from "./pages/notificationpage/NotificationPage";
 import RMAList from "./pages/rmapage/RMAPage";
-import DevicePurchaseHistoryList from "./pages/devicepages/devicepurchasehistorypage/DevicePurchaseHistoryPage";
+import DevicePurchaseHistoryList from "./pages/devicepages/DevicePurchaseHistoryPage";
 import DecomissionedItemsList from "./pages/decomissioneditemspage/DecomissionedItemsPage";
+import SoftwareComapniesList from "./pages/softwarepages/SoftwareCompanies";
+import SoftwareList from "./pages/softwarepages/SoftwareList";
+import SoftwarePurchaseHistoryList from "./pages/softwarepages/SoftwarePurchaseHistoryPage";
 
 function App() {
   return (

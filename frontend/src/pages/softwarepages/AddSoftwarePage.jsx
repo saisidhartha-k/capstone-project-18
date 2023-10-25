@@ -1,7 +1,9 @@
 import React from 'react'
-import { Sidebar } from '../../components/sidebar/Sidebar'
-import Navbar from '../../components/navbar/Navbar'
 import AddSoftware from '../../components/add/AddSoftware'
+import '../../pages/pages.scss';
+import { Sidebar } from '../../components/sidebar/Sidebar';
+import Navbar from '../../components/navbar/Navbar';
+
 
 const AddNewSoftware = () => {
   return (

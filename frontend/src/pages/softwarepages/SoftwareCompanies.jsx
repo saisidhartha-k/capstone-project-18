@@ -1,9 +1,10 @@
 import React from "react";
 
-import "./Index.scss";
-import { Sidebar } from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
-import SoftwareCompanies from "../../../components/softwaredatatables/SoftwareCompanies";
+import '../../pages/pages.scss';
+
+import SoftwareCompanies from "../../components/softwaredatatables/SoftwareCompanies";
+import { Sidebar } from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 export const SoftwareComapniesList = () => {
   return (
