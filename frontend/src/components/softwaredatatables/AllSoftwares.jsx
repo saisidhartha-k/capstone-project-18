@@ -60,20 +60,19 @@ export default function AllSoftwareDataTable() {
 
   const handleRMA = (softwareId) => {
     setSelectedSoftwareId(softwareId);
-    openModal(); // Open the modal when "RMA" button is clicked
+    openModal(); 
   };
 
   const saveRMA = async () => {
     try {
       await moveSoftwareToRma(selectedSoftwareId, rmaData);
 
-      // After successful RMA, update the UI as needed
       setData((prevData) =>
         prevData.filter((software) => software.id !== selectedSoftwareId)
       );
 
-      closeModal(); // Close the modal
-      setRmaData({ reason: "" }); // Reset the reason input
+      closeModal(); 
+      setRmaData({ reason: "" }); 
     } catch (error) {
       console.error("Error moving software to RMA", error);
     }

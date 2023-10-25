@@ -6,6 +6,7 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { getHeaders } from "../../service/SoftwareService";
 
 const Widget = ({ title, endpoint, className, value, icon }) => {
   const [dataFromEndpoint, setDataFromEndpoint] = useState(null);
@@ -15,7 +16,7 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
     const fetchDataFromEndpoint = async () => {
       try {
         // Fetch data from the 'endpoint'
-        const endpointResponse = await axios.get(endpoint);
+        const endpointResponse = await axios.get(endpoint, getHeaders());
         setDataFromEndpoint(endpointResponse.data);
       } catch (error) {
         console.error(
@@ -27,8 +28,7 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
 
     const fetchDataFromValue = async () => {
       try {
-        // Fetch data from the 'value' endpoint
-        const valueResponse = await axios.get(value);
+        const valueResponse = await axios.get(value , getHeaders());
         setDataFromValue(valueResponse.data);
       } catch (error) {
         console.error(

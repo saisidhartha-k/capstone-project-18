@@ -10,7 +10,7 @@ const getToken = () => {
   }
   return null;
 };
-const getHeaders = () => {
+ export const getHeaders = () => {
   const token = getToken();
   if (token) {
     return {

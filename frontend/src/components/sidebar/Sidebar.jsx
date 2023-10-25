@@ -19,7 +19,7 @@ export const Sidebar = () => {
         <ul>
           <p className="title"> Main </p>
           <li>
-            <Link to="/">
+            <Link to="/home">
               <SpaceDashboardIcon className="icon" />
               <span>Dashboard</span>
             </Link>
