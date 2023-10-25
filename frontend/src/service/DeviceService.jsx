@@ -94,7 +94,7 @@ export const renewDevice = async (id, deviceDto) => {
 
 export const deviceAssetCheck = async () => {
   try {
-    const response = await axios.post(`${BASE_URL}/assetcheck`, getHeaders());
+    const response = await axios.post(`${BASE_URL}/assetcheck`,{}, getHeaders());
     console.log(response);
     return response.data;
   } catch (error) {

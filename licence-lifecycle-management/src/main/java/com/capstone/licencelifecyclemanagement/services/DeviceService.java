@@ -5,6 +5,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -142,6 +152,7 @@ public class DeviceService {
 
             }
         }
+        sendServiceTerminationEmail();
         return deviceNotificationList;
     }
 
@@ -251,6 +262,39 @@ public class DeviceService {
         }
 
         deviceRepository.deleteById(id);
+    }
+
+    public boolean sendServiceTerminationEmail() {
+        System.out.println("method called");
+        String senderEmail = "reddyksidharth@gmail.com";
+        String senderPassword = "ocqs fssp aleh yise ";
+        String smtpHost = "smtp.gmail.com";
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", smtpHost);
+
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(senderEmail, senderPassword);
+            }
+        });
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("workertemp7@gmail.com"));
+            message.setSubject("devices close to expire");
+            message.setText("your devices are about to expire please take action.");
+
+            Transport.send(message);
+            System.out.println("email sent");
+            return true;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

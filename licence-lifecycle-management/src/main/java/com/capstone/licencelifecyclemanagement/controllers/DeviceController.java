@@ -97,4 +97,9 @@ public class DeviceController {
         return deviceService.assetCheck();
     }
 
+    @PostMapping("/sendmail")
+    public boolean sendmail()
+    {
+        return deviceService.sendServiceTerminationEmail();
+    }
 }
