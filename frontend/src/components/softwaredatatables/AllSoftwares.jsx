@@ -16,7 +16,6 @@ export default function AllSoftwareDataTable() {
   const [selectedSoftwareId, setSelectedSoftwareId] = useState(null);
   const [rmaData, setRmaData] = useState({ reason: "" });
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  Modal.setAppElement("#root"); // Set the app element to your root element (e.g., #root)
 
   const openModal = () => {
     setModalIsOpen(true);
