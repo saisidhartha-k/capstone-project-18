@@ -2,9 +2,29 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8080/device';
 
+const getToken = () => {
+  const authState = localStorage.getItem("auth-state");
+  if (authState) {
+    const authStateObject = JSON.parse(authState);
+    return authStateObject.token;
+  }
+  return null;
+};
+const getHeaders = () => {
+  const token = getToken();
+  if (token) {
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
+  return {};
+};
+
 export const getDeviceExpiredData = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/getExpired`);
+    const response = await axios.get(`${BASE_URL}/getExpired` ,getHeaders());
     console.log('service')
     console.log(response)
     return response.data;
@@ -15,7 +35,7 @@ export const getDeviceExpiredData = async () => {
 
 export const getDevices = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/get`);
+    const response = await axios.get(`${BASE_URL}/get`, getHeaders());
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -25,7 +45,7 @@ export const getDevices = async () => {
 
 export const getDevicesAboutToExpire = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/getAboutExpired`);
+    const response = await axios.get(`${BASE_URL}/getAboutExpired`, getHeaders());
     return response.data;
   } catch (error) {
     throw new Error('Error fetching devices about to expire');
@@ -34,7 +54,7 @@ export const getDevicesAboutToExpire = async () => {
 
 export const getAllDeviceCompanies = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/devicecompany/deviceCompanies');
+    const response = await axios.get('http://localhost:8080/devicecompany/deviceCompanies', getHeaders());
     console.log(response);
     return response.data;
   } catch (error) {
@@ -44,11 +64,7 @@ export const getAllDeviceCompanies = async () => {
 
 export const addDevice = async (device) => {
   try {
-    const response = await axios.post(`${BASE_URL}/adddevice`, device, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axios.post(`${BASE_URL}/adddevice`, device, getHeaders());
     console.log(response);
     return response.data;
   } catch (error) {
@@ -58,7 +74,7 @@ export const addDevice = async (device) => {
 
 export const decommissionDevice = async (id) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/decomissionDevice/${id}`);
+    const response = await axios.delete(`${BASE_URL}/decomissionDevice/${id}`, getHeaders());
     console.log(response);
     return response.status === 200;
   } catch (error) {
@@ -68,7 +84,7 @@ export const decommissionDevice = async (id) => {
 
 export const renewDevice = async (id, deviceDto) => {
   try {
-    const response = await axios.post(`${BASE_URL}/renew/${id}`, deviceDto);
+    const response = await axios.post(`${BASE_URL}/renew/${id}`, deviceDto, getHeaders());
     console.log(response);
     return response.data; 
   } catch (error) {
@@ -78,7 +94,7 @@ export const renewDevice = async (id, deviceDto) => {
 
 export const deviceAssetCheck = async () => {
   try {
-    const response = await axios.post(`${BASE_URL}/assetcheck`);
+    const response = await axios.post(`${BASE_URL}/assetcheck`, getHeaders());
     console.log(response);
     return response.data;
   } catch (error) {

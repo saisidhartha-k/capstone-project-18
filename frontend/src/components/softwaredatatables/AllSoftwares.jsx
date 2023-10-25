@@ -6,7 +6,7 @@ import {
   getSoftwares,
 } from "../../service/SoftwareService";
 import { moveSoftwareToRma } from "../../service/RMAService";
-import Modal from "react-modal"; // Import react-modal
+import Modal from "react-modal";
 
 export default function AllSoftwareDataTable() {
   const [data, setData] = useState([]);
@@ -14,8 +14,9 @@ export default function AllSoftwareDataTable() {
   const [softwareIdToDecommission, setSoftwareIdToDecommission] =
     useState(null);
   const [selectedSoftwareId, setSelectedSoftwareId] = useState(null);
-  const [rmaData, setRmaData] = useState({ reason: "" }); // Store the reason in state
-  const [modalIsOpen, setModalIsOpen] = useState(false); // Control modal visibility
+  const [rmaData, setRmaData] = useState({ reason: "" });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  Modal.setAppElement("#root"); // Set the app element to your root element (e.g., #root)
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -118,8 +119,8 @@ export default function AllSoftwareDataTable() {
             </button>
             <button onClick={() => handleRMA(params.row.id)}>RMA</button>
             {showModal && (
-              <div className='modal-overlay'>
-                <div className='modal-content'>
+              <div className="modal-overlay">
+                <div className="modal-content">
                   <h2>Do you want to decommission this device?</h2>
                   <button onClick={confirmDecommission}>Yes</button>
                   <button onClick={closeConfirmationModal}>No</button>
@@ -133,7 +134,10 @@ export default function AllSoftwareDataTable() {
   ];
 
   const getRowStyle = (params) => {
-    if (params.row.software && params.row.software.available === "NOT_AVAILABLE") {
+    if (
+      params.row.software &&
+      params.row.software.available === "NOT_AVAILABLE"
+    ) {
       return { display: "none" };
     } else if (params.row.available === "NOT_AVAILABLE") {
       return { display: "none" };
@@ -154,6 +158,7 @@ export default function AllSoftwareDataTable() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="RMA Reason Modal"
+        shouldCloseOnOverlayClick={true} // Add this line to allow closing on overlay click
       >
         <h2>Enter RMA Reason</h2>
         <input

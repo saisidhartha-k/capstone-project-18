@@ -70,7 +70,7 @@ public class SecurityConfiguration {
                         }))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui.html",
-                                "/swagger-ui/**", "/actuator/**").permitAll()
+                                "/swagger-ui/**", "/actuator/**","/RMA/**").permitAll()
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer(
                         oauth2ResourceServer -> oauth2ResourceServer.jwt(jwt -> jwt.decoder(jwtDecoder())))
