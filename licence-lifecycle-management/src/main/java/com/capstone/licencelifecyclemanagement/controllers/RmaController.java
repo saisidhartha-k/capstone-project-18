@@ -25,22 +25,18 @@ public class RmaController {
 
     @PostMapping("/moveSoftware/{softwareId}")
     public ResponseEntity<Void> moveSoftwareToRma(@PathVariable int softwareId, @RequestBody RMA rma) {
-        try {
-            rmaService.moveSoftwareToRma(softwareId, rma.getReason());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        rmaService.moveSoftwareToRma(softwareId, rma.getReason());
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PostMapping("/moveDevice/{deviceId}")
     public ResponseEntity<Void> moveDeviceToRma(@PathVariable int deviceId, @RequestBody RMA rma) {
-        try {
-            rmaService.moveDeviceToRma(deviceId, rma.getReason());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        rmaService.moveDeviceToRma(deviceId, rma.getReason());
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PostMapping("/putBackSoftware/{id}")
@@ -54,8 +50,7 @@ public class RmaController {
     }
 
     @GetMapping("/getRma")
-    public List<RMA> getRma()
-    {
+    public List<RMA> getRma() {
         return rmaService.getRma();
     }
 
