@@ -10,6 +10,7 @@ import useAuth from '../../hooks/useAuth';
 import instance from '../../service/LoginService';
 import { Box, Button, Container, CssBaseline, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
 
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const { isLoading, setIsLoading, persistAuthState } = useAuth();
@@ -100,7 +101,7 @@ const LoginPage = () => {
                   )}
                 </div>
               </div>
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              <Button id="submit" type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 {isLoading ? (
                   <div className="loader">
                     <BarLoader color="#fff" loading={isLoading} size={10} height={2} />

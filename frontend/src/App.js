@@ -27,7 +27,7 @@ function App() {
           <Route path="/">
             <Route index element={<Login />} />
             <Route path="home" element={<Home />} />
-            <Route path="software/">
+            <Route id="softwares" path="software/">
               <Route index element={<SoftwareList />} />
               <Route path="expiredSoftware" element={<ExpiredSoftwareList/>}/>
               <Route path="abouttoexpireSoftware" element={<AboutToExpireSoftwareList />} />

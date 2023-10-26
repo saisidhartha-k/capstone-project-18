@@ -112,16 +112,16 @@ export default function AllSoftwareDataTable() {
       renderCell: (params) => {
         return (
           <div className="action-buttons">
-            <button onClick={() => handleDecommission(params.row.id)}>
+            <button id="decommissionButton" onClick={() => handleDecommission(params.row.id)}>
               Decommission
             </button>
-            <button onClick={() => handleRMA(params.row.id)}>RMA</button>
+            <button id="RMAbutton" onClick={() => handleRMA(params.row.id)}>RMA</button>
             {showModal && (
               <div className="modal-overlay">
                 <div className="modal-content">
                   <h2>Do you want to decommission this device?</h2>
-                  <button onClick={confirmDecommission}>Yes</button>
-                  <button onClick={closeConfirmationModal}>No</button>
+                  <button id="confirmDecommission" onClick={confirmDecommission}>Yes</button>
+                  <button id="closeConfirmationModal" onClick={closeConfirmationModal}>No</button>
                 </div>
               </div>
             )}
@@ -158,12 +158,13 @@ export default function AllSoftwareDataTable() {
       >
         <h2>Enter RMA Reason</h2>
         <input
+          id="RMAReason"
           type="text"
           value={rmaData.reason}
           onChange={(e) => setRmaData({ reason: e.target.value })}
         />
-        <button onClick={saveRMA}>Save</button>
-        <button onClick={closeModal}>Cancel</button>
+        <button id="saveRMA" onClick={saveRMA}>Save</button>
+        <button id="cancelRMA"  onClick={closeModal}>Cancel</button>
       </Modal>
     </div>
   );
