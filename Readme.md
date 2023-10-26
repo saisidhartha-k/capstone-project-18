@@ -2,15 +2,34 @@
 
 ### Overview
 
-The License Management System is a web-based application designed to help enterprises keep track of their network devices and software licenses. It provides a user-friendly dashboard for monitoring the status of licenses, sends email notifications to remind users of license expirations, and allows for easy updates of license status.
+The License Management System is a web-based application designed to help enterprises keep track of their devices and software licenses. It provides a user-friendly dashboard for monitoring the status of licenses, sends email notifications to remind users of license expirations, and allows for easy updates of license status.
+
+## License Management System
+
+**Repository Links:**
+- [Frontend Code](https://github.com/saisidhartha-k/capstone-project-18/tree/main/frontend)
+- [Backend Code](https://github.com/saisidhartha-k/capstone-project-18/tree/main/licence-lifecycle-management)
+
+### Project Functional Requirements
+
+- [x] Application to track devices, software within an enterprise.
+- [x] Send email notifications at regular intervals to remind license expiry.
+- [x] Maintain a UI dashboard for tracking the license status.
+- [x] Provide a UI interface to update the license status.
+
+### Remarks (Additional Requirements)
+
+- [x] Generate notifications if a license is expiring.
+- [x] Maintain information such as device ID, date of purchase, dates of expiry, and the need to renew.
+- [x] License and Lifecycle management. Track current status and lifecycle.
 
 ### Technology Stack
 
-- **Frontend**: React
+- **Frontend**: React, JavaScript
 - **Backend**: Java 11, Spring Boot 3.1.1
 - **Database**: MySQL
-- **Testing**: Mockito
-- **Graphs**: Chart.js (for visualizing data)
+- **Testing**: Mockito, Selenium
+- **Graphs**: Chart.js, Recharts
 
 ### Features
 
@@ -47,8 +66,9 @@ To get started with the License Management System, follow these steps:
 
 ### Testing
 
-The License Management System uses Mockito for unit testing. You can write test cases to ensure the reliability and correctness of your application.
+The License Management System uses Mockito for unit testing to ensure the reliability and correctness of your application. Additionally, Selenium is utilized for visualization testing to verify the visual components of the application. 
 
 ### Visualizations
 
-The system uses Chart.js for generating graphical visualizations to represent license status and trends. You can customize these graphs as needed to display the data most effectively.
+The system uses Chart.js and Recharts for generating graphical visualizations to represent license status and trends. You can customize these graphs as needed to display the data most effectively.
+
