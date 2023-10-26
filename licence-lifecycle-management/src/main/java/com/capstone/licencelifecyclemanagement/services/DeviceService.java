@@ -145,7 +145,9 @@ public class DeviceService {
                 notificationRepository.save(notification);
             }
         }
-        sendServiceTerminationEmail();
+        if (!deviceNotificationList.isEmpty()) {
+            sendServiceTerminationEmail();
+        }
         return deviceNotificationList;
     }
 

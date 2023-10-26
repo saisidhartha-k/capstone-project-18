@@ -170,6 +170,8 @@ public class SoftwareService {
                 notificationRepository.save(notification);
 
             }
+        }
+        if (!softwareNotificationList.isEmpty()) {
             sendServiceTerminationEmail();
         }
         return softwareNotificationList;
