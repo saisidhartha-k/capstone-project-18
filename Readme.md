@@ -2,7 +2,7 @@
 
 ### Overview
 
-The License Management System is a web-based application designed to help enterprises keep track of their network devices and software licenses. It provides a user-friendly dashboard for monitoring the status of licenses, sends email notifications to remind users of license expirations, and allows for easy updates of license status.
+The License Management System is a web-based application designed to help enterprises keep track of their devices and software licenses. It provides a user-friendly dashboard for monitoring the status of licenses, sends email notifications to remind users of license expirations, and allows for easy updates of license status.
 
 ## License Management System
 
