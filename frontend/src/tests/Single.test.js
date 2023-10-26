@@ -134,12 +134,17 @@ describe("Selenium", () => {
   it("should navigate to RMA page", async () => {
     const rmaLink = await driver.findElement(By.linkText("RMA"));
     await rmaLink.click();
-  
+    
+    const handleReturnButtonClick = await driver.findElement(By.id("handleReturnButtonClick"));
+    await handleReturnButtonClick.click();
+
   });
   
   it("should navigate to Decommissioned Items page", async () => {
     const decommissionedItemsLink = await driver.findElement(By.linkText("decomissioned items"));
     await decommissionedItemsLink.click();
+
+
   
   });
   

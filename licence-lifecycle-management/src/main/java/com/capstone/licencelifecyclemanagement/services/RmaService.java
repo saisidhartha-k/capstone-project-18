@@ -98,7 +98,7 @@ public class RmaService {
             SoftwarePurchase sPurchase = new SoftwarePurchase(softwarePurchaseId);
             softwarePurchaseRepository.save(sPurchase);
             rmaRepository.delete(rma);
-        }
+        } 
 
     }
 

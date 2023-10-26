@@ -59,7 +59,7 @@ export default function RMADataTable() {
       renderCell: (params) => {
         return (
           <div className="action-buttons">
-            <button onClick={() => handleReturnButtonClick(params.row.id, params.row.device)}>
+            <button id='handleReturnButtonClick' onClick={() => handleReturnButtonClick(params.row.id, params.row.device)}>
               Return
             </button>
           </div>
