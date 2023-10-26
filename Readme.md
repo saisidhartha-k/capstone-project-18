@@ -23,6 +23,14 @@ The License Management System is a web-based application designed to help enterp
 - [x] Maintain information such as device ID, date of purchase, dates of expiry, and the need to renew.
 - [x] License and Lifecycle management. Track current status and lifecycle.
 
+# Others
+
+- [ ] Backend code with documentation
+- [x] Requirement Specifications
+- [ ] Frontend code with documentation
+- [x] ER diagram/Database model visualiasation
+- [x] Test Coverage Reports
+
 ### Technology Stack
 
 - **Frontend**: React, JavaScript
