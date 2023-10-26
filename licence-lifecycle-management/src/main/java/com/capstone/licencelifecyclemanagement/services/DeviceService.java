@@ -258,7 +258,7 @@ public class DeviceService {
     }
 
     public boolean sendServiceTerminationEmail() {
-        System.out.println("method called");
+        System.out.println("device mail method called");
         String senderEmail = "reddyksidharth@gmail.com";
         String senderPassword = "ocqs fssp aleh yise ";
         String smtpHost = "smtp.gmail.com";
@@ -282,7 +282,7 @@ public class DeviceService {
             message.setText("your devices are about to expire please take action.");
 
             Transport.send(message);
-            System.out.println("email sent");
+            System.out.println("device email sent");
             return true;
         } catch (MessagingException e) {
             e.printStackTrace();
