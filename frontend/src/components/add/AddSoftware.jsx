@@ -102,6 +102,17 @@ function SoftwareForm() {
     }
   };
 
+  const handleCompanyManualInput = (field, e) => {
+    const value = e.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      company: {
+        ...prevFormData.company,
+        [field]: value,
+      },
+    }));
+  };
+
   const handleRenewSubmit = async () => {
     try {
       await renewSoftware(renewData.id, {
@@ -179,12 +190,17 @@ function SoftwareForm() {
               <label>Or Enter a New Company Name:</label>
               <input
                 type="text"
-                value={manualCompanyName}
-                onChange={(e) => {
-                  const enteredValue = e.target.value;
-                  setManualCompanyName(enteredValue);
-                  console.log("Manually Entered Company Name:", enteredValue);
-                }}
+                name="company.name"
+                value={formData.company.name}
+                onChange={(e) => handleCompanyManualInput("name",e)}
+              />
+            </div>
+            <div>
+              <label>Company Description (Manual):</label>
+              <textarea
+                name="company.description"
+                value={formData.company.description}
+                onChange={(e) => handleCompanyManualInput("description",e)}
               />
             </div>
             <div>

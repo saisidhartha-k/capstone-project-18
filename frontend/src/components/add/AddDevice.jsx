@@ -1,49 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { addDevice, getAllDeviceCompanies, renewDevice, getDevices } from '../../service/DeviceService';
-import './index.scss';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import {
+  addDevice,
+  getAllDeviceCompanies,
+  renewDevice,
+  getDevices,
+} from "../../service/DeviceService";
+import "./index.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function DeviceForm() {
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     company: {
-      id: '',
-      name: '',
+      id: "",
+      name: "",
     },
     numberOfEmployees: 0,
     cost: 0,
-    expiryDate: '',
-    location: '',
+    expiryDate: "",
+    location: "",
   });
 
   const [renewData, setRenewData] = useState({
-    id: '',
+    id: "",
     cost: 0,
-    expiryDate: '',
+    expiryDate: "",
     company: {
-      id: '',
-      name: '',
+      id: "",
+      name: "",
     },
   });
 
   const [companies, setCompanies] = useState([]);
   const [devices, setDevices] = useState([]);
-  const [selectedCompanyId, setSelectedCompanyId] = useState('');
-  const [mode, setMode] = useState('Add');
+  const [selectedCompanyId, setSelectedCompanyId] = useState("");
+  const [mode, setMode] = useState("Add");
+  const [newCompany, setNewCompany] = useState({
+    name: "",
+    description: "",
+  });
 
   useEffect(() => {
     getAllDeviceCompanies()
       .then((data) => {
         setCompanies(data);
       })
-      .catch((error) => console.error('Error fetching device companies:', error));
+      .catch((error) =>
+        console.error("Error fetching device companies:", error)
+      );
 
     getDevices()
       .then((data) => {
         setDevices(data);
       })
-      .catch((error) => console.error('Error fetching devices:', error));
+      .catch((error) => console.error("Error fetching devices:", error));
   }, []);
 
   const handleChange = (e) => {
@@ -55,7 +66,9 @@ function DeviceForm() {
   };
 
   const handleCompanySelect = (e) => {
-    const selectedCompany = companies.find((company) => company.name === e.target.value);
+    const selectedCompany = companies.find(
+      (company) => company.name === e.target.value
+    );
 
     if (selectedCompany) {
       setFormData({
@@ -69,6 +82,17 @@ function DeviceForm() {
     }
   };
 
+  const handleCompanyManualInput = (field, e) => {
+    const value = e.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      company: {
+        ...prevFormData.company,
+        [field]: value,
+      },
+    }));
+  };
+
   const handleRenewSubmit = async (e) => {
     e.preventDefault();
 
@@ -79,10 +103,12 @@ function DeviceForm() {
         company: renewData.company,
       });
 
-      toast.success('Device renewed successfully!', { autoClose: 3000 });
+      toast.success("Device renewed successfully!", { autoClose: 3000 });
     } catch (error) {
-      console.error('Error renewing device:', error);
-      toast.error('Failed to renew the device. Please try again.', { autoClose: 3000 });
+      console.error("Error renewing device:", error);
+      toast.error("Failed to renew the device. Please try again.", {
+        autoClose: 3000,
+      });
     }
   };
 
@@ -91,18 +117,20 @@ function DeviceForm() {
 
     try {
       const response = await addDevice(formData);
-      console.log('Device added:', response);
-      toast.success('Device added successfully!', { autoClose: 3000 });
+      console.log("Device added:", response);
+      toast.success("Device added successfully!", { autoClose: 3000 });
     } catch (error) {
-      console.error('Error adding device:', error);
-      toast.error('Failed to add the device. Please try again.', { autoClose: 3000 });
+      console.error("Error adding device:", error);
+      toast.error("Failed to add the device. Please try again.", {
+        autoClose: 3000,
+      });
     }
   };
 
   return (
     <div className="form-container">
       <h2>Device Form</h2>
-      {mode === 'Add' && (
+      {mode === "Add" && (
         <div>
           <form className="form" onSubmit={handleSubmit}>
             <div>
@@ -131,12 +159,20 @@ function DeviceForm() {
               </select>
             </div>
             <div>
-              <label>Company Name (Manual):</label>
+              <label>Or Enter a New Company Name:</label>
               <input
                 type="text"
                 name="company.name"
                 value={formData.company.name}
-                onChange={handleChange}
+                onChange={(e) => handleCompanyManualInput("name",e)}
+              />
+            </div>
+            <div>
+              <label>Company Description (Manual):</label>
+              <textarea
+                name="company.description"
+                value={formData.company.description}
+                onChange={(e) => handleCompanyManualInput("description",e)}
               />
             </div>
             <div>
@@ -190,7 +226,7 @@ function DeviceForm() {
           </form>
         </div>
       )}
-      {mode === 'Renew' && (
+      {mode === "Renew" && (
         <div>
           <form className="form" onSubmit={handleRenewSubmit}>
             <div>
@@ -198,7 +234,9 @@ function DeviceForm() {
               <select
                 name="renewData.id"
                 value={renewData.id}
-                onChange={(e) => setRenewData({ ...renewData, id: e.target.value })}
+                onChange={(e) =>
+                  setRenewData({ ...renewData, id: e.target.value })
+                }
                 required
               >
                 <option value="">Select a Device ID</option>
@@ -237,7 +275,10 @@ function DeviceForm() {
                 name="renewData.company.name"
                 value={renewData.company.name}
                 onChange={(e) =>
-                  setRenewData({ ...renewData, company: { ...renewData.company, name: e.target.value } })
+                  setRenewData({
+                    ...renewData,
+                    company: { ...renewData.company, name: e.target.value },
+                  })
                 }
               >
                 <option value="">Select a Company</option>
@@ -268,8 +309,8 @@ function DeviceForm() {
           </form>
         </div>
       )}
-      <button onClick={() => setMode(mode === 'Add' ? 'Renew' : 'Add')}>
-        {mode === 'Add' ? 'Switch to Renew Mode' : 'Switch to Add Mode'}
+      <button onClick={() => setMode(mode === "Add" ? "Renew" : "Add")}>
+        {mode === "Add" ? "Switch to Renew Mode" : "Switch to Add Mode"}
       </button>
       <ToastContainer
         position="top-right"
