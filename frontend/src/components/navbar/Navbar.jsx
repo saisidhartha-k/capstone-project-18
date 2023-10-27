@@ -65,13 +65,6 @@ const Navbar = ({ toggleNotifications }) => {
           <div className="item" onClick={handleLogout}>
             <LogoutIcon />
           </div>
-          <div className="item">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdsHr0_k8PrNgg8SYhwVlV4ONxwliFxDLSDCC6TTqe&s"
-              alt=""
-              className="avatar"
-            />
-          </div>
         </div>
       </div>
     </div>
