@@ -44,7 +44,6 @@ export default function AllDevicesDataTable() {
     try {
       await moveDeviceToRma(selectedDeviceId, rmaData);
 
-      // After successful RMA, update the UI as needed
       setData((prevData) =>
         prevData.filter((device) => device.id !== selectedDeviceId)
       );
