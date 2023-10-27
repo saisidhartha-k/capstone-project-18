@@ -4,7 +4,7 @@ import {useState} from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {BarLoader} from "react-spinners";
-import "./login.scss";
+import "./login.scss"
 import { useLocation } from "react-router-dom";
 import useAuth from '../../hooks/useAuth';
 import instance from '../../service/LoginService';
@@ -46,76 +46,66 @@ const LoginPage = () => {
   };
 
   return (
-    <ThemeProvider theme={createTheme()}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className="wrapper">
-          <div className="banner">
-            <div className="circle"></div>
-            <div className="overlay"></div>
-          </div>
-          <div className="auth-body">
-            <form className="auth-form" onSubmit={handleSubmit}>
-              <Typography component="h1" variant="h5" className="auth-title">
-                Welcome back
-              </Typography>
-              <div className="input-group">
-                <label htmlFor="username" className="label">
-                  Username
-                </label>
-                <div className="input-container" data-error="Enter valid username">
-                  <TextField
-                    type="text"
-                    name="username"
-                    required
-                    placeholder="Enter username"
-                    autoComplete="username"
-                    autoFocus
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    id="username"
-                    fullWidth
-                  />
-                </div>
-              </div>
-              <div className="input-group">
-                <label htmlFor="password" className="label">
-                  Password
-                </label>
-                <div className="input-container">
-                  <TextField
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    required
-                    placeholder="Enter your password"
-                    min="6"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    id="current-password"
-                    fullWidth
-                  />
-                  {!showPassword ? (
-                    <VisibilityOffIcon className="pwd-icon" onClick={toggleShowPassword} />
-                  ) : (
-                    <VisibilityIcon className="pwd-icon" onClick={toggleShowPassword} />
-                  )}
-                </div>
-              </div>
-              <Button id="submit" type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                {isLoading ? (
-                  <div className="loader">
-                    <BarLoader color="#fff" loading={isLoading} size={10} height={2} />
-                  </div>
-                ) : (
-                  "Sign In"
-                )}
-              </Button>
-            </form>
-          </div>
+    <section className='auth'>
+        <div className='wrapper'>
+            <div >
+                <form className='auth-form' onSubmit={handleSubmit}>
+                    <h3 className='auth-title'>Welcome back</h3>
+                    <p className='auth-desc'>Welcome back! Please enter your details</p>
+                    <div className='input-group'>
+                        <label htmlFor='username' className='label'>
+                            username
+                        </label>
+                        <div className='input-container' data-error='enter valid email'>
+                            <input
+                                type='text'
+                                name='username'
+                                required
+                                placeholder='Enter username'
+                                autoComplete='username'
+                                autoFocus='on'
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                id='username'
+                            />
+                        </div>
+                    </div>
+                    <div className='input-group'>
+                        <label htmlFor='password' className='label'>
+                            Password
+                        </label>
+                        <div className='input-container'>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name='password'
+                                required
+                                placeholder='Enter your password'
+                                min='6'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                id='password'
+                            />
+                            {!showPassword ? (
+                                <VisibilityOffIcon className='pwd-icon' onClick={toggleShowPassword} />
+                            ) : (
+                                <VisibilityIcon className='pwd-icon' onClick={toggleShowPassword} />
+                            )}
+                        </div>
+                    </div>
+                    <button className='auth-btn' type='submit' id="submit">
+                        {isLoading ? (
+                            <div className='loader'>
+                                <BarLoader color='#fff' loading={isLoading} size={10} height={2} />
+                            </div>
+                        ) : (
+                            "Sign in"
+                        )}
+                    </button>
+                </form>
+            </div>
         </div>
-      </Container>
-    </ThemeProvider>
-  );
+    </section>
+);
 };
 
 export default LoginPage;
