@@ -1,5 +1,18 @@
 ## License Management System
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Repository Links](#repository-links)
+- [Project Functional Requirements](#project-functional-requirements)
+- [Remarks (Additional Requirements)](#remarks-additional-requirements)
+- [Others](#others)
+- [Technology Stack](#technology-stack)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Testing](#testing)
+- [Visualizations](#visualizations)
+
 ### Overview
 
 The License Management System is a web-based application designed to help enterprises keep track of their devices and software licenses. It provides a user-friendly dashboard for monitoring the status of licenses, sends email notifications to remind users of license expirations, and allows for easy updates of license status.
