@@ -47,7 +47,7 @@ The License Management System is a web-based application designed to help enterp
 
 ### Technology Stack
 
-- **Frontend**: React, JavaScript
+- **Frontend**: React, JavaScript, MUI components, Sass
 - **Backend**: Java 11, Spring Boot 3.1.1
 - **Database**: MySQL
 - **Testing**: Mockito, Selenium
@@ -75,7 +75,7 @@ To get started with the License Management System, follow these steps:
    - Set up your MySQL database and configure the database connection in the Spring Boot application.properties file.
    - Configure email settings in the application.properties file, including SMTP server details and email credentials.
 
-3. **Run the Backend**: Start the Spring Boot backend by running the main application class.
+3. **Run the Backend**: Start the Spring Boot backend by running the main application class. The backend of the License Management System runs on port 8080. You can access the backend API at `http://localhost:8080` or the appropriate server address.
 
 4. **Configure the Frontend**:
    - Navigate to the `frontend` directory.
