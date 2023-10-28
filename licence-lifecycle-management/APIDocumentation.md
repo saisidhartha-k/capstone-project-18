@@ -15,9 +15,6 @@ This is the API documentation for Liscence Mangement System, based on the OpenAP
 9. [Device Company Endpoints](#device-company-endpoints)
 10. [Decommissioned Items Endpoints](#decommissioned-items-endpoints)
 11. [Notification Endpoints](#notification-endpoints)
-12. [Examples and Usage](#examples-and-usage)
-13. [Schemas](#schemas)
-14. [Security Schemes](#security-schemes)
 
 ## Introduction <a name="introduction"></a>
 
@@ -346,19 +343,6 @@ To access our API, you must use Bearer Token Authentication. Include a valid JWT
 - **Response**: A list of RMA objects representing items in RMA.
 
 ## Device Company Endpoints <a name="device-company-endpoints"></a>
-
-### Add Device Company
-- **Method**: POST
-- **URL**: `/devicecompany/addCompany`
-- **Description**: Add a new device company to the system.
-- **Request**: JSON object representing the device company to be added.
-    ```json
-    {
-        "name": "New Device Company",
-        "description": "A device company description."
-    }
-    ```
-- **Response**: The added device company as a JSON object.
 
 ### Get All Device Companies
 - **Method**: GET
