@@ -266,9 +266,6 @@ To access the API, you must use Bearer Token Authentication. Include a valid JWT
 - **Description**: Perform an asset check for devices.
 - **Response**: A list of asset check results in the form of strings.
 
-## Authentication <a name="authentication"></a>
-
-To access our API, you must use Bearer Token Authentication. Include a valid JWT (JSON Web Token) in the `Authorization` header of your requests.
 
 ## Authentication Endpoints <a name="authentication-endpoints"></a>
 
