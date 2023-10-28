@@ -123,8 +123,8 @@ public class RmaService {
             expiryDate = expiryDate.plusMonths(months);
             device.setExpiryDate(expiryDate);
 
-            device.setLicenseNumber(randomLicense()); // Implement your serial number generation logic
-            device.setAvailable(Available.AVAILABLE); // Assuming you have an enumeration for device status
+            device.setLicenseNumber(randomLicense()); 
+            device.setAvailable(Available.AVAILABLE); 
             DevicePurchaseId devicePurchaseId = new DevicePurchaseId(device.getLicenseNumber(), device);
             DevicePurchase devicePurchase = new DevicePurchase(devicePurchaseId);
             devicePurchaseRepository.save(devicePurchase);

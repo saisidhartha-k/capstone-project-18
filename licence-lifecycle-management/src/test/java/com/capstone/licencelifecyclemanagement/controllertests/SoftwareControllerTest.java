@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SoftwareControllerTest {
+class SoftwareControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,7 +40,7 @@ public class SoftwareControllerTest {
     @Test
     @WithMockUser
     void testAddSoftware() throws Exception {
-        // Arrange
+
         Software software = new Software();
         software.setId(1);
         software.setName("Microsoft Office");
@@ -49,7 +49,6 @@ public class SoftwareControllerTest {
 
         when(softwareService.addSoftware(software)).thenReturn(software);
 
-        // Act and Assert
         mockMvc.perform(post("/software/addsoftware")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(software)))
@@ -58,15 +57,14 @@ public class SoftwareControllerTest {
 
     @Test
     @WithMockUser
-    public void testGetNotExpired() throws Exception {
-        // Arrange
+    void testGetNotExpired() throws Exception {
+
         List<Software> softwareList = new ArrayList<>();
         softwareList.add(new Software());
         softwareList.add(new Software());
 
         when(softwareService.notExpList()).thenReturn(softwareList);
 
-        // Act and Assert
         mockMvc.perform(get("/software/getNotExpired")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -75,15 +73,14 @@ public class SoftwareControllerTest {
 
     @Test
     @WithMockUser
-    public void testGetAboutExpired() throws Exception {
-        // Arrange
+    void testGetAboutExpired() throws Exception {
+
         List<Software> softwareList = new ArrayList<>();
         softwareList.add(new Software());
         softwareList.add(new Software());
 
         when(softwareService.aboutToExpire()).thenReturn(softwareList);
 
-        // Act and Assert
         mockMvc.perform(get("/software/getAboutExpired")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -92,15 +89,14 @@ public class SoftwareControllerTest {
 
     @Test
     @WithMockUser
-    public void testGetSoftwares() throws Exception {
-        // Arrange
+    void testGetSoftwares() throws Exception {
+
         List<Software> softwareList = new ArrayList<>();
         softwareList.add(new Software());
         softwareList.add(new Software());
 
         when(softwareService.getSoftwares()).thenReturn(softwareList);
 
-        // Act and Assert
         mockMvc.perform(get("/software/get")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -109,11 +105,10 @@ public class SoftwareControllerTest {
 
     @Test
     @WithMockUser
-    public void testGetExpiredCount() throws Exception {
-    // Arrange
+     void testGetExpiredCount() throws Exception {
+    
     when(softwareService.expiredSoftwaresCount()).thenReturn(5);
 
-    // Act and Assert
     mockMvc.perform(get("/software/getExpiredCount")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
@@ -122,11 +117,10 @@ public class SoftwareControllerTest {
 
     @Test
     @WithMockUser
-    public void testGetNotExpiredCount() throws Exception {
-    // Arrange
+     void testGetNotExpiredCount() throws Exception {
+    
     when(softwareService.notExpListCount()).thenReturn(5);
 
-    // Act and Assert
     mockMvc.perform(get("/software/getNotExpiredCount")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
@@ -135,11 +129,10 @@ public class SoftwareControllerTest {
 
 @Test
 @WithMockUser
-public void testGetAboutExpiredCount() throws Exception {
-    // Arrange
+ void testGetAboutExpiredCount() throws Exception {
+    
     when(softwareService.aboutToExpireCount()).thenReturn(5);
 
-    // Act and Assert
     mockMvc.perform(get("/software/getAboutExpiredCount")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -148,7 +141,7 @@ public void testGetAboutExpiredCount() throws Exception {
 
     @Test
     @WithMockUser
-    public void testRenewSoftware() throws Exception {
+    void testRenewSoftware() throws Exception {
         int id = 1;
         SoftwareDto dto = new SoftwareDto();
         dto.setExpiryDate(LocalDate.now().plusMonths(6));
@@ -157,17 +150,16 @@ public void testGetAboutExpiredCount() throws Exception {
 
         mockMvc.perform(post("/software/renew/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto))) 
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
     }
 
 @Test
 @WithMockUser
-public void testPercentageOfSoftwareAboutToExpire() throws Exception {
-    // Arrange
+ void testPercentageOfSoftwareAboutToExpire() throws Exception {
+    
     when(softwareService.percentageOfSoftwareAboutToExpire()).thenReturn(40);
 
-    // Act and Assert
     mockMvc.perform(get("/software/percentageAboutToExpire")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -176,11 +168,10 @@ public void testPercentageOfSoftwareAboutToExpire() throws Exception {
 
 @Test
 @WithMockUser
-public void testPercentageOfNotExpiredSoftware() throws Exception {
-    // Arrange
+ void testPercentageOfNotExpiredSoftware() throws Exception {
+    
     when(softwareService.percentageOfNotExpiredSoftware()).thenReturn(40);
 
-    // Act and Assert
     mockMvc.perform(get("/software/percentageNotExpired")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -189,11 +180,10 @@ public void testPercentageOfNotExpiredSoftware() throws Exception {
 
 @Test
 @WithMockUser
-public void testPercentageOfExpiredSoftware() throws Exception {
-    // Arrange
+ void testPercentageOfExpiredSoftware() throws Exception {
+    
     when(softwareService.percentageOfExpiredSoftware()).thenReturn(40);
 
-    // Act and Assert
     mockMvc.perform(get("/software/percentageExpired")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -202,11 +192,10 @@ public void testPercentageOfExpiredSoftware() throws Exception {
 
     @Test
     @WithMockUser
-    public void testDeleteSoftware() throws Exception {
-        // Arrange
+    void testDeleteSoftware() throws Exception {
+
         int id = 1;
 
-        // Act and Assert
         mockMvc.perform(delete("/software/decomission/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -215,14 +204,13 @@ public void testPercentageOfExpiredSoftware() throws Exception {
     @Test
     @WithMockUser
     void testAssetCheck() throws Exception {
-        // Arrange
+
         List<String> assetList = new ArrayList<>();
         assetList.add("Microsoft Office");
         assetList.add("Adobe Photoshop");
 
         when(softwareService.assetCheck()).thenReturn(assetList);
 
-        // Act and Assert
         mockMvc.perform(post("/software/assetcheck")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

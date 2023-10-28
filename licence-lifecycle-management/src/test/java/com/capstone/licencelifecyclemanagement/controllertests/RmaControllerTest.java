@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class RmaControllerTest {
+class RmaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,12 +34,11 @@ public class RmaControllerTest {
     @Test
     @WithMockUser
     void testMoveSoftwareToRma() throws Exception {
-        // Arrange
+
         int softwareId = 1;
         RMA rma = new RMA();
         rma.setReason("Test reason");
 
-        // Act and Assert
         mockMvc.perform(post("/RMA/moveSoftware/{softwareId}", softwareId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(rma)))
@@ -49,12 +48,11 @@ public class RmaControllerTest {
     @Test
     @WithMockUser
     void testMoveDeviceToRma() throws Exception {
-        // Arrange
+
         int deviceId = 1;
         RMA rma = new RMA();
         rma.setReason("Test reason");
 
-        // Act and Assert
         mockMvc.perform(post("/RMA/moveDevice/{deviceId}", deviceId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(rma)))
@@ -64,10 +62,9 @@ public class RmaControllerTest {
     @Test
     @WithMockUser
     void testPutBackSoftware() throws Exception {
-        // Arrange
+
         int id = 1;
 
-        // Act and Assert
         mockMvc.perform(post("/RMA/putBackSoftware/{id}", id))
                 .andExpect(status().isOk());
     }
@@ -75,10 +72,9 @@ public class RmaControllerTest {
     @Test
     @WithMockUser
     void testPutBackDevice() throws Exception {
-        // Arrange
+
         int id = 1;
 
-        // Act and Assert
         mockMvc.perform(post("/RMA/putBackDevice/{id}", id))
                 .andExpect(status().isOk());
     }
@@ -86,10 +82,8 @@ public class RmaControllerTest {
     @Test
     @WithMockUser
     void testGetRma() throws Exception {
-        // Act and Assert
         mockMvc.perform(get("/RMA/getRma"))
                 .andExpect(status().isOk());
     }
-
 
 }

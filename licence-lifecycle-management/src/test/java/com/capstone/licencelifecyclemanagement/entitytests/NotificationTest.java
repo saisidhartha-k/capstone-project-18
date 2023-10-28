@@ -13,7 +13,7 @@ class NotificationTest {
     private Notification notification;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         notification = new Notification();
         notification.setId(1);
         notification.setProductName("Test Notification");
@@ -23,37 +23,27 @@ class NotificationTest {
     }
 
     @Test
-    public void testGetId() {
+    void testGetId() {
         assertEquals(1, notification.getId());
     }
 
-    // @Test
-    // public void testGetSoftware() {
-    // assertEquals(new Software(), notification.getSoftware());
-    // }
-
-    // @Test
-    // public void testGetDevice() {
-    // assertEquals(new Device(), notification.getDevice());
-    // }
-
     @Test
-    public void testGetName() {
+    void testGetName() {
         assertEquals("Test Notification", notification.getProductName());
     }
 
     @Test
-    public void testGetExpiryDate() {
+    void testGetExpiryDate() {
         assertEquals(LocalDate.now(), notification.getExpiryDate());
     }
 
     @Test
-    public void testGetNumberOfDaysLeft() {
+    void testGetNumberOfDaysLeft() {
         assertEquals(30, notification.getNumberOfDaysLeft());
     }
 
     @Test
-    public void testGetMessage() {
+    void testGetMessage() {
         assertEquals("Test Message", notification.getMessage());
     }
 

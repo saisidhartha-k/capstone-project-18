@@ -30,12 +30,11 @@ import com.capstone.licencelifecyclemanagement.repository.RMARepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwarePurchaseRepository;
 import com.capstone.licencelifecyclemanagement.repository.SoftwareRepository;
 import com.capstone.licencelifecyclemanagement.services.RmaService;
-import com.capstone.licencelifecyclemanagement.services.RmaService;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class RMAServiceTest {
+class RMAServiceTest {
 
     @InjectMocks
     private RmaService rmaService;
@@ -72,7 +71,6 @@ public class RMAServiceTest {
 
     @Test
     void testMoveDeviceToRma() {
-        // Arrange
         int deviceId = 1;
         String reason = "Test Reason";
         Device device = new Device();
@@ -80,16 +78,13 @@ public class RMAServiceTest {
 
         when(deviceRepository.findById(deviceId)).thenReturn(Optional.of(device));
 
-        // Act
         rmaService.moveDeviceToRma(deviceId, reason);
 
-        // Assert
         verify(rmaRepository, times(1)).save(any(RMA.class));
     }
 
     @Test
     void testPutBackDeviceFromRma() {
-        // Arrange
         int rmaId = 1;
         Device device = new Device();
         device.setId(1);
@@ -102,17 +97,14 @@ public class RMAServiceTest {
 
         when(rmaRepository.findById(rmaId)).thenReturn(Optional.of(rma));
 
-        // Act
         rmaService.putBackDeviceFromRma(rmaId);
 
-        // Assert
         verify(devicePurchaseRepository, times(1)).save(any(DevicePurchase.class));
         verify(rmaRepository, times(1)).delete(rma);
     }
 
     @Test
     void testPutBackSoftwareFromRma() {
-        // Arrange
         int rmaId = 1;
         Software software = new Software();
         software.setId(1);
@@ -125,24 +117,19 @@ public class RMAServiceTest {
 
         when(rmaRepository.findById(rmaId)).thenReturn(Optional.of(rma));
 
-        // Act
         rmaService.putBackSoftwareFromRma(rmaId);
 
-        // Assert
         verify(softwarePurchaseRepository, times(1)).save(any(SoftwarePurchase.class));
         verify(rmaRepository, times(1)).delete(rma);
     }
 
     @Test
     void testGetRma() {
-        // Arrange
         List<RMA> expected = new ArrayList<>();
         when(rmaRepository.findAll()).thenReturn(expected);
 
-        // Act
         List<RMA> actual = rmaService.getRma();
 
-        // Assert
         assertEquals(expected, actual);
     }
 

@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.capstone.licencelifecyclemanagement.dto.userDTO;
 import com.capstone.licencelifecyclemanagement.entitys.User;
 import com.capstone.licencelifecyclemanagement.repository.UserRepository;
 import com.capstone.licencelifecyclemanagement.services.UserService;
@@ -22,7 +21,7 @@ import com.capstone.licencelifecyclemanagement.services.UserService;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
@@ -32,21 +31,16 @@ public class UserServiceTest {
 
     @Test
     void testFindByName() {
-        // Arrange
         String username = "admin";
         User user = new User();
         user.setName(username);
 
         when(userRepository.findByName(username)).thenReturn(Optional.of(user));
 
-        // Act
         Optional<User> result = userService.findByName(username);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(username, result.get().getName());
     }
-
- 
 
 }

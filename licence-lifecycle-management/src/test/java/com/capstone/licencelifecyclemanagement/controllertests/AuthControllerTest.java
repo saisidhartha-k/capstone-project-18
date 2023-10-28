@@ -35,58 +35,57 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AuthControllerTest {
+class AuthControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+        @Autowired
+        private ObjectMapper objectMapper;
 
-    @MockBean
-    private UserService userService;
+        @MockBean
+        private UserService userService;
 
-    private User user;
+        private User user;
 
-    @MockBean
-    private AuthenticationManager authenticationManager;
+        @MockBean
+        private AuthenticationManager authenticationManager;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @Test
-    void testUserAuthentication() throws Exception {
-        LoginBody loginBody = new LoginBody();
-        loginBody.setUsername("test");
-        loginBody.setPassword("test123");
+        @Test
+        void testUserAuthentication() throws Exception {
+                LoginBody loginBody = new LoginBody();
+                loginBody.setUsername("test");
+                loginBody.setPassword("test123");
 
-        user = new User();
-        
+                user = new User();
 
-        when(userService.findByName("test")).thenReturn(Optional.of(user));
+                when(userService.findByName("test")).thenReturn(Optional.of(user));
 
-        List<GrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_USER"));
-        Authentication auth = new UsernamePasswordAuthenticationToken(
-                "test",
-                "test123",
-                authorities);
+                List<GrantedAuthority> authorities = Collections.singletonList(
+                                new SimpleGrantedAuthority("ROLE_USER"));
+                Authentication auth = new UsernamePasswordAuthenticationToken(
+                                "test",
+                                "test123",
+                                authorities);
 
-        when(
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken("test", "test123")))
-                .thenReturn(auth);
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        securityContext.setAuthentication(auth);
-        SecurityContextHolder.setContext(securityContext);
+                when(
+                                authenticationManager.authenticate(
+                                                new UsernamePasswordAuthenticationToken("test", "test123")))
+                                .thenReturn(auth);
+                SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+                securityContext.setAuthentication(auth);
+                SecurityContextHolder.setContext(securityContext);
 
-        mockMvc
-                .perform(
-                        MockMvcRequestBuilders
-                                .post("/api/auth/token")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(loginBody)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.token").isNotEmpty());
-    }
+                mockMvc
+                                .perform(
+                                                MockMvcRequestBuilders
+                                                                .post("/api/auth/token")
+                                                                .contentType(MediaType.APPLICATION_JSON)
+                                                                .content(objectMapper.writeValueAsString(loginBody)))
+                                .andExpect(status().isOk())
+                                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(jsonPath("$.token").isNotEmpty());
+        }
 }

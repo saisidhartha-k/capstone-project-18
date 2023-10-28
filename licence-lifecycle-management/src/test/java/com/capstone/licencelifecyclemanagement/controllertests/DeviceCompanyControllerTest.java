@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DeviceCompanyControllerTest {
+class DeviceCompanyControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,14 +33,13 @@ public class DeviceCompanyControllerTest {
     @Test
     @WithMockUser
     void testAddCompany() throws Exception {
-        // Arrange
+
         DeviceCompany company = new DeviceCompany();
         company.setId(1);
         company.setName("Test Company");
 
         when(deviceCompanyService.addCompany(company)).thenReturn(company);
 
-        // Act and Assert
         mockMvc.perform(post("/devicecompany/addCompany")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(company)))
@@ -50,7 +49,6 @@ public class DeviceCompanyControllerTest {
     @Test
     @WithMockUser
     void testAllDeviceCompany() throws Exception {
-        // Act and Assert
         mockMvc.perform(get("/devicecompany/deviceCompanies"))
                 .andExpect(status().isOk());
     }

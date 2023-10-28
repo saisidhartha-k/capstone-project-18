@@ -320,7 +320,6 @@ class SoftwareServiceTest {
     @Test
     void testAddSoftwareelse() {
 
-        // Create a mock Software object
         Software mockSoftware1 = new Software();
         mockSoftware1.setName("SoftwareName1");
         mockSoftware1.setNumberOfEmployees(50);
@@ -329,36 +328,28 @@ class SoftwareServiceTest {
         mockSoftware1.setPurchaseDate(LocalDate.now());
         mockSoftware1.setId(1);
 
-        // Create a mock SoftwareCompany object
         SoftwareCompany mockCompany = new SoftwareCompany();
-        mockCompany.setId(999); // This ID should not exist in your repository
+        mockCompany.setId(999);
         mockCompany.setName("NonExistentCompany");
         mockSoftware1.setCompany(mockCompany);
 
-        // Mock the existsById method to return false
         Mockito.when(softwareCompanyRepository.existsById(mockCompany.getId())).thenReturn(false);
 
-        // Mock the save methods
         Mockito.when(softwareRepository.save(Mockito.any())).thenReturn(mockSoftware1);
         Mockito.when(softwarePurchaseRepository.save(Mockito.any())).thenReturn(new SoftwarePurchase());
 
-        // Call the addSoftware method
         Software addedSoftware = softwareService.addSoftware(mockSoftware1);
 
-        // Verify that existsById was called with the correct ID
         Mockito.verify(softwareCompanyRepository).existsById(mockCompany.getId());
 
-        // Verify that save was called on the repositories
         Mockito.verify(softwareRepository).save(Mockito.any());
         Mockito.verify(softwarePurchaseRepository).save(Mockito.any());
 
-        // Assert that the returned Software object has the expected values
         assertEquals("SoftwareName1", addedSoftware.getName());
     }
 
     @Test
     void testAssetCheck() {
-        // Prepare mock data
         List<Software> softwareList = new ArrayList<>();
 
         Software expiringSoftware = new Software();
@@ -393,7 +384,6 @@ class SoftwareServiceTest {
 
     @Test
     void testDecommissionSoftware() {
-        // Arrange
         int id = 1;
         Software software = new Software();
         software.setId(id);
@@ -412,10 +402,8 @@ class SoftwareServiceTest {
         when(softwareRepository.findById(id)).thenReturn(Optional.of(software));
         when(softwarePurchaseRepository.findBySoftwarePurchaseId_Software_Id(id)).thenReturn(softwarePurchases);
 
-        // Act
         softwareService.decommissionSoftware(id);
 
-        // Assert
         verify(decommisionedItemRepository, times(1)).save(any(DecommissionedItem.class));
         verify(softwarePurchaseRepository, times(1)).delete(softwarePurchase);
         verify(softwareRepository, times(1)).deleteById(id);
@@ -423,7 +411,6 @@ class SoftwareServiceTest {
 
     @Test
     void testSetExistingCompany() {
-        // Arrange
         int companyId = 1;
         Software software = new Software();
         SoftwareCompany company = new SoftwareCompany();
@@ -431,16 +418,13 @@ class SoftwareServiceTest {
 
         when(softwareCompanyRepository.findById(companyId)).thenReturn(Optional.of(company));
 
-        // Act
         softwareService.setExistingCompany(software, company);
 
-        // Assert
         assertEquals(company, software.getCompany());
     }
 
     @Test
     void testPercentageOfSoftwareAboutToExpire() {
-        // Arrange
         SoftwareService softwareService = new SoftwareService() {
             @Override
             public List<Software> aboutToExpire() {
@@ -453,16 +437,13 @@ class SoftwareServiceTest {
             }
         };
 
-        // Act
         int percentage = softwareService.percentageOfSoftwareAboutToExpire();
 
-        // Assert
         assertEquals(40, percentage);
     }
 
     @Test
     void testPercentageOfNotExpiredSoftware() {
-        // Arrange
         SoftwareService softwareService = new SoftwareService() {
             @Override
             public int notExpListCount() {
@@ -475,16 +456,13 @@ class SoftwareServiceTest {
             }
         };
 
-        // Act
         int percentage = softwareService.percentageOfNotExpiredSoftware();
 
-        // Assert
         assertEquals(40, percentage);
     }
 
     @Test
     void testPercentageOfExpiredSoftware() {
-        // Arrange
         SoftwareService softwareService = new SoftwareService() {
             @Override
             public int expiredSoftwaresCount() {
@@ -497,10 +475,8 @@ class SoftwareServiceTest {
             }
         };
 
-        // Act
         int percentage = softwareService.percentageOfExpiredSoftware();
 
-        // Assert
         assertEquals(40, percentage);
     }
 

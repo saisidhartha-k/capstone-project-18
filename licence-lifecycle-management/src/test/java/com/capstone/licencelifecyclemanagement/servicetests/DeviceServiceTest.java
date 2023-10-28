@@ -23,7 +23,6 @@ import com.capstone.licencelifecyclemanagement.repository.DeviceRepository;
 import com.capstone.licencelifecyclemanagement.repository.NotificationRepository;
 import com.capstone.licencelifecyclemanagement.services.DeviceService;
 
-import jakarta.persistence.EntityNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -138,15 +137,12 @@ class DeviceServiceTest {
 
         when(deviceRepository.findById(1)).thenReturn(Optional.of(device));
 
-        // Mock the save method to return the device
         when(deviceRepository.save(any(Device.class))).thenReturn(device);
 
-        // Mock the save method for the device purchase
         when(devicePurchaseRepository.save(any(DevicePurchase.class))).thenReturn(null);
 
         String result = deviceService.renewDevice(1, deviceDto);
 
-        // Verify that findById, save, and save for device purchase were called
         verify(deviceRepository, times(1)).findById(1);
         verify(deviceRepository, times(1)).save(any(Device.class));
         verify(devicePurchaseRepository, times(1)).save(any(DevicePurchase.class));
@@ -161,9 +157,9 @@ class DeviceServiceTest {
         mockDeviceList.add(mockDevice);
         LocalDate today = LocalDate.now();
 
-        when(deviceRepository.findNonExpiredDevice(today)).thenReturn(mockDeviceList); // Correct method name
+        when(deviceRepository.findNonExpiredDevice(today)).thenReturn(mockDeviceList);
 
-        List<Device> result = deviceService.notExpiredDevice(); // Correct method name
+        List<Device> result = deviceService.notExpiredDevice();
 
         verify(deviceRepository, times(1)).findNonExpiredDevice(today);
 
@@ -275,8 +271,7 @@ class DeviceServiceTest {
     }
 
     @Test
-    public void testDecommissionDevice() {
-        // Arrange
+    void testDecommissionDevice() {
         int id = 1;
         Device device = new Device();
         device.setId(id);
@@ -303,23 +298,20 @@ class DeviceServiceTest {
     }
 
     @Test
-    public void testCreateNewCompany() {
-        // Arrange
+    void testCreateNewCompany() {
         Device device = new Device();
         DeviceCompany company = new DeviceCompany();
         device.setCompany(company);
 
         when(deviceCompanyRepository.save(company)).thenReturn(company);
 
-        // Act
         deviceService.createNewCompany(device);
 
-        // Assert
         assertEquals(company, device.getCompany());
     }
 
     @Test
-    public void testSetExistingCompany() {
+    void testSetExistingCompany() {
         int companyId = 1;
         Device device = new Device();
         DeviceCompany company = new DeviceCompany();
@@ -333,8 +325,8 @@ class DeviceServiceTest {
     }
 
     @Test
-    public void testPercentageOfDevicesAboutToExpire() {
-        // Arrange
+    void testPercentageOfDevicesAboutToExpire() {
+
         DeviceService deviceService = new DeviceService() {
             @Override
             public List<Device> devicesAboutToExpire() {
@@ -353,8 +345,7 @@ class DeviceServiceTest {
     }
 
     @Test
-    public void testPercentageOfDevicesAboutToExpire0() {
-        // Arrange
+    void testPercentageOfDevicesAboutToExpire0() {
         DeviceService deviceService = new DeviceService() {
             @Override
             public List<Device> devicesAboutToExpire() {
@@ -374,7 +365,6 @@ class DeviceServiceTest {
 
     @Test
     void testPercentageOfNotExpiredDevices() {
-        // Arrange
         DeviceService deviceService = new DeviceService() {
             @Override
             public List<Device> notExpiredDevice() {
@@ -387,16 +377,13 @@ class DeviceServiceTest {
             }
         };
 
-        // Act
         int percentage = deviceService.percentageOfNotExpiredDevices();
 
-        // Assert
         assertEquals(40, percentage);
     }
 
     @Test
     void testPercentageOfExpiredDevices() {
-        // Arrange
         DeviceService deviceService = new DeviceService() {
             @Override
             public List<Device> expierdDevices() {
@@ -409,10 +396,8 @@ class DeviceServiceTest {
             }
         };
 
-        // Act
         int percentage = deviceService.percentageOfExpiredDevices();
 
-        // Assert
         assertEquals(40, percentage);
     }
 

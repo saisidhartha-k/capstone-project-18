@@ -185,7 +185,7 @@ public class SoftwareService {
     }
 
     public List<Software> expiredSoftwares() {
-        LocalDate today = LocalDate.now(); // Get the current date
+        LocalDate today = LocalDate.now(); 
         return softwarerepository.findExpiredSoftware(today);
     }
 
