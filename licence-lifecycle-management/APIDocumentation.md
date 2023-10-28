@@ -27,7 +27,7 @@ This documentation provides detailed information about the API, which allows you
 
 ## Authentication <a name="authentication"></a>
 
-To access our API, you must use Bearer Token Authentication. Include a valid JWT (JSON Web Token) in the `Authorization` header of your requests.
+To access the API, you must use Bearer Token Authentication. Include a valid JWT (JSON Web Token) in the `Authorization` header of your requests.
 
 ## Software Endpoints <a name="software-endpoints"></a>
 
