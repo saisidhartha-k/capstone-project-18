@@ -63,18 +63,4 @@ public class AuthController {
         return ResponseEntity.ok().body(response);
     }
 
-//     @PostMapping("/signup")
-//     public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupBody signUpRequest) {
-//         if (userService.existsByName(signUpRequest.getUsername())) {
-//             return ResponseEntity.badRequest()
-//                     .body(new MessageResponse("Error: Username is already taken!"));
-//         }
-//         User user = new User();
-//         user.setName(signUpRequest.getUsername());
-//         user.setEmail(signUpRequest.getEmail());
-//         user.setPassword(signUpRequest.getPassword());
-//         userService.create(user);
-//         return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("User registered successfully!"));
-//     }
-
 }

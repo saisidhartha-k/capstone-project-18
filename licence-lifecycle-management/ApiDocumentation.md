@@ -142,6 +142,131 @@ To access our API, you must use Bearer Token Authentication. Include a valid JWT
 - **Description**`: Perform an asset check for software.
 - **Response**: A list of asset check results in the form of strings.
 
+## Device Endpoints <a name="device-endpoints"></a>
+
+### Add Device
+- **Method**: POST
+- **URL**: `/device/adddevice`
+- **Description**: Add a new device to the system.
+- **Request**: JSON object representing the device to be added.
+    ```json
+    {
+        "name": "New Device",
+        "serialNumber": "12345-ABCDE",
+        "expiryDate": "2024-12-31",
+        "cost":1000,
+        "Location":"Hyderabad",
+        "company": {
+            "id": 2,
+            "name": "Device Company",
+            "description": "A device company."
+        }
+    }
+    ```
+- **Response**: The added device as a JSON object.
+
+### Renew Device
+- **Method**: POST
+- **URL**: `/device/renew/{id}`
+- **Description**: Renew a device with a specified ID.
+- **Request**: JSON object with the renewal details.
+    ```json
+    {
+        "cost": 1000,
+        "expiryDate": "2023-12-31",
+        "company": {
+            "id": 1,
+            "name": "Company XYZ"
+        }
+    }
+    ```
+- **Response**: A success message as a string.
+
+### Get Expired Devices
+- **Method**: GET
+- **URL**: `/device/getExpired`
+- **Description**: Get a list of expired devices.
+- **Response**: A list of device objects that have expired.
+
+### Get Devices About to Expire
+- **Method**: GET
+- **URL**: `/device/getAboutExpired`
+- **Description**: Get a list of devices that are about to expire.
+- **Response**: A list of device objects that are about to expire.
+
+### Get Devices About to Expire Count
+- **Method**: GET
+- **URL**: `/device/aboutToExpireCount`
+- **Description**: Get the count of devices that are about to expire.
+- **Response**: The count of devices about to expire as an integer.
+
+### Get Not Expired Device Count
+- **Method**: GET
+- **URL**: `/device/notExpiredCount`
+- **Description**: Get the count of devices that are not expired.
+- **Response**: The count of devices that are not expired as an integer.
+
+### Get Expired Devices Count
+- **Method**: GET
+- **URL**: `/device/expiredCount`
+- **Description**: Get the count of expired devices.
+- **Response**: The count of expired devices as an integer.
+
+### Get Percentage of Devices About to Expire
+- **Method**: GET
+- **URL**: `/device/percentageAboutToExpire`
+- **Description**: Get the percentage of devices that are about to expire.
+- **Response**: The percentage as an integer.
+
+### Get Percentage of Not Expired Devices
+- **Method**: GET
+- **URL**: `/device/percentageNotExpired`
+- **Description**: Get the percentage of devices that are not expired.
+- **Response**: The percentage as an integer.
+
+### Get Percentage of Expired Devices
+- **Method**: GET
+- **URL**: `/device/percentageExpired`
+- **Description**: Get the percentage of expired devices.
+- **Response**: The percentage as an integer.
+
+### Decommission Device
+- **Method**: DELETE
+- **URL**: `/device/decomissionDevice/{id}`
+- **Description**: Decommission a device by ID.
+- **Response**: No content. The device is decommissioned.
+
+### Asset Check
+- **Method**: POST
+- **URL**: `/device/assetcheck`
+- **Description**: Perform an asset check for devices.
+- **Response**: A list of asset check results in the form of strings.
+
+## Authentication <a name="authentication"></a>
+
+To access our API, you must use Bearer Token Authentication. Include a valid JWT (JSON Web Token) in the `Authorization` header of your requests.
+
+## Authentication Endpoints <a name="authentication-endpoints"></a>
+
+### Obtain JWT Token
+- **Method**: POST
+- **URL**: `/api/auth/token`
+- **Description**: Obtain a JSON Web Token (JWT) for authentication.
+- **Request**: JSON object containing the username and password.
+    ```json
+    {
+        "username": "admin",
+        "password": "admin"
+    }
+    ```
+- **Response**: A JWT response with the user's ID, token, and username.
+    ```json
+    {
+        "userId": 1,
+        "token": "example-jwt-token",
+        "username": "username"
+    }
+    ```
 
 ---
 
