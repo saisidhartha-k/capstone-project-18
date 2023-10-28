@@ -65,17 +65,17 @@
     }
 
     .small-progress-bar {
-      width: 40px; // Adjust the width
-      height: 40px; // Adjust the height
+      width: 40px; 
+      height: 40px;
     }
     
     .small-progress-bar .CircularProgressbar-path {
-      stroke-width: 5px; // Adjust the thickness of the progress bar
-      stroke: blue; // Adjust the color of the progress bar
+      stroke-width: 5px; 
+      stroke: blue;
     }
     
     .small-progress-bar .CircularProgressbar-text {
-      font-size: 12px; // Adjust the font size of the text
+      font-size: 12px; 
     }
     
   }

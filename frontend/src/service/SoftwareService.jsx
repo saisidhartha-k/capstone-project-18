@@ -101,7 +101,6 @@ export const getAboutExpired = async () => {
   }
 };
 
-//change this later
 export const getSoftwareCompanies = async () => {
   try {
     const response = await axios.get(

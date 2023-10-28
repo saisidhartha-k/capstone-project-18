@@ -27,8 +27,7 @@ export const getNotifications = async () => {
     const response = await axios.get(`${BASE_URL}/getAll`, getHeaders());
     return response.data;
   } catch (error) {
-    // Handle errors, e.g., log the error or throw a custom error
     console.error('Error fetching notifications', error);
-    throw error; // You can re-throw the error for further handling in your application
+    throw error; 
   }
 };

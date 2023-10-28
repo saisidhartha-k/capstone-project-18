@@ -5,12 +5,8 @@ import { getSoftwareExpiredData } from "../../service/SoftwareService";
 import { getDeviceExpiredData } from "../../service/DeviceService";
 import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import DevicesIcon from "@mui/icons-material/Devices";
-import TerminalIcon from "@mui/icons-material/Terminal";
 import { green, red } from "@mui/material/colors";
 
-// Define the common columns
 const columns = [
   { field: "id", headerName: "ID", width: 50 },
   { field: "name", headerName: "Name", width: 200 },

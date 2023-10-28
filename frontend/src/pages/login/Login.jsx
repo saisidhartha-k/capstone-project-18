@@ -8,7 +8,6 @@ import "./login.scss"
 import { useLocation } from "react-router-dom";
 import useAuth from '../../hooks/useAuth';
 import instance from '../../service/LoginService';
-import { Box, Button, Container, CssBaseline, TextField, ThemeProvider, Typography, createTheme } from '@mui/material';
 
 
 const LoginPage = () => {

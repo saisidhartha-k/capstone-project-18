@@ -15,7 +15,6 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
   useEffect(() => {
     const fetchDataFromEndpoint = async () => {
       try {
-        // Fetch data from the 'endpoint'
         const endpointResponse = await axios.get(endpoint, getHeaders());
         setDataFromEndpoint(endpointResponse.data);
       } catch (error) {
@@ -53,7 +52,7 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
         <div className="small-progress-bar">
           <span>
             <CircularProgressbar
-              value={dataFromValue} // Use the fetched data as the value
+              value={dataFromValue}
               text={`${dataFromValue}%`}
               strokeWidth={5}
               styles={buildStyles({
