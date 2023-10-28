@@ -345,4 +345,51 @@ To access our API, you must use Bearer Token Authentication. Include a valid JWT
 - **Description**: Get a list of items currently in the Return Merchandise Authorization (RMA).
 - **Response**: A list of RMA objects representing items in RMA.
 
+## Device Company Endpoints <a name="device-company-endpoints"></a>
+
+### Add Device Company
+- **Method**: POST
+- **URL**: `/devicecompany/addCompany`
+- **Description**: Add a new device company to the system.
+- **Request**: JSON object representing the device company to be added.
+    ```json
+    {
+        "name": "New Device Company",
+        "description": "A device company description."
+    }
+    ```
+- **Response**: The added device company as a JSON object.
+
+### Get All Device Companies
+- **Method**: GET
+- **URL**: `/devicecompany/deviceCompanies`
+- **Description**: Get a list of all device companies.
+- **Response**: A list of device company objects.
+
+## Software Company Endpoints <a name="software-company-endpoints"></a>
+
+### Get All Software Companies
+- **Method**: GET
+- **URL**: `/softwarecompany/getcompanies`
+- **Description**: Get a list of all software companies.
+- **Response**: A list of software company objects.
+
+
+## Decommissioned Items Endpoints <a name="decommissioned-items-endpoints"></a>
+
+### Get Decommissioned Items
+- **Method**: GET
+- **URL**: `/decommissioneditems/get`
+- **Description**: Get a list of decommissioned items.
+- **Response**: A list of decommissioned item objects.
+
+## Notification Endpoints <a name="notification-endpoints"></a>
+
+### Get Notifications
+- **Method**: GET
+- **URL**: `/notification/getAll`
+- **Description**: Get a list of notifications.
+- **Response**: A list of notification objects.
+
 ---
+
