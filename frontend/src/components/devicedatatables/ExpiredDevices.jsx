@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './datatable.scss';
 import { DataGrid } from '@mui/x-data-grid';
-import { getAboutExpired } from '../../service/SoftwareService';
-import { getDeviceExpiredData, getDevicesAboutToExpire } from '../../service/DeviceService';
+import { getDeviceExpiredData } from '../../service/DeviceService';
 
 const columns = [
   { field: "id", headerName: "ID", width: 60 },

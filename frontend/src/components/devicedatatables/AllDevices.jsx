@@ -48,9 +48,9 @@ export default function AllDevicesDataTable() {
         prevData.filter((device) => device.id !== selectedDeviceId)
       );
 
-      closeModal(); // Close the modal
-      setRmaData({ reason: "" }); // Reset the reason input
-      setSelectedDeviceId(null); // Reset the selectedDeviceId
+      closeModal(); 
+      setRmaData({ reason: "" }); 
+      setSelectedDeviceId(null); 
     } catch (error) {
       console.error("Error moving device to RMA", error);
     }
@@ -58,7 +58,7 @@ export default function AllDevicesDataTable() {
 
   const handleRMA = (deviceId) => {
     setSelectedDeviceId(deviceId);
-    openModal(); // Open the modal when "RMA" button is clicked
+    openModal(); 
   };
 
   useEffect(() => {

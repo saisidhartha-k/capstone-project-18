@@ -42,11 +42,11 @@ export default function RMADataTable() {
       width: 150,
       valueGetter: (params) => {
         if (params.row.software) {
-          return params.row.software.name; // Display software name if software is not null
+          return params.row.software.name; 
         } else if (params.row.device) {
-          return params.row.device.name; // Display device name if device is not null
+          return params.row.device.name; 
         } else {
-          return ''; // Return an empty string if both software and device are null
+          return ''; 
         }
       },
     },

@@ -5,7 +5,6 @@ import { getSoftwares } from "../../service/SoftwareService";
 import { getDevices } from "../../service/DeviceService";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Tooltip from "@mui/material/Tooltip";
 
 const Featured = () => {
   const chartRef = useRef(null);

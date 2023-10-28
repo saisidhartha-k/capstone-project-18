@@ -2,10 +2,9 @@ import React from "react";
 import "./sidebar.scss";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-import DevicesIcon from "@mui/icons-material/Devices";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import DvrIcon from '@mui/icons-material/Dvr';
 

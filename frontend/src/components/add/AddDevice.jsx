@@ -36,10 +36,7 @@ function DeviceForm() {
   const [devices, setDevices] = useState([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
   const [mode, setMode] = useState("Add");
-  const [newCompany, setNewCompany] = useState({
-    name: "",
-    description: "",
-  });
+  
 
   useEffect(() => {
     getAllDeviceCompanies()
@@ -289,20 +286,6 @@ function DeviceForm() {
                 ))}
               </select>
             </div>
-            {/* <div>
-              <label>Company ID:</label>
-              <input
-                type="number"
-                name="renewData.company.id"
-                value={renewData.company.id}
-                onChange={(e) =>
-                  setRenewData({
-                    ...renewData,
-                    company: { ...renewData.company, id: e.target.value },
-                  })
-                }
-              />
-            </div> */}
             <button className="submit-button" type="submit">
               Renew Device
             </button>

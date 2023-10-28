@@ -47,8 +47,6 @@ public class SoftwareService {
     @Autowired
     private DecommisionedItemRepository decommisionedItemRepository;
 
-    String toEmail = "admin@prodapt.com";
-
     @Transactional
     public Software addSoftware(Software software) {
         if (software.getCompany() != null && softwareCompanyRepository.existsById(software.getCompany().getId())) {

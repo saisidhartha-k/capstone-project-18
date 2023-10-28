@@ -34,11 +34,11 @@ function SoftwareForm() {
 
   const [companies, setCompanies] = useState([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState("");
-  const [mode, setMode] = useState("Add"); // "Add" or "Renew"
+  const [mode, setMode] = useState("Add"); 
 
   const [software, setSoftware] = useState([]);
 
-  const [manualCompanyName, setManualCompanyName] = useState(""); // Manually entered company name
+  const [manualCompanyName] = useState(""); 
 
   useEffect(() => {
     getSoftwareCompanies()
@@ -89,7 +89,7 @@ function SoftwareForm() {
       });
       setSelectedCompanyId(selectedCompany.id);
     } else {
-      const manuallyEnteredName = manualCompanyName.trim(); // Trim whitespace
+      const manuallyEnteredName = manualCompanyName.trim(); 
       console.log("Manually Entered Name:", manuallyEnteredName);
       setFormData({
         ...formData,

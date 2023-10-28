@@ -5,36 +5,36 @@ import { getAllDevicePurchases } from '../../service/DevicePurchaseService';
 
 const columns = [
   { field: "id", headerName: "ID", width: 30 },
-  { field: "purchaseDate", headerName: "Purchase Date", width: 150 }, // Changed "purchase Date" to "Purchase Date"
+  { field: "purchaseDate", headerName: "Purchase Date", width: 150 }, 
   {
-    field: "expiryDate", // Changed "expirydate" to "expiryDate"
-    headerName: "Expiry Date", // Changed "expiry Date" to "Expiry Date"
+    field: "expiryDate", 
+    headerName: "Expiry Date", 
     width: 150,
-    valueGetter: (params) => params.row.devicePurchaseId.device.expiryDate, // Changed "softwarePurchaseId" to "devicePurchaseId" and "software" to "device"
+    valueGetter: (params) => params.row.devicePurchaseId.device.expiryDate, 
   },
   {
     field: "licenseNumber",
-    headerName: "License Number", // Changed "licenseNumber" to "License Number"
+    headerName: "License Number", 
     width: 150,
-    valueGetter: (params) => params.row.devicePurchaseId.licenseNumber, // Changed "softwarePurchaseId" to "devicePurchaseId"
+    valueGetter: (params) => params.row.devicePurchaseId.licenseNumber, 
   },
   {
-    field: "deviceName", // Changed "software name" to "deviceName"
-    headerName: "Device Name", // Changed "software name" to "Device Name"
+    field: "deviceName", 
+    headerName: "Device Name", 
     width: 170,
-    valueGetter: (params) => params.row.devicePurchaseId.device.name, // Changed "softwarePurchaseId" to "devicePurchaseId" and "software" to "device"
+    valueGetter: (params) => params.row.devicePurchaseId.device.name, 
   },
   {
-    field: "deviceCost", // Changed "software cost" to "deviceCost"
-    headerName: "Device Cost", // Changed "software cost" to "Device Cost"
+    field: "deviceCost", 
+    headerName: "Device Cost", 
     width: 150,
-    valueGetter: (params) => params.row.devicePurchaseId.device.cost, // Changed "softwarePurchaseId" to "devicePurchaseId" and "software" to "device"
+    valueGetter: (params) => params.row.devicePurchaseId.device.cost, 
   },
   {
-    field: "deviceCompany", // Changed "device company" to "deviceCompany"
-    headerName: "Device Company", // Changed "device company" to "Device Company"
+    field: "deviceCompany", 
+    headerName: "Device Company", 
     width: 200,
-    valueGetter: (params) => params.row.devicePurchaseId.device.company.name, // Changed "devicePurchaseId" to "devicePurchaseId"
+    valueGetter: (params) => params.row.devicePurchaseId.device.company.name, 
   },
 ];
 
@@ -44,7 +44,7 @@ export default function DevicePurchasesDataTable() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getAllDevicePurchases(); // Changed the function to fetch device purchases
+        const result = await getAllDevicePurchases(); 
         const dataWithCustomIds = result.map((row, index) => ({
           ...row,
           id: `${index}`,

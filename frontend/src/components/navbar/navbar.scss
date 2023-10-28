@@ -16,7 +16,7 @@
       .items {
         display: flex;
         align-items: center;
-        margin-left: auto; /* This will move the items to the right */
+        margin-left: auto; 
   
         .item {
           display: flex;
@@ -27,7 +27,7 @@
           .icon {
             font-size: 18px;
             display: inline;
-            vertical-align: middle; /* Add this line for vertical alignment */
+            vertical-align: middle; 
           }
   
           .avatar {
