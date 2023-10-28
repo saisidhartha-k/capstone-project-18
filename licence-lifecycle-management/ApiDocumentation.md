@@ -67,38 +67,38 @@ To access our API, you must use Bearer Token Authentication. Include a valid JWT
 
 ## Get About to Expire Software
 - **Method**: GET
-- **URL`: `/getAboutExpired`
-- **Description`: Get a list of software that is about to expire.
-- **Response`: A list of software objects that are about to expire.
+- **URL**`: `/getAboutExpired`
+- **Description**`: Get a list of software that is about to expire.
+- **Response**`: A list of software objects that are about to expire.
 
 ## Get All Software
 - **Method**: GET
-- **URL`: `/get`
-- **Description`: Get a list of all available software.
-- **Response`: A list of software objects.
+- **URL**`: `/get`
+- **Description**`: Get a list of all available software.
+- **Response**`: A list of software objects.
 
 ## Get Expired Software Count
 - **Method**: GET
-- **URL`: `/getExpiredCount`
-- **Description`: Get the count of expired software.
-- **Response`: The count of expired software as an integer.
+- **URL**`: `/getExpiredCount`
+- **Description**`: Get the count of expired software.
+- **Response**`: The count of expired software as an integer.
 
 ## Get Not Expired Software Count
 - **Method**: GET
-- **URL`: `/getNotExpiredCount`
-- **Description`: Get the count of not expired software.
-- **Response`: The count of not expired software as an integer.
+- **URL**`: `/getNotExpiredCount`
+- **Description**`: Get the count of not expired software.
+- **Response**`: The count of not expired software as an integer.
 
 ## Get About to Expire Software Count
 - **Method**: GET
-- **URL`: `/getAboutExpiredCount`
-- **Description`: Get the count of software that is about to expire.
-- **Response`: The count of software about to expire as an integer.
+- **URL**`:`/getAboutExpiredCount`
+- **Description**`: Get the count of software that is about to expire.
+- **Response**`: The count of software about to expire as an integer.
 
 ## Renew Software
 - **Method**: POST
-- **URL`: `/renew/{id}`
-- **Description`: Renew software with a specified ID.
+- **URL**`: `/renew/{id}`
+- **Description**`: Renew software with a specified ID.
 - **Request**: JSON object with the renewal details.
     ```json
     {
@@ -114,32 +114,32 @@ To access our API, you must use Bearer Token Authentication. Include a valid JWT
 
 ## Get Percentage of Software About to Expire
 - **Method**: GET
-- **URL`: `/percentageAboutToExpire`
-- **Description`: Get the percentage of software that is about to expire.
+- **URL**`: `/percentageAboutToExpire`
+- **Description**`: Get the percentage of software that is about to expire.
 - **Response**: The percentage as an integer.
 
 ## Get Percentage of Not Expired Software
 - **Method**: GET
-- **URL`: `/percentageNotExpired`
-- **Description`: Get the percentage of software that is not expired.
+- **URL**`: `/percentageNotExpired`
+- **Description**`: Get the percentage of software that is not expired.
 - **Response**: The percentage as an integer.
 
 ## Get Percentage of Expired Software
 - **Method**: GET
-- **URL`: `/percentageExpired`
-- **Description`: Get the percentage of expired software.
+- **URL**`: `/percentageExpired`
+- **Description**`: Get the percentage of expired software.
 - **Response**: The percentage as an integer.
 
 ## Decommission Software
 - **Method**: DELETE
-- **URL`: `/decommission/{id}`
-- **Description`: Decommission software by ID.
+- **URL**`: `/decommission/{id}`
+- **Description**`: Decommission software by ID.
 - **Response**: No content. The software is decommissioned.
 
 ## Asset Check
 - **Method**: POST
-- **URL`: `/assetcheck`
-- **Description`: Perform an asset check for software.
+- **URL**`: `/assetcheck`
+- **Description**`: Perform an asset check for software.
 - **Response**: A list of asset check results in the form of strings.
 
 
