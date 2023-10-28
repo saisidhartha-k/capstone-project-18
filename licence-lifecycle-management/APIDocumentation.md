@@ -18,7 +18,7 @@ This is the API documentation for Liscence Mangement System, based on the OpenAP
 
 ## Introduction <a name="introduction"></a>
 
-This documentation provides detailed information about our API, which allows you to interact with our service. It is based on the OpenAPI 3.0.1 specification and is intended to help you understand how to use the available endpoints.
+This documentation provides detailed information about the API, which allows you to interact with the endpoints. It is based on the OpenAPI 3.0.1 specification and is intended to help understand how to use the available endpoints.
 
 ## Base URL <a name="base-url"></a>
 
