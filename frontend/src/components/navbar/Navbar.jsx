@@ -62,9 +62,12 @@ const Navbar = ({ toggleNotifications }) => {
               </div>
             </Tooltip>
           </div>
+          <Tooltip
+            title="Logout">
           <div className="item" onClick={handleLogout}>
             <LogoutIcon />
           </div>
+          </Tooltip>
         </div>
       </div>
     </div>

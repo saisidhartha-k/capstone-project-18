@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./widget.scss";
 import axios from "axios";
-import {
-  CircularProgressbar,
-  buildStyles,
-} from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getHeaders } from "../../service/SoftwareService";
+import ReorderIcon from '@mui/icons-material/Reorder';
 
 const Widget = ({ title, endpoint, className, value, icon }) => {
   const [dataFromEndpoint, setDataFromEndpoint] = useState(null);
@@ -27,7 +25,7 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
 
     const fetchDataFromValue = async () => {
       try {
-        const valueResponse = await axios.get(value , getHeaders());
+        const valueResponse = await axios.get(value, getHeaders());
         setDataFromValue(valueResponse.data);
       } catch (error) {
         console.error(
@@ -46,7 +44,10 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
       <div className="left">
         <span className="title">{title}</span>
         <span className="counter">{dataFromEndpoint}</span>
-        <span className="link">See more</span>
+        <br />
+        <div  style={{ textDecoration: 'none' }}>
+          <ReorderIcon/>
+        </div>
       </div>
       <div className="right">
         <div className="small-progress-bar">
@@ -54,9 +55,9 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
             <CircularProgressbar
               value={dataFromValue}
               text={`${dataFromValue}%`}
-              strokeWidth={5}
+              strokeWidth={4}
               styles={buildStyles({
-                textSize: "27px",
+                textSize: "25px",
               })}
             />
             <br />
