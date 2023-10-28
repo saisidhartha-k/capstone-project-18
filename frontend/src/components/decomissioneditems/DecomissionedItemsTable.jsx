@@ -20,12 +20,10 @@ export default function DecomissionedItemsDataTable() {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 60 },
-    { field: "productName", headerName: "Product Name", width: 190 },
-    { field: "expiryDate", headerName: "Expiry Date", width: 120 },
-    { field: "decommissionDate", headerName: "Decommission Date", width: 120 },
-    { field: "licenseNumber", headerName: "License Number", width: 120 },
-    { field: "purchaseId", headerName: "Purchase ID", width: 120 },
+    { field: "id", headerName: "ID", width: 130 },
+    { field: "productName", headerName: "Product Name", width: 250 },
+    { field: "decommissionDate", headerName: "Decommission Date", width: 250 },
+    { field: "licenseNumber", headerName: "License Number", width: 250 },
     {
       field: "productTypeStatus",
       headerName: "Product Type",

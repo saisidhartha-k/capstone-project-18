@@ -4,30 +4,29 @@ import { DataGrid } from '@mui/x-data-grid';
 import { getAllSoftwareOrders } from '../../../service/SoftwarePurchaseService';
 
 const columns = [
-  { field: "id", headerName: "ID", width: 30 },
-  { field: "purchaseDate", headerName: "purchase Date", width: 150 },
-  {
-    field: "expirydate",
-    headerName: "expiry Date",
-    width: 150,
-    valueGetter: (params) => params.row.softwarePurchaseId.software.expiryDate,
-  },
+  { field: "id", headerName: "ID", width: 100 },
+  // {
+  //   field: "expirydate",
+  //   headerName: "expiry Date",
+  //   width: 150,
+  //   valueGetter: (params) => params.row.softwarePurchaseId.software.expiryDate,
+  // },
   {
     field: "licenseNumber",
     headerName: "licenseNumber",
-    width: 150,
+    width: 200,
     valueGetter: (params) => params.row.softwarePurchaseId.licenseNumber,
   },
   {
     field: "software name",
     headerName: "software name",
-    width: 170,
+    width: 250,
     valueGetter: (params) => params.row.softwarePurchaseId.software.name,
   },
   {
     field: "software cost",
     headerName: "software cost",
-    width: 150,
+    width: 170,
     valueGetter: (params) => params.row.softwarePurchaseId.software.cost,
   },
   {

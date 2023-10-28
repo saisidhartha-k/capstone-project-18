@@ -119,7 +119,7 @@ public class SoftwareService {
         if (existingCompany.isPresent()) {
             software.setCompany(existingCompany.get());
             return true;
-        } 
+        }
         return false;
     }
 
@@ -134,7 +134,7 @@ public class SoftwareService {
         if (existingCompany.isPresent()) {
             software.setCompany(existingCompany.get());
             return true;
-        } 
+        }
         return false;
     }
 
@@ -171,9 +171,10 @@ public class SoftwareService {
 
             }
         }
-        if (!softwareNotificationList.isEmpty()) {
+
+        if (!softwareNotificationList.isEmpty())
             sendServiceTerminationEmail();
-        }
+            
         return softwareNotificationList;
     }
 
@@ -183,7 +184,7 @@ public class SoftwareService {
     }
 
     public List<Software> expiredSoftwares() {
-        LocalDate today = LocalDate.now(); 
+        LocalDate today = LocalDate.now();
         return softwarerepository.findExpiredSoftware(today);
     }
 
@@ -266,13 +267,14 @@ public class SoftwareService {
     public boolean sendServiceTerminationEmail() {
         System.out.println("software email method called");
         String senderEmail = "reddyksidharth@gmail.com";
-        String senderPassword = "ocqs fssp aleh yise ";
+        String senderPassword = "mjuh ufms krvf opvd";
         String smtpHost = "smtp.gmail.com";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", smtpHost);
+        properties.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {

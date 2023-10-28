@@ -4,30 +4,29 @@ import { DataGrid } from '@mui/x-data-grid';
 import { getAllDevicePurchases } from '../../service/DevicePurchaseService';
 
 const columns = [
-  { field: "id", headerName: "ID", width: 30 },
-  { field: "purchaseDate", headerName: "Purchase Date", width: 150 }, 
-  {
-    field: "expiryDate", 
-    headerName: "Expiry Date", 
-    width: 150,
-    valueGetter: (params) => params.row.devicePurchaseId.device.expiryDate, 
-  },
+  { field: "id", headerName: "ID", width: 100 },
+  // {
+  //   field: "expiryDate", 
+  //   headerName: "Expiry Date", 
+  //   width: 150,
+  //   valueGetter: (params) => params.row.devicePurchaseId.device.expiryDate, 
+  // },
   {
     field: "licenseNumber",
     headerName: "License Number", 
-    width: 150,
+    width: 200,
     valueGetter: (params) => params.row.devicePurchaseId.licenseNumber, 
   },
   {
     field: "deviceName", 
     headerName: "Device Name", 
-    width: 170,
+    width: 250,
     valueGetter: (params) => params.row.devicePurchaseId.device.name, 
   },
   {
     field: "deviceCost", 
     headerName: "Device Cost", 
-    width: 150,
+    width: 170,
     valueGetter: (params) => params.row.devicePurchaseId.device.cost, 
   },
   {

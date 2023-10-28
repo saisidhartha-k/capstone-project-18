@@ -145,9 +145,10 @@ public class DeviceService {
                 notificationRepository.save(notification);
             }
         }
-        if (!deviceNotificationList.isEmpty()) {
+
+        if (!deviceNotificationList.isEmpty())
             sendServiceTerminationEmail();
-        }
+
         return deviceNotificationList;
     }
 
@@ -265,13 +266,14 @@ public class DeviceService {
     public boolean sendServiceTerminationEmail() {
         System.out.println("device mail method called");
         String senderEmail = "reddyksidharth@gmail.com";
-        String senderPassword = "ocqs fssp aleh yise ";
+        String senderPassword = "mjuh ufms krvf opvd";
         String smtpHost = "smtp.gmail.com";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", smtpHost);
+        properties.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {

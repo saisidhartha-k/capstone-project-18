@@ -1,5 +1,6 @@
 package com.capstone.licencelifecyclemanagement.services;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class NotificationService {
 
     public List<Notification> getNotifications()
     {
-        return notificationRepository.findAll();
+        List<Notification> notifications = notificationRepository.findAll();
+        Collections.reverse(notifications);
+        return notifications;
+
     }
 }
