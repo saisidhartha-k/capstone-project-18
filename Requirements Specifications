@@ -1,0 +1,29 @@
+Use case
+Inventory
+Author/Owner
+Vignesh
+Project Name
+LLM
+Description
+Build an app to track license details of network devices and softwares.
+Project Functional Requirements
+Application to track devices, softwares within a enterprise.
+Send email notification at regular intervals to remind license expiry.
+Maintain UI dashboard for tracking the license status.
+Provide UI interface to update license status.
+Dev/Execution Platform
+Java-11, Springboot-2.7.13, React for UI
+Reference documents/Videos
+nan
+Remarks
+Backend should generate notification if a license is expiring.
+Maintain things like device id, date of purchase, dates of expiry, needing to renew.
+Dashboard showing all entries. License management
+License and Lifecycle management. Track current status and lifecycle.
+Commissioned - deployed to another location (RMA?)
+
+Swagger documentation and a React UI are compulsory.
+
+(taken sidharth, neeraj)
+I approve this set of requirements (SME name below)
+Vignesh Ethiraj (Approved)
