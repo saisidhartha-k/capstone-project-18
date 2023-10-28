@@ -1,6 +1,6 @@
 # API Documentation
 
-Welcome to the API documentation for our service, based on the OpenAPI 3.0.1 specification.
+This is the API documentation for Liscence Mangement System, based on the OpenAPI 3.0.1 specification.
 
 ## Table of Contents
 
