@@ -40,7 +40,7 @@ public class RmaService {
     @Autowired
     private SoftwarePurchaseRepository softwarePurchaseRepository;
 
-    public void moveSoftwareToRma(int softwareId, String reason) {
+    public boolean moveSoftwareToRma(int softwareId, String reason) {
         Optional<Software> softwareOpt = softwareRepository.findById(softwareId);
         if (softwareOpt.isPresent()) {
             RMA rma = new RMA();
@@ -50,10 +50,12 @@ public class RmaService {
             rma.setRequestDate(LocalDate.now());
             rma.setReason(reason);
             rmaRepository.save(rma);
+            return true;
         }
+        return false;
     }
 
-    public void moveDeviceToRma(int deviceId, String reason) {
+    public boolean moveDeviceToRma(int deviceId, String reason) {
         Optional<Device> deviceOpt = deviceRepository.findById(deviceId);
         if (deviceOpt.isPresent()) {
             RMA rma = new RMA();
@@ -63,7 +65,9 @@ public class RmaService {
             rma.setRequestDate(LocalDate.now());
             rma.setReason(reason);
             rmaRepository.save(rma);
+            return true;
         }
+        return false;
     }
 
     private String randomLicense() {
@@ -77,7 +81,7 @@ public class RmaService {
         return randomString;
     }
 
-    public void putBackSoftwareFromRma(int rmaId) {
+    public boolean putBackSoftwareFromRma(int rmaId) {
         Optional<RMA> rmaOpt = rmaRepository.findById(rmaId);
         if (rmaOpt.isPresent() && rmaOpt.get().getSoftware() != null) {
             RMA rma = rmaOpt.get();
@@ -98,11 +102,12 @@ public class RmaService {
             SoftwarePurchase sPurchase = new SoftwarePurchase(softwarePurchaseId);
             softwarePurchaseRepository.save(sPurchase);
             rmaRepository.delete(rma);
-        } 
-
+            return true;
+        }
+        return false;
     }
 
-    public void putBackDeviceFromRma(int rmaId) {
+    public boolean putBackDeviceFromRma(int rmaId) {
         Optional<RMA> rmaOpt = rmaRepository.findById(rmaId);
 
         if (rmaOpt.isPresent() && rmaOpt.get().getDevice() != null) {
@@ -124,7 +129,9 @@ public class RmaService {
             DevicePurchase devicePurchase = new DevicePurchase(devicePurchaseId);
             devicePurchaseRepository.save(devicePurchase);
             rmaRepository.delete(rma);
+            return true;
         }
+        return false;
     }
 
     public List<RMA> getRma() {

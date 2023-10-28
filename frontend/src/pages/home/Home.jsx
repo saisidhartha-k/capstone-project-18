@@ -21,8 +21,8 @@ export const Home = () => {
   useEffect(() => {
     const notificationInterval = setInterval(() => {
       if (showNotifications) {
-        fetchSoftwareNotifications(); // Updated function name for software notifications
-        fetchDeviceNotifications(); // Added function for device notifications
+        fetchSoftwareNotifications(); 
+        fetchDeviceNotifications(); 
       }
     }, 5000);
 
@@ -35,11 +35,9 @@ export const Home = () => {
     const mutedNotifications = JSON.parse(localStorage.getItem("mutedNotifications")) || [];
 
     if (mutedNotifications.includes(notification)) {
-      // Unmute the notification
       const updatedMutedNotifications = mutedNotifications.filter((item) => item !== notification);
       localStorage.setItem("mutedNotifications", JSON.stringify(updatedMutedNotifications));
     } else {
-      // Mute the notification
       mutedNotifications.push(notification);
       localStorage.setItem("mutedNotifications", JSON.stringify(mutedNotifications));
     }
@@ -50,7 +48,6 @@ export const Home = () => {
     return mutedNotifications.includes(notification);
   };
 
-  // Rename to fetchSoftwareNotifications
   const fetchSoftwareNotifications = async () => {
     try {
       const data = await fetchAssetCheck();
@@ -70,7 +67,7 @@ export const Home = () => {
 
   const fetchDeviceNotifications = async () => {
     try {
-      const data = await deviceAssetCheck(); // Fetch device notifications
+      const data = await deviceAssetCheck(); 
       
       if (Array.isArray(data)) {
         setNotifications(data);

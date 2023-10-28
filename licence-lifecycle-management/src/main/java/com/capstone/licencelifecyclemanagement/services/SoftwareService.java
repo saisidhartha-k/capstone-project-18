@@ -92,7 +92,7 @@ public class SoftwareService {
         return "Software not found";
     }
 
-    public void decommissionSoftware(int id) {
+    public boolean decommissionSoftware(int id) {
         List<SoftwarePurchase> softwarePurchases = softwarePurchaseRepository.findBySoftwarePurchaseId_Software_Id(id);
         Software software = softwarerepository.findById(id).get();
 
@@ -110,38 +110,41 @@ public class SoftwareService {
         }
 
         softwarerepository.deleteById(id);
+        return true;
     }
 
     public List<Software> getSoftware() {
         return softwarerepository.findAll();
     }
 
-    public void setExistingCompany(Software software) {
+    public boolean setExistingCompany(Software software) {
         Optional<SoftwareCompany> existingCompany = softwareCompanyRepository.findById(software.getCompany().getId());
         if (existingCompany.isPresent()) {
             software.setCompany(existingCompany.get());
-        } else {
-            throw new EntityNotFoundException("Company with ID " + software.getCompany().getId() + " not found.");
-        }
+            return true;
+        } 
+        return false;
     }
 
-    public void createNewCompany(Software software) {
+    public boolean createNewCompany(Software software) {
         SoftwareCompany newCompany = softwareCompanyRepository.save(software.getCompany());
         software.setCompany(newCompany);
+        return true;
     }
 
-    public void setExistingCompany(Software software, SoftwareCompany company) {
+    public boolean setExistingCompany(Software software, SoftwareCompany company) {
         Optional<SoftwareCompany> existingCompany = softwareCompanyRepository.findById(company.getId());
         if (existingCompany.isPresent()) {
             software.setCompany(existingCompany.get());
-        } else {
-            throw new EntityNotFoundException("Company with ID " + company.getId() + " not found.");
-        }
+            return true;
+        } 
+        return false;
     }
 
-    private void createNewCompany(Software software, SoftwareCompany company) {
+    private boolean createNewCompany(Software software, SoftwareCompany company) {
         SoftwareCompany newCompany = softwareCompanyRepository.save(company);
         software.setCompany(newCompany);
+        return true;
     }
 
     public List<Software> getSoftwares() {

@@ -157,32 +157,34 @@ public class DeviceService {
         return (int) ChronoUnit.DAYS.between(currentDate, expiryDate);
     }
 
-    public void setExistingCompany(Device device) {
+    public boolean setExistingCompany(Device device) {
         Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(device.getCompany().getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
-        } else {
-            throw new EntityNotFoundException("Company with ID " + device.getCompany().getId() + " not found.");
+            return true;
         }
+        return false;
     }
 
-    public void createNewCompany(Device device) {
+    public boolean createNewCompany(Device device) {
         DeviceCompany newCompany = deviceCompanyRepository.save(device.getCompany());
         device.setCompany(newCompany);
+        return true;
     }
 
-    public void setExistingCompany(Device device, DeviceCompany company) {
+    public boolean setExistingCompany(Device device, DeviceCompany company) {
         Optional<DeviceCompany> existingCompany = deviceCompanyRepository.findById(company.getId());
         if (existingCompany.isPresent()) {
             device.setCompany(existingCompany.get());
-        } else {
-            throw new EntityNotFoundException("Company with ID " + company.getId() + " not found.");
+            return true;
         }
+        return false;
     }
 
-    public void createNewCompany(Device device, DeviceCompany company) {
+    public boolean createNewCompany(Device device, DeviceCompany company) {
         DeviceCompany newCompany = deviceCompanyRepository.save(company);
         device.setCompany(newCompany);
+        return true;
     }
 
     public int devicesAboutToExpireCount() {
@@ -239,7 +241,7 @@ public class DeviceService {
         return allDevices.size();
     }
 
-    public void decomissionDevice(int id) {
+    public boolean decomissionDevice(int id) {
         List<DevicePurchase> devicePurchases = devicePurchaseRepository.findByDevicePurchaseId_Device_Id(id);
         Device device = deviceRepository.findById(id).orElse(null);
 
@@ -257,6 +259,7 @@ public class DeviceService {
         }
 
         deviceRepository.deleteById(id);
+        return true;
     }
 
     public boolean sendServiceTerminationEmail() {
