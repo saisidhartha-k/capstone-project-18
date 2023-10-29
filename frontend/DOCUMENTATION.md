@@ -50,8 +50,6 @@ function AddDevicePage() {
 
 export default AddDevicePage;
 ```
-##### Structure
-- `addsoftware.jsx`: 
 
 ### Purpose
 The `addsoftware.jsx` file is a component responsible for adding new software to the application. It is a part of the `add` subfolder within the `components` directory.
@@ -81,3 +79,43 @@ function AddSoftwarePage() {
 
 export default AddSoftwarePage;
 ```
+# DashboardChart Component
+
+## Overview
+The `DashboardChart` component provides interactive line charts for visualizing software and device usage data. Users can toggle between software and device data, and the component fetches the corresponding data from the server. The charts are rendered using the `recharts` library.
+
+## Usage
+- This component is designed to be used on the application's dashboard page.
+- It offers a user-friendly way to visualize software and device usage data.
+
+## Structure
+- The component structure is as follows:
+
+### Data Selection
+- Users can toggle between software and device data using a switch.
+
+### Data Fetching
+- Data is fetched from the server based on the selected data type (software or device) using the `getSoftwares` and `getDevices` functions.
+- The component initiates data fetching whenever the data type changes.
+
+### Chart Display
+- A responsive line chart is displayed using the `recharts` library.
+- The chart shows usage data, including product name, the number of employees using the product, and the associated company.
+- Chart properties, including CartesianGrid, XAxis, YAxis, and a custom Tooltip, are configured.
+
+### Toggle Switch
+- Users can switch between viewing software and device data using a toggle switch provided by `@mui/material`.
+
+## Example
+```jsx
+import React from 'react';
+import DashboardChart from './DashboardChart';
+
+function DashboardPage() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <DashboardChart />
+    </div>
+  );
+}
