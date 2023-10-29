@@ -13,7 +13,7 @@ This React.js project is organized into several folders, each serving a specific
 ### Purpose
 The `components` folder contains reusable React components used throughout the project. These components can be composed to build various parts of the application's user interface.
 
-#### `add`
+#### add
 
 ##### Purpose
 The `add` subfolder contains components related to adding software and devices.
@@ -116,6 +116,41 @@ function DashboardPage() {
     <div>
       <h1>Dashboard</h1>
       <DashboardChart />
+    </div>
+  );
+}
+```
+### Decomission
+#### Purpose
+The `DecommissionedItemsDataTable` subcomponent is a part of the `components` directory and is responsible for displaying a data table of decommissioned items. It provides a clear overview of various attributes of decommissioned items, including their ID, product name, decommission date, license number, and product type.
+
+#### Usage
+- This subcomponent is typically used within the application's user interface to present a list of decommissioned items.
+
+#### Structure
+- The `DecommissionedItemsDataTable` subcomponent structure is as follows:
+
+#### Data Fetching
+- The subcomponent fetches data about decommissioned items from the server using the `getDecommissionedItems` function.
+- The data is retrieved during the component's lifecycle using the `useEffect` hook.
+
+#### Data Table
+- A data grid is displayed using the `@mui/x-data-grid` library.
+- The columns for the data grid are defined to include fields like ID, product name, decommission date, license number, and product type.
+
+#### Product Type Status
+- The "Product Type" column in the data table includes a rendered cell that distinguishes between "Software" and "Device" based on the product type, adding appropriate styling.
+
+### Example
+```jsx
+import React from 'react';
+import DecommissionedItemsDataTable from './DecommissionedItemsDataTable';
+
+function DecommissionedItemsPage() {
+  return (
+    <div>
+      <h1>Decommissioned Items</h1>
+      <DecommissionedItemsDataTable />
     </div>
   );
 }
