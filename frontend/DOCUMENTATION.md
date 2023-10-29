@@ -300,3 +300,107 @@ function ExpiredDevicesPage() {
   );
 }
 ```
+### featured chart
+#### Purpose
+The `Featured` subcomponent is responsible for displaying featured data in the form of a pie chart. It allows users to toggle between software and device cost visualization and provides information about companies with the most and least money spent.
+
+#### Usage
+- This subcomponent is often placed on the application's dashboard or a dedicated feature page to showcase cost data in an engaging way.
+
+#### Structure
+- The `Featured` subcomponent offers the following key features:
+
+#### Data Fetching and Visualization
+- Data for the pie chart is fetched from the server based on the selected data type (software or device) using the `getSoftwares` and `getDevices` functions.
+- The pie chart is generated using the `chart.js` library.
+
+#### Toggle Functionality
+- Users can toggle between software and device data visualization.
+- The switch control enables the user to switch between "Show Software Costs" and "Show Device Costs" labels.
+
+#### Company Information
+- The subcomponent displays the name of the company with the most and least money spent.
+
+### Example
+```jsx
+import React from 'react';
+import Featured from './Featured';
+
+function DashboardPage() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Featured />
+    </div>
+  );
+}
+```
+
+### Navbar
+
+#### Purpose
+The `Navbar` subcomponent serves as the application's navigation bar, offering links to various sections and functionalities. It also provides options to toggle notifications and log out.
+
+#### Usage
+- The `Navbar` subcomponent is typically placed at the top of the application interface to enable navigation and access to important features.
+
+#### Structure
+- The `Navbar` subcomponent includes the following key features:
+
+#### Scrolling Behavior
+- The navigation bar's appearance can change based on scrolling behavior.
+
+#### Notifications
+- Users can toggle the display of notifications.
+- The icon changes to indicate whether notifications are active or muted.
+
+#### Log Out
+- Users can log out from the application.
+
+### Example
+```jsx
+import React from 'react';
+import Navbar from './Navbar';
+
+function App() {
+  // ...
+  return (
+    <div>
+      <Navbar toggleNotifications={handleToggleNotifications} />
+    </div>
+  );
+}
+```
+
+### AllNotificationsDataTable
+
+#### Purpose
+The `AllNotificationsDataTable` subcomponent is responsible for displaying a data table containing notifications. It presents information about product names, expiry dates, days left, messages, and product types (software or device).
+
+#### Usage
+- This subcomponent is often used to show a list of notifications, allowing users to stay informed about important events.
+
+#### Structure
+- The `AllNotificationsDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Notification data is fetched from the server using the `getNotifications` function.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid are defined, including fields like ID, product name, expiry date, days left, message, and product type.
+
+### Example
+```jsx
+import React from 'react';
+import AllNotificationsDataTable from './AllNotificationsDataTable';
+
+function NotificationsPage() {
+  return (
+    <div>
+      <h1>Notifications</h1>
+      <AllNotificationsDataTable />
+    </div>
+  );
+}
+```
