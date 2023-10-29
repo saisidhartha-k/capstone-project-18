@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { getDevices, decommissionDevice } from "../../service/DeviceService";
-import Modal from "react-modal"; 
+import Modal from "react-modal";
 import { moveDeviceToRma } from "../../service/RMAService";
 
 export default function AllDevicesDataTable() {
@@ -48,9 +48,9 @@ export default function AllDevicesDataTable() {
         prevData.filter((device) => device.id !== selectedDeviceId)
       );
 
-      closeModal(); 
-      setRmaData({ reason: "" }); 
-      setSelectedDeviceId(null); 
+      closeModal();
+      setRmaData({ reason: "" });
+      setSelectedDeviceId(null);
     } catch (error) {
       console.error("Error moving device to RMA", error);
     }
@@ -58,7 +58,7 @@ export default function AllDevicesDataTable() {
 
   const handleRMA = (deviceId) => {
     setSelectedDeviceId(deviceId);
-    openModal(); 
+    openModal();
   };
 
   useEffect(() => {
@@ -112,7 +112,9 @@ export default function AllDevicesDataTable() {
             <button onClick={() => handleDecommission(params.row.id)}>
               Decommission
             </button>
-            <button onClick={() => handleRMA(params.row.id)}>RMA</button>
+            <button id="RMAbutton" onClick={() => handleRMA(params.row.id)}>
+              RMA
+            </button>
             {showModal && (
               <div className="modal-overlay">
                 <div className="modal-content">
@@ -129,12 +131,9 @@ export default function AllDevicesDataTable() {
   ];
 
   const getRowStyle = (params) => {
-    if (
-      params.row.device &&
-      params.row.device.available === "NOT_AVAILABLE"
-    ) {
+    if (params.row.device && params.row.device.available === "NOT_AVAILABLE") {
       return { display: "none" };
-    } 
+    }
     return {};
   };
 
@@ -154,12 +153,17 @@ export default function AllDevicesDataTable() {
       >
         <h2>Enter RMA Reason</h2>
         <input
+          id="RMAReason"
           type="text"
           value={rmaData.reason}
           onChange={(e) => setRmaData({ reason: e.target.value })}
         />
-        <button onClick={saveRMA}>Save</button>
-        <button onClick={closeModal}>Cancel</button>
+        <button id="saveRMA" onClick={saveRMA}>
+          Save
+        </button>
+        <button id="cancelRMA" onClick={closeModal}>
+          Cancel
+        </button>
       </Modal>
     </div>
   );

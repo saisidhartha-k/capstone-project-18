@@ -38,7 +38,7 @@ const Navbar = ({ toggleNotifications }) => {
         <div className="items">
           <div className="item">
             <Link to="/notification">
-              <span>ALL Notifications</span>
+              <span id="All Notiications">ALL Notifications</span>
             </Link>
           </div>
           <div className="item">

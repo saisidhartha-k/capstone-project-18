@@ -164,6 +164,7 @@ function SoftwareForm() {
             <div className="form-row">
               <label>Name:</label>
               <input
+                id="name"
                 type="text"
                 name="name"
                 value={formData.name}
@@ -189,6 +190,7 @@ function SoftwareForm() {
             <div className="form-row">
               <label>Enter a New Company Name:</label>
               <input
+                id="company name"
                 type="text"
                 name="company.name"
                 value={formData.company.name}
