@@ -50,7 +50,7 @@ function AddDevicePage() {
 }
 
 export default AddDevicePage;
-```
+
 ##### Structure
 - `addsoftware.jsx`: 
 
