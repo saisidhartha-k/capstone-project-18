@@ -8,28 +8,10 @@ import "react-circular-progressbar/dist/styles.css";
 import { getHeaders } from "../../service/SoftwareService";
 import ReorderIcon from '@mui/icons-material/Reorder';
 
-/**
- * Widget component displays a customizable widget with a title, data from an endpoint, and an icon.
- *
- * @component
- * @param {Object} props - The component's props.
- * @param {string} props.title - The title of the widget.
- * @param {string} props.endpoint - The endpoint for fetching data.
- * @param {string} props.className - The CSS class name for styling the widget.
- * @param {string} props.value - The value used in the widget.
- * @param {ReactNode} props.icon - The icon element to display in the widget.
- * @returns {JSX.Element} Widget component.
- */
 const Widget = ({ title, endpoint, className, value, icon }) => {
   const [dataFromEndpoint, setDataFromEndpoint] = useState(null);
   const [dataFromValue, setDataFromValue] = useState(null);
 
- /**
-   * Fetch data from the specified endpoint and store it in the component's state.
-   * @function
-   * @async
-   * @returns {Promise<void>}
-   */
   useEffect(() => {
     const fetchDataFromEndpoint = async () => {
       try {
@@ -43,12 +25,7 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
       }
     };
 
-/**
-   * Fetch data from the specified endpoint and store it in the component's state.
-   * @function
-   * @async
-   * @returns {Promise<void>}
-   */
+
     const fetchDataFromValue = async () => {
       try {
         const valueResponse = await axios.get(value, getHeaders());
@@ -65,8 +42,6 @@ const Widget = ({ title, endpoint, className, value, icon }) => {
     fetchDataFromValue();
   }, [endpoint, value, title]);
 
- /* The `return` statement in the `Widget` component is responsible for rendering the JSX (JavaScript
- XML) code that represents the structure and content of the component. */
   return (
     <div className={`widget ${className}`}>
       <div className="left">

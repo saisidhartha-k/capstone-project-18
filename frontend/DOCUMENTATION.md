@@ -644,3 +644,79 @@ function SoftwareCompaniesPage() {
   );
 }
 ```
+### dashboard datatable
+#### Purpose
+The `DataTable` subcomponent is responsible for displaying a data table containing information about either expired software or expired devices. Users can toggle between viewing expired software and expired devices.
+
+#### Usage
+- This subcomponent is often used to provide users with a visual representation of software and device data that has expired.
+
+#### Structure
+- The `DataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data for either expired software or expired devices is fetched from the server using the `getSoftwareExpiredData` or `getDeviceExpiredData` functions, depending on user selection.
+
+#### Toggle Switch
+- Users can toggle between viewing expired software and expired devices using a switch.
+- The switch changes color (from green to red) based on the selected data category.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, name, company, license number, cost, expiry date, and status.
+
+### Example
+```jsx
+import React from 'react';
+import DataTable from './DataTable';
+
+function ExpiredDataPage() {
+  return (
+    <div>
+      <h1>Expired Data</h1>
+      <DataTable />
+    </div>
+  );
+}
+```
+
+
+### Widget
+
+#### Purpose
+The `Widget` subcomponent is a reusable component for displaying data-related information in a widget format. It includes a title, a counter for data, a progress bar, and an icon.
+
+#### Usage
+- This subcomponent can be used to create various widgets within the application to showcase data.
+
+#### Structure
+- The `Widget` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data is fetched from specified endpoints using asynchronous requests to `axios`. The data can be sourced from either `endpoint` or `value`.
+
+#### Widget Elements
+- The widget includes a title, a counter for displaying data from the endpoint, and a circular progress bar.
+- It also allows for an icon to be added on the right side of the widget.
+
+### Example
+```jsx
+import React from 'react';
+import Widget from './Widget';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+
+function ExampleDashboard() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Widget
+        title="Temperature"
+        endpoint="/api/temperature"
+        value="/api/temperature/value"
+        className="temperature-widget"
+        icon={<AcUnitIcon />}
+      />
+    </div>
+  );
+}
+```
