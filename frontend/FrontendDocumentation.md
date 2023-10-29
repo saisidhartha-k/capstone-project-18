@@ -3,10 +3,7 @@
 This React.js project is organized into several folders, each serving a specific purpose. Below, you will find documentation for each of these folders.
 
 - [`components`](#components)
-- [`hooks`](#hooks)
-- [`context`](#context)
-- [`page`](#page)
-- [`test`](#test)
+
 
 ## `components`
 
