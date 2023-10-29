@@ -193,14 +193,13 @@ function AboutToExpireDevicesPage() {
 
 ### AllDevicesDataTable
 
-```markdown
-### Purpose
+#### Purpose
 The `AllDevicesDataTable` subcomponent is responsible for displaying a data table of all devices. It provides a clear overview of device details including ID, name, company, license, cost, purchase date, expiry date, and status. Additionally, it offers options to decommission devices and move them to the RMA (Return Merchandise Authorization) process.
 
-### Usage
+#### Usage
 - This subcomponent is typically used within the application's user interface to present a list of all devices and perform actions like decommissioning and RMA.
 
-### Structure
+#### Structure
 - The `AllDevicesDataTable` subcomponent includes the following key features:
 
 #### Data Fetching
@@ -225,6 +224,41 @@ function AllDevicesPage() {
     <div>
       <h1>All Devices</h1>
       <AllDevicesDataTable />
+    </div>
+  );
+}
+```
+
+
+### DeviceCompaniesDataTable
+
+#### Purpose
+The `DeviceCompaniesDataTable` subcomponent is responsible for displaying a data table of device companies. It provides a structured overview of company details including ID, name, and description.
+
+#### Usage
+- This subcomponent is typically used within the application's user interface to present a list of device companies.
+
+#### Structure
+- The `DeviceCompaniesDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data about device companies is fetched from the server using the `getAllDeviceCompanies` function.
+- The data is retrieved during the component's lifecycle using the `useEffect` hook.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid are defined, including fields like ID, name, and description.
+
+### Example
+```jsx
+import React from 'react';
+import DeviceCompaniesDataTable from './DeviceCompaniesDataTable';
+
+function DeviceCompaniesPage() {
+  return (
+    <div>
+      <h1>Device Companies</h1>
+      <DeviceCompaniesDataTable />
     </div>
   );
 }
