@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test": "vitest",
     "eject": "react-scripts eject",
-    "doc": "react-doc-generator ./src/components/add/ -o DOCUMENTATION.md"
+    "doc": "react-docgen ./src/components/widgets/ --markdown -o DOCUMENTATION.md"
   },
   "eslintConfig": {
     "extends": [
