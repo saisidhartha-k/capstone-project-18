@@ -263,3 +263,40 @@ function DeviceCompaniesPage() {
   );
 }
 ```
+
+### ExpiredDeviceDataTable
+
+#### Purpose
+The `ExpiredDeviceDataTable` subcomponent is responsible for displaying a data table of devices with expiration information. It provides a structured overview of device details, including ID, name, company, license, cost, purchase date, expiry date, and status.
+
+#### Usage
+- This subcomponent is typically used within the application's user interface to present information about devices that have expired.
+
+#### Structure
+- The `ExpiredDeviceDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data about devices with expiration information is fetched from the server using the `getDeviceExpiredData` function.
+- The data is retrieved during the component's lifecycle using the `useEffect` hook.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid are defined, including fields like ID, name, company, license, cost, purchase date, expiry date, and status.
+
+#### Status
+- The "Status" column in the data table indicates whether a device is expired or not and applies appropriate styling.
+
+### Example
+```jsx
+import React from 'react';
+import ExpiredDeviceDataTable from './ExpiredDeviceDataTable';
+
+function ExpiredDevicesPage() {
+  return (
+    <div>
+      <h1>Expired Devices</h1>
+      <ExpiredDeviceDataTable />
+    </div>
+  );
+}
+```

@@ -5,12 +5,6 @@ import { getAllDevicePurchases } from '../../service/DevicePurchaseService';
 
 const columns = [
   { field: "id", headerName: "ID", width: 100 },
-  // {
-  //   field: "expiryDate", 
-  //   headerName: "Expiry Date", 
-  //   width: 150,
-  //   valueGetter: (params) => params.row.devicePurchaseId.device.expiryDate, 
-  // },
   {
     field: "licenseNumber",
     headerName: "License Number", 
