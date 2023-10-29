@@ -155,3 +155,37 @@ function DecommissionedItemsPage() {
   );
 }
 ```
+### about to expire device 
+#### Purpose
+The `AboutToExpireDeviceDataTable` subcomponent is responsible for displaying a data table of devices that are about to expire. It provides a clear overview of device details including ID, name, company, license, cost, purchase date, expiry date, and status. The component fetches data about devices that are about to expire and presents it in a structured table format.
+
+#### Usage
+- This subcomponent is typically used within the application's user interface to provide information about devices that are close to their expiration date.
+
+#### Structure
+- The `AboutToExpireDeviceDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data about devices that are about to expire is fetched from the server using the `getDevicesAboutToExpire` function.
+- The data is retrieved during the component's lifecycle using the `useEffect` hook.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid are defined, including fields like ID, name, company, license, cost, purchase date, expiry date, and status.
+
+#### Status
+- The "Status" column in the data table indicates whether a device is expired or not and applies appropriate styling.
+
+### Example
+```jsx
+import React from 'react';
+import AboutToExpireDeviceDataTable from './AboutToExpireDeviceDataTable';
+
+function AboutToExpireDevicesPage() {
+  return (
+    <div>
+      <h1>About to Expire Devices</h1>
+      <AboutToExpireDeviceDataTable />
+    </div>
+  );
+}
