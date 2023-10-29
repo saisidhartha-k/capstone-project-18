@@ -50,3 +50,49 @@ function AddDevicePage() {
 }
 
 export default AddDevicePage;
+```
+##### Structure
+- `addsoftware.jsx`: 
+
+### Purpose
+The `addsoftware.jsx` file is a component responsible for adding new software to the application. It is a part of the `add` subfolder within the `components` directory.
+
+### Usage
+- The `addsoftware.jsx` component is typically utilized within the application's user interface to collect and submit data for adding new software.
+
+### Structure
+- `addsoftware.jsx` is structured as follows:
+
+#### 1. Software Information Collection
+   - The component provides input fields and controls for collecting the following software information:
+     - Software Name
+     - Company Name
+     - Number of Employees
+     - Cost
+     - Expiry Date
+     - Is Expired (a boolean flag)
+
+#### 2. Company Selection
+   - Users can select an existing company from a dropdown menu or manually input a new company name and description if necessary.
+
+#### 3. Software Renewal
+   - Users can switch between "Add" and "Renew" modes, allowing them to either add new software or renew existing software licenses.
+
+#### 4. Toast Notifications
+   - Toast notifications from the `react-toastify` library are used to provide feedback to the user upon successful or failed software addition or renewal.
+
+### Example
+```jsx
+import React from 'react';
+import SoftwareForm from './SoftwareForm';
+
+function AddSoftwarePage() {
+  return (
+    <div>
+      <h1>Add Software</h1>
+      <SoftwareForm />
+    </div>
+  );
+}
+
+export default AddSoftwarePage;
