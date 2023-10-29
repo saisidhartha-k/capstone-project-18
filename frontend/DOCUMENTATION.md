@@ -189,3 +189,43 @@ function AboutToExpireDevicesPage() {
     </div>
   );
 }
+```
+
+### AllDevicesDataTable
+
+```markdown
+### Purpose
+The `AllDevicesDataTable` subcomponent is responsible for displaying a data table of all devices. It provides a clear overview of device details including ID, name, company, license, cost, purchase date, expiry date, and status. Additionally, it offers options to decommission devices and move them to the RMA (Return Merchandise Authorization) process.
+
+### Usage
+- This subcomponent is typically used within the application's user interface to present a list of all devices and perform actions like decommissioning and RMA.
+
+### Structure
+- The `AllDevicesDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data about all devices is fetched from the server using the `getDevices` function.
+- The data is retrieved during the component's lifecycle using the `useEffect` hook.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid are defined, including fields like ID, name, company, license, cost, purchase date, expiry date, and status.
+
+#### Actions
+- The subcomponent provides options to decommission devices and initiate the RMA process for selected devices.
+- Modal dialogs are used to confirm decommissioning and gather RMA reason input.
+
+### Example
+```jsx
+import React from 'react';
+import AllDevicesDataTable from './AllDevicesDataTable';
+
+function AllDevicesPage() {
+  return (
+    <div>
+      <h1>All Devices</h1>
+      <AllDevicesDataTable />
+    </div>
+  );
+}
+```
