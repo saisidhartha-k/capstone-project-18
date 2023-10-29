@@ -12,6 +12,7 @@ export const SoftwareComapniesList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>Software Companies</h1>
         <SoftwareCompanies />
       </div>
     </div>

@@ -161,7 +161,7 @@ function SoftwareForm() {
       {mode === "Add" && (
         <div>
           <form className="form" onSubmit={handleSubmit}>
-            <div>
+            <div className="form-row">
               <label>Name:</label>
               <input
                 type="text"
@@ -171,7 +171,7 @@ function SoftwareForm() {
                 required
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Company Name (Select):</label>
               <select
                 name="company.name"
@@ -186,8 +186,8 @@ function SoftwareForm() {
                 ))}
               </select>
             </div>
-            <div>
-              <label>Or Enter a New Company Name:</label>
+            <div className="form-row">
+              <label>Enter a New Company Name:</label>
               <input
                 type="text"
                 name="company.name"
@@ -195,24 +195,16 @@ function SoftwareForm() {
                 onChange={(e) => handleCompanyManualInput("name",e)}
               />
             </div>
-            <div>
-              <label>Company Description (Manual):</label>
+            <div className="form-row">
+              <label>Company Description:</label>
+              <br />
               <textarea
                 name="company.description"
                 value={formData.company.description}
                 onChange={(e) => handleCompanyManualInput("description",e)}
               />
             </div>
-            <div>
-              <label>Company ID:</label>
-              <input
-                type="number"
-                name="company.id"
-                value={selectedCompanyId}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
+            <div className="form-row">
               <label>Number of Employees:</label>
               <input
                 type="number"
@@ -221,7 +213,7 @@ function SoftwareForm() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Cost:</label>
               <input
                 type="number"
@@ -230,7 +222,7 @@ function SoftwareForm() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Expiry Date:</label>
               <input
                 type="date"
@@ -248,7 +240,7 @@ function SoftwareForm() {
       {mode === "Renew" && (
         <div>
           <form className="form" onSubmit={handleSubmit}>
-            <div>
+            <div className="form-row"> 
               <label>Software ID to Renew:</label>
               <select
                 name="renewData.id"
@@ -266,9 +258,9 @@ function SoftwareForm() {
                 ))}
               </select>
             </div>
-            <div>
+            <div className="form-row">
               <label>Cost:</label>
-              <input
+              <input 
                 type="number"
                 name="renewData.cost"
                 value={renewData.cost}
@@ -277,7 +269,7 @@ function SoftwareForm() {
                 }
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Expiry Date:</label>
               <input
                 type="date"
@@ -288,7 +280,7 @@ function SoftwareForm() {
                 }
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Company Name (Select):</label>
               <select
                 name="renewData.company.name"
@@ -308,7 +300,7 @@ function SoftwareForm() {
                 ))}
               </select>
             </div>
-            <div>
+            {/* <div>
               <label>Company ID:</label>
               <input
                 type="number"
@@ -316,7 +308,7 @@ function SoftwareForm() {
                 value={renewData.company.id}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             <button className="submit-button" type="submit">
               Renew Software
             </button>

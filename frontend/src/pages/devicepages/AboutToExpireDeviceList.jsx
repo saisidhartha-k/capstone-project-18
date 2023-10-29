@@ -11,6 +11,7 @@ export const AboutToExpireDeviceList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>About To Expire Devices</h1>
         <AboutToExpireDeviceDataTable />
       </div>
     </div>

@@ -154,7 +154,7 @@ export default function AllSoftwareDataTable() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="RMA Reason Modal"
-        shouldCloseOnOverlayClick={true} // Add this line to allow closing on overlay click
+        shouldCloseOnOverlayClick={true} 
       >
         <h2>Enter RMA Reason</h2>
         <input

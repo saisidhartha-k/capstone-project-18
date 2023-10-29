@@ -5,17 +5,17 @@ import { getExpired } from '../../service/SoftwareService';
 
 const columns = [
   { field: "id", headerName: "ID", width: 60 },
-  { field: "name", headerName: "Name", width: 150 },
+  { field: "name", headerName: "Name", width: 170 },
   {
     field: "company",
     headerName: "Company",
-    width: 200,
+    width: 170,
     valueGetter: (params) => params.row.company.name,
   },
   { field: "licenseNumber", headerName: "License", width: 120 },
   { field: "cost", headerName: "Cost", width: 100 },
-  { field: 'purchaseDate', headerName: 'Purchase Date', width: 120 },
-  { field: "expiryDate", headerName: "Expiry Date", width: 120 },
+  { field: 'purchaseDate', headerName: 'Purchase Date', width: 160 },
+  { field: "expiryDate", headerName: "Expiry Date", width: 150 },
   {
     field: "isExpired",
     headerName: "Status",
@@ -56,7 +56,6 @@ export default function ExpiredDataTable() {
         rows={data}
         columns={columns}
         pageSize={5}
-        checkboxSelection
       />
     </div>
   );

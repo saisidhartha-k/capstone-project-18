@@ -11,6 +11,7 @@ export const SoftwareList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>All Softwares</h1>
         <AllSoftwareDataTable />
       </div>
     </div>

@@ -130,7 +130,7 @@ function DeviceForm() {
       {mode === "Add" && (
         <div>
           <form className="form" onSubmit={handleSubmit}>
-            <div>
+            <div className="form-row">
               <label>Name:</label>
               <input
                 type="text"
@@ -140,7 +140,7 @@ function DeviceForm() {
                 required
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Company Name (Select):</label>
               <select
                 name="company.name"
@@ -155,7 +155,7 @@ function DeviceForm() {
                 ))}
               </select>
             </div>
-            <div>
+            <div className="form-row">
               <label>Or Enter a New Company Name:</label>
               <input
                 type="text"
@@ -164,7 +164,7 @@ function DeviceForm() {
                 onChange={(e) => handleCompanyManualInput("name",e)}
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Company Description (Manual):</label>
               <textarea
                 name="company.description"
@@ -172,16 +172,7 @@ function DeviceForm() {
                 onChange={(e) => handleCompanyManualInput("description",e)}
               />
             </div>
-            <div>
-              <label>Company ID:</label>
-              <input
-                type="number"
-                name="company.id"
-                value={selectedCompanyId}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
+            <div className="form-row">
               <label>Number of Employees:</label>
               <input
                 type="number"
@@ -190,7 +181,7 @@ function DeviceForm() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Cost:</label>
               <input
                 type="number"
@@ -199,7 +190,7 @@ function DeviceForm() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Expiry Date:</label>
               <input
                 type="date"
@@ -208,7 +199,7 @@ function DeviceForm() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Location:</label>
               <input
                 type="text"
@@ -226,7 +217,7 @@ function DeviceForm() {
       {mode === "Renew" && (
         <div>
           <form className="form" onSubmit={handleRenewSubmit}>
-            <div>
+            <div className="form-row">
               <label>Device ID to Renew:</label>
               <select
                 name="renewData.id"
@@ -244,7 +235,7 @@ function DeviceForm() {
                 ))}
               </select>
             </div>
-            <div>
+            <div className="form-row">
               <label>Cost:</label>
               <input
                 type="number"
@@ -255,7 +246,7 @@ function DeviceForm() {
                 }
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Expiry Date:</label>
               <input
                 type="date"
@@ -266,7 +257,7 @@ function DeviceForm() {
                 }
               />
             </div>
-            <div>
+            <div className="form-row">
               <label>Company Name (Select):</label>
               <select
                 name="renewData.company.name"
@@ -280,8 +271,8 @@ function DeviceForm() {
               >
                 <option value="">Select a Company</option>
                 {companies.map((company) => (
-                  <option key={company.id} value={company.id}>
-                    {company.id} - {company.name}
+                  <option key={company.id} value={company.name}>
+                   {company.name}
                   </option>
                 ))}
               </select>

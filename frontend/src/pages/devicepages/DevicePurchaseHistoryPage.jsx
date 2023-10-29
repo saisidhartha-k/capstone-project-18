@@ -10,6 +10,7 @@ export const DevicePurchaseHistoryList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>Device Purchase History</h1>
         <DevicePurchasesDataTable />
       </div>
     </div>

@@ -1,9 +1,9 @@
 import React from "react";
 import '../../pages/pages.scss';
 
-import SoftwarePurchasesDataTable from "../../components/SoftwareComponents/software_purchase_components/SoftwarePurchaseHistory";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
+import SoftwarePurchasesDataTable from "../../components/softwaredatatables/SoftwarePurchaseHistory";
 
 export const SoftwarePurchaseHistoryList = () => {
   return (
@@ -11,6 +11,7 @@ export const SoftwarePurchaseHistoryList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>Software Purchase History</h1>
         <SoftwarePurchasesDataTable />
       </div>
     </div>

@@ -10,6 +10,7 @@ export const ExpiredSoftwareList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>Expired Softwares</h1>
         <ExpiredDataTable />
       </div>
     </div>

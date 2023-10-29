@@ -7,6 +7,8 @@ import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import { Link } from "react-router-dom";
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import DvrIcon from '@mui/icons-material/Dvr';
+import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
+import BackspaceIcon from '@mui/icons-material/Backspace';
 
 export const Sidebar = () => {
   return (
@@ -105,17 +107,16 @@ export const Sidebar = () => {
               <span>Device Purchases</span>
             </Link>
           </li>
-
           <p className="title"> Others </p>
           <li>
           <Link to="/rma">
-            <NotificationsActiveIcon className="icon" />
+            <AssignmentReturnIcon className="icon" />
             <span>RMA</span>
           </Link>
           </li>
           <li>
           <Link to="/decomissioneditems">
-            <NotificationsActiveIcon className="icon" />
+            <BackspaceIcon className="icon" />
             <span>decomissioned items</span>
           </Link>
           </li>

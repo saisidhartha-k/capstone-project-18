@@ -34,7 +34,6 @@ export default function SoftwareCompanies() {
         rows={data}
         columns={columns}
         pageSize={5}
-        checkboxSelection
       />
     </div>
   );

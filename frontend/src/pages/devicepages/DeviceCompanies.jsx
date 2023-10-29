@@ -11,6 +11,7 @@ export const DeviceCompaniesList = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <h1>Device Companies</h1>
         <DeviceCompaniesDataTable />
       </div>
     </div>

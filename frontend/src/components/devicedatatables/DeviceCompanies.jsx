@@ -5,7 +5,7 @@ import { getAllDeviceCompanies } from '../../service/DeviceService';
 
 
 const columns = [
-  { field: "id", headerName: "ID", width: 60 },
+  { field: "id", headerName: "ID", width: 140 },
   { field: "name", headerName: "Name", width: 200 },
 
   { field: "description", headerName: "description", width: 400 },
@@ -34,7 +34,6 @@ export default function DeviceCompaniesDataTable() {
         rows={data}
         columns={columns}
         pageSize={5}
-        checkboxSelection
       />
     </div>
   );

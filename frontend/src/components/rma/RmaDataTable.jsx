@@ -35,11 +35,11 @@ export default function RMADataTable() {
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 60 },
+    { field: 'id', headerName: 'ID', width: 100 },
     {
       field: 'name',
       headerName: 'Item Name',
-      width: 150,
+      width: 200,
       valueGetter: (params) => {
         if (params.row.software) {
           return params.row.software.name; 
@@ -51,7 +51,7 @@ export default function RMADataTable() {
       },
     },
     { field: 'reason', headerName: 'Reason', width: 200 },
-    { field: 'requestDate', headerName: 'Request Date', width: 120 },
+    { field: 'requestDate', headerName: 'Request Date', width: 150 },
     {
       field: "actions",
       headerName: "Actions",
@@ -88,7 +88,6 @@ export default function RMADataTable() {
         rows={data}
         columns={columns}
         pageSize={5}
-        checkboxSelection
       />
     </div>
   );

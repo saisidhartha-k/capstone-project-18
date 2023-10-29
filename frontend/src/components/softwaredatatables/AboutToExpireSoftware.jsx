@@ -9,7 +9,7 @@ const columns = [
   {
     field: "company",
     headerName: "Company",
-    width: 150,
+    width: 200,
     valueGetter: (params) => params.row.company.name,
   },
   { field: "licenseNumber", headerName: "License", width: 120 },
@@ -55,7 +55,6 @@ export default function AboutToExpireDataTable() {
         rows={data}
         columns={columns}
         pageSize={5}
-        checkboxSelection
       />
     </div>
   );
