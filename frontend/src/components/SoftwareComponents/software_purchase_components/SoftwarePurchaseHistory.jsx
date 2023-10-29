@@ -5,12 +5,6 @@ import { getAllSoftwareOrders } from '../../../service/SoftwarePurchaseService';
 
 const columns = [
   { field: "id", headerName: "ID", width: 100 },
-  // {
-  //   field: "expirydate",
-  //   headerName: "expiry Date",
-  //   width: 150,
-  //   valueGetter: (params) => params.row.softwarePurchaseId.software.expiryDate,
-  // },
   {
     field: "licenseNumber",
     headerName: "licenseNumber",

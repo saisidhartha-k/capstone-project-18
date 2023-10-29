@@ -404,3 +404,106 @@ function NotificationsPage() {
   );
 }
 ```
+### RMA table
+#### Purpose
+The `RMADataTable` subcomponent is responsible for displaying a data table containing information about Return Merchandise Authorization (RMA). It allows users to return items from RMA.
+
+#### Usage
+- This subcomponent is often used to manage and monitor RMA-related activities within the application.
+
+#### Structure
+- The `RMADataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- RMA data is fetched from the server using the `getRMA` function.
+
+#### Return Functionality
+- Users can return items from RMA by clicking the "Return" button in the table.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, item name, reason, request date, actions (return button), and product type (software or device).
+
+### Example
+```jsx
+import React from 'react';
+import RMADataTable from './RMADataTable';
+
+function RMAManagementPage() {
+  return (
+    <div>
+      <h1>RMA Management</h1>
+      <RMADataTable />
+    </div>
+  );
+}
+```
+
+
+### Sidebar
+
+#### Purpose
+The `Sidebar` subcomponent serves as the application's sidebar navigation, providing quick access to various sections and functionalities.
+
+#### Usage
+- The `Sidebar` subcomponent is typically placed on the side of the application interface to enable navigation and access to different sections.
+
+#### Structure
+- The `Sidebar` subcomponent includes the following key features:
+
+#### Logo
+- The application's logo is displayed at the top of the sidebar.
+
+#### Navigation
+- The sidebar provides links to various sections, including the main dashboard, software-related menus, device-related menus, and others.
+- Each section has an associated icon for quick identification.
+
+### Example
+```jsx
+import React from 'react';
+import Sidebar from './Sidebar';
+
+function App() {
+  // ...
+  return (
+    <div>
+      <Sidebar />
+      {/* Other components and content */}
+    </div>
+  );
+}
+```
+
+
+### SoftwarePurchasesDataTable
+
+#### Purpose
+The `SoftwarePurchasesDataTable` subcomponent is responsible for displaying a data table containing information about software purchases. It presents details about license numbers, software names, software costs, and software companies.
+
+#### Usage
+- This subcomponent is often used to track and manage software purchases within the application.
+
+#### Structure
+- The `SoftwarePurchasesDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Software purchase data is fetched from the server using the `getAllSoftwareOrders` function.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, license number, software name, software cost, and software company.
+
+### Example
+```jsx
+import React from 'react';
+import SoftwarePurchasesDataTable from './SoftwarePurchasesDataTable';
+
+function SoftwarePurchaseHistoryPage() {
+  return (
+    <div>
+      <h1>Software Purchase History</h1>
+      <SoftwarePurchasesDataTable />
+    </div>
+  );
+}
+```
