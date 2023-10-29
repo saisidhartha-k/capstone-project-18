@@ -48,7 +48,7 @@ The License Management System is a web-based application designed to help enterp
 ### Technology Stack
 
 - **Frontend**: React, JavaScript, MUI components, Sass
-- **Backend**: Java 11, Spring Boot 3.1.1
+- **Backend**: Java, Spring Boot 
 - **Database**: MySQL
 - **Testing**: Mockito, Selenium
 - **Graphs**: Chart.js, Recharts
