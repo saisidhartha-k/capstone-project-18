@@ -40,7 +40,7 @@ The License Management System is a web-based application designed to help enterp
 
 - [x] [Backend code with documentation](https://github.com/saisidhartha-k/capstone-project-18/blob/main/licence-lifecycle-management/APIDocumentation.md)
 - [x] Requirement Specifications
-- [ ] Frontend code with documentation
+- [x] [Frontend code with documentation](https://github.com/saisidhartha-k/capstone-project-18/blob/main/frontend/FrontendDocumentation.md)
 - [x] [Code Coverage Report](https://github.com/saisidhartha-k/capstone-project-18/blob/main/code%20coverage%20report.png)
 - [x] [Database Layer](https://github.com/saisidhartha-k/capstone-project-18/blob/main/database%20layer.png)
 
