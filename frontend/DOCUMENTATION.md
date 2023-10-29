@@ -79,34 +79,34 @@ function AddSoftwarePage() {
 
 export default AddSoftwarePage;
 ```
-# DashboardChart Component
+### DashboardChart Component
 
-## Overview
-The `DashboardChart` component provides interactive line charts for visualizing software and device usage data. Users can toggle between software and device data, and the component fetches the corresponding data from the server. The charts are rendered using the `recharts` library.
+#### Purpose
+The `DashboardChart` subcomponent is a part of the `components` directory and is responsible for visualizing software and device usage data using interactive line charts. Users can switch between viewing software and device data, and the subcomponent fetches the relevant data from the server. The charts are rendered using the `recharts` library.
 
-## Usage
-- This component is designed to be used on the application's dashboard page.
-- It offers a user-friendly way to visualize software and device usage data.
+### Usage
+- This subcomponent is designed to be used on the application's dashboard page.
+- It provides an intuitive way to visualize software and device usage data.
 
-## Structure
-- The component structure is as follows:
+### Structure
+- The `DashboardChart` subcomponent structure is as follows:
 
-### Data Selection
+#### Data Selection
 - Users can toggle between software and device data using a switch.
 
-### Data Fetching
+#### Data Fetching
 - Data is fetched from the server based on the selected data type (software or device) using the `getSoftwares` and `getDevices` functions.
-- The component initiates data fetching whenever the data type changes.
+- The subcomponent initiates data fetching whenever the data type changes.
 
-### Chart Display
+#### Chart Display
 - A responsive line chart is displayed using the `recharts` library.
 - The chart shows usage data, including product name, the number of employees using the product, and the associated company.
 - Chart properties, including CartesianGrid, XAxis, YAxis, and a custom Tooltip, are configured.
 
-### Toggle Switch
+#### Toggle Switch
 - Users can switch between viewing software and device data using a toggle switch provided by `@mui/material`.
 
-## Example
+### Example
 ```jsx
 import React from 'react';
 import DashboardChart from './DashboardChart';
@@ -119,3 +119,4 @@ function DashboardPage() {
     </div>
   );
 }
+```
