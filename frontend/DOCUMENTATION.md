@@ -507,3 +507,140 @@ function SoftwarePurchaseHistoryPage() {
   );
 }
 ```
+
+### About To Expire software DataTable
+#### Purpose
+The `AboutToExpireDataTable` subcomponent is responsible for displaying a data table containing information about software items that are about to expire.
+
+#### Usage
+- This subcomponent is typically used to monitor software items that are nearing their expiry date and need attention.
+
+#### Structure
+- The `AboutToExpireDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Software items that are about to expire are fetched from the server using the `getAboutExpired` function.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, name, company, license, cost, purchase date, expiry date, and status.
+
+### Example
+```jsx
+import React from 'react';
+import AboutToExpireDataTable from './AboutToExpireDataTable';
+
+function AboutToExpireSoftwarePage() {
+  return (
+    <div>
+      <h1>About to Expire Software</h1>
+      <AboutToExpireDataTable />
+    </div>
+  );
+}
+```
+
+
+### AllSoftwareDataTable
+
+#### Purpose
+The `AllSoftwareDataTable` subcomponent is responsible for displaying a data table containing information about all software items. It allows users to decommission software items or move them to the RMA (Return Merchandise Authorization) process.
+
+#### Usage
+- This subcomponent is often used for managing and monitoring software inventory within the application.
+
+#### Structure
+- The `AllSoftwareDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Software data is fetched from the server using the `getSoftwares` function.
+
+#### Decommission and RMA Functionality
+- Users can decommission software items or move them to the RMA process using the respective buttons in the table.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, name, company, license, cost, purchase date, expiry date, status, and actions (decommission and RMA buttons).
+
+### Example
+```jsx
+import React from 'react';
+import AllSoftwareDataTable from './AllSoftwareDataTable';
+
+function SoftwareInventoryPage() {
+  return (
+    <div>
+      <h1>Software Inventory</h1>
+      <AllSoftwareDataTable />
+    </div>
+  );
+}
+```
+
+
+### ExpiredDataTable
+
+#### Purpose
+The `ExpiredDataTable` subcomponent is responsible for displaying a data table containing information about expired software items.
+
+#### Usage
+- This subcomponent is typically used to keep track of software items that have already expired and need attention.
+
+#### Structure
+- The `ExpiredDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Expired software items are fetched from the server using the `getExpired` function.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, name, company, license, cost, purchase date, expiry date, and status.
+
+### Example
+```jsx
+import React from 'react';
+import ExpiredDataTable from './ExpiredDataTable';
+
+function ExpiredSoftwarePage() {
+  return (
+    <div>
+      <h1>Expired Software</h1>
+      <ExpiredDataTable />
+    </div>
+  );
+}
+```
+
+
+### SoftwareCompaniesDataTable
+
+#### Purpose
+The `SoftwareCompaniesDataTable` subcomponent is responsible for displaying a data table containing information about software companies.
+
+#### Usage
+- This subcomponent is often used to maintain a list of software companies and their details within the application.
+
+#### Structure
+- The `SoftwareCompaniesDataTable` subcomponent includes the following key features:
+
+#### Data Fetching
+- Data about software companies is fetched from the server using the `getSoftwareCompanies` function.
+
+#### Data Table
+- The subcomponent uses the `@mui/x-data-grid` library to display the data in a table format.
+- The columns for the data grid include fields like ID, name, and description of the software companies.
+
+### Example
+```jsx
+import React from 'react';
+import SoftwareCompaniesDataTable from './SoftwareCompaniesDataTable';
+
+function SoftwareCompaniesPage() {
+  return (
+    <div>
+      <h1>Software Companies</h1>
+      <SoftwareCompaniesDataTable />
+    </div>
+  );
+}
+```
