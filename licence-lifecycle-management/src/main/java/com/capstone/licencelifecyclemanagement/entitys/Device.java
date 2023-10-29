@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 @Getter
 @Setter
 @Entity
@@ -20,7 +22,7 @@ public class Device implements Serializable {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private DeviceCompany company;
-    private String licenseNumber = String.valueOf(Math.ceil(Math.random() * 10000));
+    private String licenseNumber = RandomStringUtils.randomAlphanumeric(10);
     private int numberOfEmployees;
     private int cost;
     private LocalDate purchaseDate = LocalDate.now();

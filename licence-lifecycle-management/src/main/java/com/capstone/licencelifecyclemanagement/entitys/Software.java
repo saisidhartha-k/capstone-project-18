@@ -3,6 +3,8 @@ package com.capstone.licencelifecyclemanagement.entitys;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -29,7 +31,7 @@ public class Software implements Serializable {
     @JoinColumn(name = "company_id")
     private SoftwareCompany company;
 
-    private String licenseNumber = String.valueOf(Math.ceil(Math.random() * 10000));
+    private String licenseNumber = RandomStringUtils.randomAlphanumeric(10);
     private int numberOfEmployees;
     private int cost;
     private LocalDate purchaseDate = LocalDate.now();
